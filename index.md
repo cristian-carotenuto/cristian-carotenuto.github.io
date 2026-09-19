@@ -5,7 +5,7 @@ layout: default
 # Investigation Team Dossier
 
 > **SHIA // INVESTIGATION TEAM MEMBER**  
-> *"La verità è nascosta oltre la nebbia del Midnight Channel... benvenuto nel mio dominio personale! Questo è il mio biglietto da visita digitale."*
+> *"La verità è nascosta oltre la nebbia del Midnight Channel... benvenuto sul mio canale personale, The Shia Channel! Questo è il mio biglietto da visita digitale."*
 
 Ciao! Mi chiamo **Cristian** (online conosciuto come **Shia**). Sono uno sviluppatore appassionato di tecnologia, design e videogiochi. Questo sito è il mio quartier generale su GitHub Pages, ispirato all'indimenticabile stile e atmosfera di **Persona 4**.
 

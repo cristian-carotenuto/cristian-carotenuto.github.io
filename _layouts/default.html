@@ -20,7 +20,48 @@
     {% seo %}
   </head>
   <body>
-    <!-- Subtle CRT TV Scanline Overlay -->
+
+    <!-- ================= PERSONA 4 LOADING INTRO (MAX 3 SECONDS) ================= -->
+    <div id="p4-intro" class="p4-intro-overlay" role="dialog" aria-modal="true" aria-label="Persona 4 Welcome Loading Screen">
+      <div class="intro-crt-beam" aria-hidden="true"></div>
+      <div class="intro-stage" id="intro-stage">
+        <div class="intro-scanlines" aria-hidden="true"></div>
+        <div class="intro-card">
+          <!-- Animated 3D Spinning TV Glasses -->
+          <div class="intro-glasses-box" aria-hidden="true">
+            <div class="intro-lens lens-l"><div class="glass-glare"></div></div>
+            <div class="intro-bridge"></div>
+            <div class="intro-lens lens-r"><div class="glass-glare"></div></div>
+          </div>
+
+          <!-- Slanted Now Loading badge -->
+          <div class="intro-loading-ribbon">
+            <span class="intro-loading-text">NOW LOADING</span>
+            <span class="intro-dots"><span>.</span><span>.</span><span>.</span></span>
+          </div>
+
+          <!-- Welcome Message -->
+          <div class="intro-welcome-box">
+            <span class="intro-welcome-sub">MIDNIGHT CHANNEL // SPECIAL BROADCAST</span>
+            <h2 class="intro-welcome-title">WELCOME TO THE SHIA CHANNEL</h2>
+          </div>
+
+          <!-- Persona 4 Rainbow Progress Bar -->
+          <div class="intro-progress-wrap">
+            <div class="intro-progress-bar" id="intro-progress-bar"></div>
+          </div>
+
+          <!-- Skip / Audio Prompt -->
+          <div class="intro-prompt-wrap">
+            <button type="button" class="intro-skip-btn" id="intro-skip-btn">
+              <span>▶ CLICK ANYWHERE TO ENTER &bull; START RADIO 🎵</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subtle CRT TV Scanline Overlay for Main Page -->
     <div class="crt-scanline-overlay" aria-hidden="true"></div>
 
     <div class="p4-viewport-wrap">
@@ -40,18 +81,33 @@
           
           <!-- TV Header Ticker / Status Bar -->
           <div class="tv-ticker-bar">
-            <div class="ticker-item tv-channel-tag">
-              <span class="channel-num">{{ site.channel | default: "CH 04" }}</span>
+            <div class="ticker-item tv-channel-tag" id="tv-channel-tag" title="Canale TV / Traccia Corrente">
+              <span class="channel-num" id="channel-display">{{ site.channel | default: "CH 04" }}</span>
             </div>
+            
             <div class="ticker-item tv-rec">
               <span class="rec-dot"></span> REC
             </div>
+
+            <!-- Radio Jukebox Status Ticker -->
+            <div class="ticker-item tv-radio-ticker" id="tv-radio-ticker" role="button" tabindex="0" title="Radio TV World (Clicca per Play/Pause)">
+              <span class="radio-icon" id="radio-icon-status">📻</span>
+              <span class="radio-track-title" id="radio-track-display">RADIO: Like a Dream Come True</span>
+              <span class="radio-eq" id="radio-eq-bars" aria-hidden="true">
+                <span class="eq-b"></span>
+                <span class="eq-b"></span>
+                <span class="eq-b"></span>
+              </span>
+            </div>
+
             <div class="ticker-item tv-weather">
               <span class="weather-icon">🌧️</span> WEATHER: <span class="weather-state">{{ site.weather | default: "RAIN / FOG" }}</span>
             </div>
+
             <div class="ticker-item tv-broadcast">
               <span class="glitch-text" data-text="MIDNIGHT CHANNEL">MIDNIGHT CHANNEL</span>
             </div>
+
             <div class="ticker-item tv-clock" id="p4-clock">
               00:00 AM
             </div>
@@ -70,7 +126,7 @@
                   <div class="p4-sub-badge">INVESTIGATION TEAM &bull; PROFILE</div>
                   <h1 class="p4-main-title">
                     <a href="{{ "/" | absolute_url }}">
-                      <span class="title-word">{{ site.title | default: "Shia's Domain" }}</span>
+                      <span class="title-word">{{ site.title | default: "The Shia Channel" }}</span>
                     </a>
                   </h1>
                   <p class="p4-tagline">{{ site.description | default: "Il mio biglietto da visita!" }}</p>
@@ -85,19 +141,28 @@
               </div>
             </div>
 
-            <!-- TV Side Hardware Controls (Dials, Knobs, Speaker Slits) -->
-            <div class="tv-controls-panel" aria-hidden="true">
-              <div class="tv-dial dial-vhf">
-                <div class="dial-notch"></div>
+            <!-- TV Side Hardware Controls (Interactive Radio & Jukebox) -->
+            <div class="tv-controls-panel" aria-label="Controlli Radio TV">
+              <!-- Top Dial: Next Track (VHF) -->
+              <div class="tv-dial dial-vhf" id="dial-next-track" role="button" tabindex="0" title="Manopola VHF: Traccia Successiva">
+                <div class="dial-notch" id="notch-vhf"></div>
+                <span class="dial-tag">VHF ▶</span>
               </div>
-              <div class="tv-dial dial-uhf">
-                <div class="dial-notch notch-2"></div>
+
+              <!-- Bottom Dial: Prev Track (UHF) -->
+              <div class="tv-dial dial-uhf" id="dial-prev-track" role="button" tabindex="0" title="Manopola UHF: Traccia Precedente">
+                <div class="dial-notch notch-2" id="notch-uhf"></div>
+                <span class="dial-tag">◀ UHF</span>
               </div>
-              <div class="tv-power-switch">
-                <span class="power-led"></span>
-                <span class="power-label">POWER</span>
+
+              <!-- Power Switch: Play / Pause Radio -->
+              <div class="tv-power-switch" id="radio-power-toggle" role="button" tabindex="0" title="Interruttore Power Radio (Play/Pausa)">
+                <span class="power-led" id="radio-power-led"></span>
+                <span class="power-label" id="radio-power-text">POWER</span>
               </div>
-              <div class="speaker-grille">
+
+              <!-- Speaker Grille Audio Visualizer -->
+              <div class="speaker-grille" id="tv-speaker-grille" title="Altoparlante TV World">
                 <span></span><span></span><span></span><span></span><span></span>
               </div>
             </div>
@@ -133,6 +198,9 @@
             <strong>{{ site.title }}</strong> &bull; Inspired by <em>Persona 4 (Atlus)</em> &bull; Hosted on GitHub Pages
           </p>
           <div class="footer-links">
+            <button type="button" class="p4-link-btn" id="btn-replay-intro" title="Riguarda la schermata di caricamento di Persona 4">
+              <span>↺ Replay Intro</span>
+            </button>
             {% if site.github.is_user_page or site.github_username %}
             <a href="https://github.com/{{ site.github_username | default: site.github.owner_name }}" class="p4-link-btn" target="_blank" rel="noopener">
               <span>GitHub Profile</span>
@@ -147,16 +215,19 @@
 
     </div>
 
-    <!-- Clock script for TV header ticker -->
+    <!-- Hidden HTML5 Audio Element for Persona 4 Soundtrack Radio -->
+    <audio id="p4-audio-player" preload="auto"></audio>
+
+    <!-- ================= SCRIPTS: INTRO, CLOCK, AND RADIO JUKEBOX ================= -->
     <script>
       (function() {
+        // --- 1. TV CLOCK ---
         function updateClock() {
           var clockEl = document.getElementById('p4-clock');
           if (!clockEl) return;
           var now = new Date();
           var h = String(now.getHours()).padStart(2, '0');
           var m = String(now.getMinutes()).padStart(2, '0');
-          // Midnight Channel touch: if hour is 00:00, show special alert
           if (h === '00' && m === '00') {
             clockEl.innerHTML = '<span style="color:#ff0055; animation: blink 1s infinite;">00:00 RAIN</span>';
           } else {
@@ -165,6 +236,222 @@
         }
         updateClock();
         setInterval(updateClock, 30000);
+
+        // --- 2. SOUNDTRACK PLAYLIST & RADIO CONTROLLER ---
+        var playlist = [
+          {
+            title: "Like a Dream Come True",
+            channel: "CH 04",
+            src: "{{ '/assets/audio/like-a-dream-come-true.mp3' | relative_url }}"
+          },
+          {
+            title: "Heartbeat, Heartbreak",
+            channel: "CH 02",
+            src: "https://archive.org/download/never-more-reincarnation-persona-4/02.%20Heartbeat%2C%20Heartbreak.mp3"
+          },
+          {
+            title: "Your Affection",
+            channel: "CH 06",
+            src: "https://archive.org/download/never-more-reincarnation-persona-4/06.%20Your%20Affection.mp3"
+          },
+          {
+            title: "Specialist",
+            channel: "CH 11",
+            src: "https://archive.org/download/never-more-reincarnation-persona-4/11.%20specialist.mp3"
+          },
+          {
+            title: "Signs of Love",
+            channel: "CH 10",
+            src: "https://archive.org/download/never-more-reincarnation-persona-4/10.%20Signs%20Of%20Love.mp3"
+          },
+          {
+            title: "Reach Out To The Truth",
+            channel: "CH 05",
+            src: "https://archive.org/download/never-more-reincarnation-persona-4/05.%20Reach%20Out%20To%20The%20Truth.mp3"
+          },
+          {
+            title: "Pursuing My True Self",
+            channel: "CH 01",
+            src: "https://archive.org/download/never-more-reincarnation-persona-4/01.%20Pursuing%20My%20True%20Self.mp3"
+          },
+          {
+            title: "Never More",
+            channel: "CH 12",
+            src: "https://archive.org/download/never-more-reincarnation-persona-4/12.%20Never%20More.mp3"
+          }
+        ];
+
+        var currentIndex = 0;
+        var isPlaying = false;
+        var vhfAngle = 0;
+        var uhfAngle = 70;
+
+        var audioPlayer = document.getElementById('p4-audio-player');
+        var powerLed = document.getElementById('radio-power-led');
+        var powerText = document.getElementById('radio-power-text');
+        var trackDisplay = document.getElementById('radio-track-display');
+        var channelDisplay = document.getElementById('channel-display');
+        var speakerGrille = document.getElementById('tv-speaker-grille');
+        var radioTicker = document.getElementById('tv-radio-ticker');
+        var notchVhf = document.getElementById('notch-vhf');
+        var notchUhf = document.getElementById('notch-uhf');
+
+        function loadTrack(index) {
+          currentIndex = (index + playlist.length) % playlist.length;
+          var track = playlist[currentIndex];
+          audioPlayer.src = track.src;
+          channelDisplay.textContent = track.channel;
+          if (isPlaying) {
+            trackDisplay.textContent = "NOW PLAYING: " + track.title;
+          } else {
+            trackDisplay.textContent = "READY: " + track.title;
+          }
+        }
+
+        // Initialize default track (Like a Dream Come True)
+        loadTrack(0);
+
+        function playRadio() {
+          audioPlayer.play().then(function() {
+            isPlaying = true;
+            powerLed.classList.add('is-active');
+            powerText.textContent = "ON";
+            powerText.style.color = "#00FF66";
+            speakerGrille.classList.add('is-playing');
+            radioTicker.classList.add('is-playing');
+            trackDisplay.textContent = "NOW PLAYING: " + playlist[currentIndex].title;
+          }).catch(function(err) {
+            console.log("Audio autoplay was restricted by browser, waiting for user click.");
+          });
+        }
+
+        function pauseRadio() {
+          audioPlayer.pause();
+          isPlaying = false;
+          powerLed.classList.remove('is-active');
+          powerText.textContent = "POWER";
+          powerText.style.color = "";
+          speakerGrille.classList.remove('is-playing');
+          radioTicker.classList.remove('is-playing');
+          trackDisplay.textContent = "PAUSED: " + playlist[currentIndex].title;
+        }
+
+        function toggleRadio() {
+          if (isPlaying) {
+            pauseRadio();
+          } else {
+            playRadio();
+          }
+        }
+
+        function nextTrack() {
+          vhfAngle += 45;
+          if (notchVhf) notchVhf.style.transform = 'rotate(' + vhfAngle + 'deg)';
+          loadTrack(currentIndex + 1);
+          playRadio();
+        }
+
+        function prevTrack() {
+          uhfAngle -= 45;
+          if (notchUhf) notchUhf.style.transform = 'rotate(' + uhfAngle + 'deg)';
+          loadTrack(currentIndex - 1);
+          playRadio();
+        }
+
+        // When track naturally ends, proceed to next song
+        audioPlayer.addEventListener('ended', function() {
+          nextTrack();
+        });
+
+        // Event listeners for radio hardware
+        var powerToggleBtn = document.getElementById('radio-power-toggle');
+        if (powerToggleBtn) {
+          powerToggleBtn.addEventListener('click', toggleRadio);
+          powerToggleBtn.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleRadio(); }
+          });
+        }
+
+        var dialNextBtn = document.getElementById('dial-next-track');
+        if (dialNextBtn) {
+          dialNextBtn.addEventListener('click', nextTrack);
+          dialNextBtn.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); nextTrack(); }
+          });
+        }
+
+        var dialPrevBtn = document.getElementById('dial-prev-track');
+        if (dialPrevBtn) {
+          dialPrevBtn.addEventListener('click', prevTrack);
+          dialPrevBtn.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); prevTrack(); }
+          });
+        }
+
+        if (radioTicker) {
+          radioTicker.addEventListener('click', toggleRadio);
+        }
+
+        // --- 3. PERSONA 4 LOADING INTRO SCREEN (MAX 3 SECONDS) ---
+        var introOverlay = document.getElementById('p4-intro');
+        var introStage = document.getElementById('intro-stage');
+        var introBar = document.getElementById('intro-progress-bar');
+        var introSkipBtn = document.getElementById('intro-skip-btn');
+        var introTimer = null;
+        var introDismissed = false;
+
+        function dismissIntro(startSound) {
+          if (introDismissed) return;
+          introDismissed = true;
+          if (introTimer) clearTimeout(introTimer);
+
+          introOverlay.classList.add('fade-out');
+          setTimeout(function() {
+            introOverlay.style.display = 'none';
+          }, 450);
+
+          if (startSound) {
+            playRadio();
+          }
+        }
+
+        // Auto dismiss after 2.8s
+        introTimer = setTimeout(function() {
+          dismissIntro(false);
+        }, 2800);
+
+        // Click anywhere to dismiss immediately & trigger music!
+        if (introOverlay) {
+          introOverlay.addEventListener('click', function(e) {
+            dismissIntro(true);
+          });
+        }
+
+        // Keypress (Space, Enter, Esc) dismisses intro
+        window.addEventListener('keydown', function(e) {
+          if (!introDismissed && (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter')) {
+            dismissIntro(true);
+          }
+        });
+
+        // Replay Intro Button in Footer
+        var replayBtn = document.getElementById('btn-replay-intro');
+        if (replayBtn) {
+          replayBtn.addEventListener('click', function() {
+            introDismissed = false;
+            introOverlay.style.display = 'flex';
+            introOverlay.classList.remove('fade-out');
+            // Restart progress bar animation
+            introBar.style.animation = 'none';
+            introBar.offsetHeight; /* trigger reflow */
+            introBar.style.animation = '';
+            
+            introTimer = setTimeout(function() {
+              dismissIntro(false);
+            }, 2800);
+          });
+        }
+
       })();
     </script>
   </body>

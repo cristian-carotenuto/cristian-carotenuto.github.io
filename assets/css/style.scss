@@ -1306,3 +1306,411 @@ tr:hover td {
     width: 100%;
   }
 }
+
+/* --------------------------------------------------------------------------
+   13. PERSONA 4 LOADING INTRO SCREEN (MAX 3 SECONDS)
+   -------------------------------------------------------------------------- */
+.p4-intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: #0d0d0d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  transition: opacity 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.p4-intro-overlay.fade-out {
+  opacity: 0;
+  transform: scale(1.06);
+  pointer-events: none;
+}
+
+/* CRT Beam flash on screen turn-on */
+.intro-crt-beam {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: #FFFFFF;
+  box-shadow: 0 0 20px #FFFFFF, 0 0 40px var(--p4-yellow);
+  transform: scale(0, 1);
+  transform-origin: center center;
+  z-index: 10;
+  pointer-events: none;
+  animation: p4BeamFlash 0.4s ease-out forwards;
+}
+
+@keyframes p4BeamFlash {
+  0% { transform: scale(0, 0.1); opacity: 0; }
+  35% { transform: scale(1, 0.8); opacity: 1; filter: brightness(4); }
+  70% { transform: scale(1, 30); opacity: 0.9; }
+  100% { transform: scale(1, 100); opacity: 0; }
+}
+
+/* Intro Stage / TV Frame */
+.intro-stage {
+  position: relative;
+  z-index: 5;
+  width: 90%;
+  max-width: 680px;
+  background: var(--p4-yellow);
+  background-image: 
+    radial-gradient(var(--p4-yellow-dark) 18%, transparent 19%),
+    radial-gradient(var(--p4-yellow-dark) 18%, transparent 19%);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  border: 6px solid var(--p4-black);
+  border-radius: 18px;
+  box-shadow: 12px 12px 0px var(--p4-black), 0 0 35px rgba(0, 0, 0, 0.7);
+  padding: 40px 30px;
+  text-align: center;
+  overflow: hidden;
+  animation: p4IntroSnap 0.45s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+@keyframes p4IntroSnap {
+  0% { transform: scale(0.4) rotate(-4deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.intro-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.08) 0px,
+    rgba(0, 0, 0, 0.08) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  z-index: 2;
+}
+
+.intro-card {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Animated 3D Spinning TV Glasses in Intro */
+.intro-glasses-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+  animation: p4GlassesTumble 1.4s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  transform-origin: center center;
+}
+
+@keyframes p4GlassesTumble {
+  0% { transform: rotate(-8deg) scale(1); }
+  50% { transform: rotate(8deg) scale(1.12); }
+  100% { transform: rotate(-8deg) scale(1); }
+}
+
+.intro-lens {
+  width: 58px;
+  height: 44px;
+  background: var(--p4-black);
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+.glass-glare {
+  width: 100%;
+  height: 100%;
+  background: var(--p4-yellow);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-glare::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, transparent 50%);
+}
+
+.intro-bridge {
+  width: 16px;
+  height: 8px;
+  background: var(--p4-black);
+  margin-top: -6px;
+}
+
+/* Slanted NOW LOADING ribbon */
+.intro-loading-ribbon {
+  background: var(--p4-black);
+  color: var(--p4-yellow);
+  font-family: var(--font-display);
+  font-size: 3.2rem;
+  letter-spacing: 2.5px;
+  padding: 4px 28px;
+  border: 4px solid var(--p4-white);
+  box-shadow: 6px 6px 0px var(--p4-black);
+  transform: skew(-10deg);
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.intro-dots span {
+  display: inline-block;
+  animation: p4DotPulse 1.2s infinite ease-in-out;
+}
+.intro-dots span:nth-child(2) { animation-delay: 0.2s; }
+.intro-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes p4DotPulse {
+  0%, 100% { opacity: 0.2; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-4px); }
+}
+
+.intro-welcome-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.intro-welcome-sub {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--p4-black);
+  letter-spacing: 1.5px;
+}
+
+.intro-welcome-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--p4-black);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2px 16px;
+  border-left: 5px solid var(--p4-black);
+  transform: skew(-6deg);
+  letter-spacing: 1px;
+}
+
+/* Persona 4 Rainbow Progress Bar */
+.intro-progress-wrap {
+  width: 85%;
+  height: 14px;
+  background: #111;
+  border: 3px solid var(--p4-black);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 6px;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.8);
+}
+
+.intro-progress-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    var(--p4-rainbow-yellow),
+    var(--p4-rainbow-orange),
+    var(--p4-rainbow-pink),
+    var(--p4-rainbow-purple),
+    var(--p4-rainbow-cyan),
+    var(--p4-rainbow-green)
+  );
+  animation: p4ProgressBar 2.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes p4ProgressBar {
+  0% { width: 0%; }
+  30% { width: 35%; }
+  70% { width: 75%; }
+  100% { width: 100%; }
+}
+
+.intro-prompt-wrap {
+  margin-top: 6px;
+}
+
+.intro-skip-btn {
+  background: var(--p4-black);
+  color: var(--p4-yellow);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 6px 18px;
+  border: 2px solid var(--p4-yellow);
+  border-radius: 4px;
+  cursor: pointer;
+  transform: skew(-6deg);
+  animation: p4Blink 0.9s infinite alternate;
+  box-shadow: 3px 3px 0 var(--p4-black);
+  transition: all 0.15s ease;
+}
+
+.intro-skip-btn:hover {
+  background: var(--p4-yellow);
+  color: var(--p4-black);
+  border-color: var(--p4-black);
+}
+
+/* --------------------------------------------------------------------------
+   14. RADIO JUKEBOX & HARDWARE CONTROLS
+   -------------------------------------------------------------------------- */
+.tv-radio-ticker {
+  cursor: pointer;
+  background: #202020;
+  padding: 3px 12px;
+  border-radius: 4px;
+  border: 1px solid #383838;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.tv-radio-ticker:hover {
+  background: #2D2D2D;
+  border-color: var(--p4-yellow);
+}
+
+.tv-radio-ticker.is-playing {
+  border-color: var(--p4-crt-green);
+  box-shadow: 0 0 10px rgba(0, 255, 102, 0.35);
+  background: #142218;
+}
+
+.radio-track-title {
+  color: #EEE;
+  font-weight: bold;
+}
+
+.tv-radio-ticker.is-playing .radio-track-title {
+  color: var(--p4-crt-green);
+}
+
+/* Animated Equalizer Bars in Ticker */
+.radio-eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+  margin-left: 4px;
+}
+
+.eq-b {
+  width: 3px;
+  height: 3px;
+  background: #666;
+  border-radius: 1px;
+  transition: height 0.1s ease;
+}
+
+.tv-radio-ticker.is-playing .eq-b {
+  background: var(--p4-crt-green);
+}
+
+.tv-radio-ticker.is-playing .eq-b:nth-child(1) {
+  animation: p4EqBounce 0.45s infinite alternate ease-in-out;
+}
+.tv-radio-ticker.is-playing .eq-b:nth-child(2) {
+  animation: p4EqBounce 0.3s infinite alternate ease-in-out 0.1s;
+}
+.tv-radio-ticker.is-playing .eq-b:nth-child(3) {
+  animation: p4EqBounce 0.55s infinite alternate ease-in-out 0.2s;
+}
+
+@keyframes p4EqBounce {
+  0% { height: 3px; }
+  100% { height: 12px; }
+}
+
+/* Radio Hardware Knobs / Dials */
+.tv-dial {
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.12s ease;
+}
+
+.tv-dial:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 10px rgba(255, 208, 0, 0.6);
+}
+
+.dial-tag {
+  position: absolute;
+  bottom: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: #AAA;
+  font-weight: bold;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.dial-notch {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Power Switch */
+.tv-power-switch {
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: background 0.15s ease, transform 0.1s ease;
+  user-select: none;
+}
+
+.tv-power-switch:hover {
+  background: #242424;
+  transform: scale(1.05);
+}
+
+.power-led {
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.power-led.is-active {
+  background: #00FF66 !important;
+  box-shadow: 0 0 10px #00FF66, 0 0 20px rgba(0, 255, 102, 0.8) !important;
+  animation: p4LedPulse 1.4s infinite alternate ease-in-out;
+}
+
+@keyframes p4LedPulse {
+  0% { box-shadow: 0 0 6px #00FF66; }
+  100% { box-shadow: 0 0 16px #00FF66, 0 0 24px rgba(0, 255, 102, 0.9); }
+}
+
+/* Speaker Grille Soundwave Animation */
+.speaker-grille.is-playing span {
+  background: var(--p4-yellow) !important;
+  box-shadow: 0 0 6px rgba(255, 208, 0, 0.6);
+}
+
+.speaker-grille.is-playing span:nth-child(1) { animation: p4SpeakerVibe 0.4s infinite alternate; }
+.speaker-grille.is-playing span:nth-child(2) { animation: p4SpeakerVibe 0.25s infinite alternate 0.08s; }
+.speaker-grille.is-playing span:nth-child(3) { animation: p4SpeakerVibe 0.35s infinite alternate 0.16s; }
+.speaker-grille.is-playing span:nth-child(4) { animation: p4SpeakerVibe 0.3s infinite alternate 0.12s; }
+.speaker-grille.is-playing span:nth-child(5) { animation: p4SpeakerVibe 0.45s infinite alternate 0.04s; }
+
+@keyframes p4SpeakerVibe {
+  0% { transform: scaleX(0.7); opacity: 0.5; }
+  100% { transform: scaleX(1.15); opacity: 1; }
+}
