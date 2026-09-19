@@ -123,7 +123,7 @@
               <!-- Content inside TV Screen -->
               <div class="tv-screen-content">
                 <div class="p4-title-cluster">
-                  <div class="p4-sub-badge">INVESTIGATION TEAM &bull; PROFILE</div>
+                  <div class="p4-sub-badge">CRISTIAN CAROTENUTO &bull; UNISA</div>
                   <h1 class="p4-main-title">
                     <a href="{{ "/" | absolute_url }}">
                       <span class="title-word">{{ site.title | default: "The Shia Channel" }}</span>
@@ -152,7 +152,7 @@
               <!-- Middle Dial: Volume (VOL) -->
               <div class="tv-dial dial-vol" id="dial-volume" role="button" tabindex="0" title="Manopola Volume: Clicca per regolare o usa la rotellina del mouse">
                 <div class="dial-notch" id="notch-vol"></div>
-                <span class="dial-tag" id="vol-tag">VOL 80%</span>
+                <span class="dial-tag" id="vol-tag">VOL 10%</span>
               </div>
 
               <!-- Power Switch: Play / Pause Radio -->
@@ -192,10 +192,10 @@
         <div class="footer-rainbow" aria-hidden="true"></div>
         <div class="footer-inner">
           <div class="footer-badge">
-            <span class="badge-icon">📺</span> CH-04 BROADCAST
+            <span class="badge-icon">📺</span> site.channel
           </div>
           <p class="footer-meta">
-            <strong>{{ site.title }}</strong> &bull; Inspired by <em>Persona 4 (Atlus)</em> &bull; Hosted on GitHub Pages
+            <strong>{{ site.title }}</strong> &bull; Theme Inspired by <em>Persona 4 (Atlus)</em> &bull; Hosted on GitHub Pages
           </p>
           <div class="footer-links">
             <button type="button" class="p4-link-btn" id="btn-replay-intro" title="Riguarda la schermata di caricamento di Persona 4">
@@ -241,7 +241,7 @@
         var playlist = [
           {
             title: "Like a Dream Come True",
-            channel: "CH 04",
+            channel: "CH 01",
             src: "{{ '/assets/audio/like-a-dream-come-true.mp3' | relative_url }}"
           },
           {
@@ -251,32 +251,32 @@
           },
           {
             title: "Your Affection",
-            channel: "CH 06",
+            channel: "CH 03",
             src: "https://archive.org/download/never-more-reincarnation-persona-4/06.%20Your%20Affection.mp3"
           },
           {
             title: "Specialist",
-            channel: "CH 11",
+            channel: "CH 04",
             src: "https://archive.org/download/never-more-reincarnation-persona-4/11.%20specialist.mp3"
           },
           {
             title: "Signs of Love",
-            channel: "CH 10",
+            channel: "CH 05",
             src: "https://archive.org/download/never-more-reincarnation-persona-4/10.%20Signs%20Of%20Love.mp3"
           },
           {
             title: "Reach Out To The Truth",
-            channel: "CH 05",
+            channel: "CH 06",
             src: "https://archive.org/download/never-more-reincarnation-persona-4/05.%20Reach%20Out%20To%20The%20Truth.mp3"
           },
           {
             title: "Pursuing My True Self",
-            channel: "CH 01",
+            channel: "CH 07",
             src: "https://archive.org/download/never-more-reincarnation-persona-4/01.%20Pursuing%20My%20True%20Self.mp3"
           },
           {
             title: "Never More",
-            channel: "CH 12",
+            channel: "CH 08",
             src: "https://archive.org/download/never-more-reincarnation-persona-4/12.%20Never%20More.mp3"
           }
         ];
@@ -393,7 +393,7 @@
         }
 
         // Initialize volume at 80%
-        setVolume(0.8);
+        setVolume(0.1);
 
         // When track naturally ends, proceed to next song
         audioPlayer.addEventListener('ended', function() {

@@ -2,24 +2,24 @@
 layout: default
 ---
 
-# Investigation Team Dossier
+# ABOUT ME
 
-> **SHIA // INVESTIGATION TEAM MEMBER**  
-> *"La verità è nascosta oltre la nebbia del Midnight Channel... benvenuto sul mio canale personale, The Shia Channel! Questo è il mio biglietto da visita digitale."*
+> **SHIA // UNISA STUDENT**  
+> *"Benvenuto sul mio canale personale, The Shia Channel! Questa pagina è uno showcase delle mie passioni più che dei miei progetti, ma nonostante ciò spero possa graderti. Già che ci sei, se stai leggendo questo messaggio puoi contattarmi tramite i miei **Social Link** ;)"*
 
-Ciao! Mi chiamo **Cristian** (online conosciuto come **Shia**). Sono uno sviluppatore appassionato di tecnologia, design e videogiochi. Questo sito è il mio quartier generale su GitHub Pages, ispirato all'indimenticabile stile e atmosfera di **Persona 4**.
+Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno studente di Informatica presso l'Università degli Studi di Salerno, e se non si fosse notato, un grande fan di **Persona 4**, il mio gioco Atlus preferito. Ma dunque all'infuori di questo, chi sono davvero? Qual è il **vero io**? Enter sezione dedicata allo spiegare Persona 4 e il pensiero filosofico, in breve. 
 
 <div style="margin: 25px 0;">
-  <a href="#social-links" class="p4-btn"><span>▶ S-Links (Contatti)</span></a>
-  <a href="#progetti" class="p4-btn p4-btn-dark"><span>📺 Progetti & TV Channels</span></a>
-  <a href="#status" class="p4-btn"><span>⚡ Parametri Personaggio</span></a>
+  <a href="#social-links" class="p4-btn"><span>▶ SOCIAL LINKS</span></a>
+  <a href="#progetti" class="p4-btn p4-btn-dark"><span>📺 PROGETTI</span></a>
+  <a href="#status" class="p4-btn"><span>⚡ SKILLS AND STATS </span></a>
 </div>
 
 ---
 
 <h2 id="social-links">Social Links (S-Links)</h2>
 
-Stabilisci un legame! Ecco dove puoi trovarmi in giro per la rete:
+Thou art I... And I am thou... Thou hast established a new bond... It brings thee closer to the truth...
 
 <div class="slink-grid">
 
@@ -32,7 +32,7 @@ Stabilisci un legame! Ecco dove puoi trovarmi in giro per la rete:
     </div>
     <div class="slink-info">
       <span class="slink-name">GitHub</span>
-      <span class="slink-arcana">ARCANA: MAGICIAN // CODING</span>
+      <span class="slink-arcana">ARCANA: THE FOOL // CODING</span>
     </div>
   </a>
 
@@ -45,7 +45,7 @@ Stabilisci un legame! Ecco dove puoi trovarmi in giro per la rete:
     </div>
     <div class="slink-info">
       <span class="slink-name">LinkedIn</span>
-      <span class="slink-arcana">ARCANA: EMPEROR // CAREER</span>
+      <span class="slink-arcana">ARCANA: THE SUN // CAREER</span>
     </div>
   </a>
 
@@ -58,7 +58,7 @@ Stabilisci un legame! Ecco dove puoi trovarmi in giro per la rete:
     </div>
     <div class="slink-info">
       <span class="slink-name">Email</span>
-      <span class="slink-arcana">ARCANA: HERMIT // DIRECT MSG</span>
+      <span class="slink-arcana">ARCANA: THE HIEROPHANT // DIRECT MSG</span>
     </div>
   </a>
 
@@ -71,7 +71,7 @@ Stabilisci un legame! Ecco dove puoi trovarmi in giro per la rete:
     </div>
     <div class="slink-info">
       <span class="slink-name">Steam</span>
-      <span class="slink-arcana">ARCANA: CHARIOT // GAMING</span>
+      <span class="slink-arcana">ARCANA: THE MAGICIAN // GAMING</span>
     </div>
   </a>
 
@@ -84,7 +84,7 @@ Stabilisci un legame! Ecco dove puoi trovarmi in giro per la rete:
     </div>
     <div class="slink-info">
       <span class="slink-name">Discord</span>
-      <span class="slink-arcana">ARCANA: LOVERS // COMMUNITY</span>
+      <span class="slink-arcana">ARCANA: THE JESTER // COMMUNITY</span>
     </div>
   </a>
 
@@ -92,9 +92,7 @@ Stabilisci un legame! Ecco dove puoi trovarmi in giro per la rete:
 
 ---
 
-<h2 id="progetti">Midnight Channel Broadcasts (Progetti)</h2>
-
-I programmi attualmente in onda sul mio canale:
+<h2 id="progetti">Tonight's Broadcasts... </h2>
 
 <div class="p4-grid">
 
@@ -159,9 +157,8 @@ I programmi attualmente in onda sul mio canale:
 
 ---
 
-<h2 id="status">Status & Competenze</h2>
+<h2 id="status">Stats & Competenze</h2>
 
-I miei parametri personali da sviluppatore:
 
 <div style="margin: 25px 0;">
   
