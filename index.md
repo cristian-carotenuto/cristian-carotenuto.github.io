@@ -19,7 +19,9 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
 
 <h2 id="social-links">Social Links (S-Links)</h2>
 
-**Thou art I... And I am thou... Thou hast established a new bond... It brings thee closer to the truth...**
+> ** ??? // THE TRUE SELF**  
+> *"**Thou art I... And I am thou... Thou hast established a new bond... It brings thee closer to the truth...**"*
+
 
 <div class="slink-grid">
 
