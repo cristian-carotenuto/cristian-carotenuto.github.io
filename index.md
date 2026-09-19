@@ -5,7 +5,7 @@ layout: default
 # ABOUT ME
 
 > **SHIA // UNISA STUDENT**  
-> *"Benvenuto sul mio canale personale, The Shia Channel! Questa pagina è uno showcase delle mie passioni più che dei miei progetti, ma nonostante ciò spero possa graderti. Già che ci sei, se stai leggendo questo messaggio puoi contattarmi tramite i miei **Social Link** ;)"*
+> *"Benvenuto sul mio canale personale, **The Shia Channel**! Questa pagina è uno showcase delle mie passioni più che dei miei progetti, ma nonostante ciò spero possa graderti. Già che ci sei, se stai leggendo questo messaggio puoi contattarmi tramite i miei **Social Link** ;)"*
 
 Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno studente di Informatica presso l'Università degli Studi di Salerno, e se non si fosse notato, un grande fan di **Persona 4**, il mio gioco Atlus preferito. Ma dunque all'infuori di questo, chi sono davvero? Qual è il **vero io**? Enter sezione dedicata allo spiegare Persona 4 e il pensiero filosofico, in breve. 
 
@@ -19,7 +19,7 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
 
 <h2 id="social-links">Social Links (S-Links)</h2>
 
-Thou art I... And I am thou... Thou hast established a new bond... It brings thee closer to the truth...
+**Thou art I... And I am thou... Thou hast established a new bond... It brings thee closer to the truth...**
 
 <div class="slink-grid">
 
