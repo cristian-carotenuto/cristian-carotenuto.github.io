@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "it-IT" }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ site.title }} - {{ site.description }}</title>
+    
+    <!-- Favicon Persona 4 TV Icon -->
+    <link rel="icon" type="image/svg+xml" href="{{ "/assets/images/favicon.svg" | relative_url }}">
+    
+    <!-- Google Fonts: Bebas Neue, Rubik, Share Tech Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rubik:ital,wght@0,400;0,600;0,700;0,900;1,700;1,900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
+    
+    {% seo %}
+  </head>
+  <body>
+    <!-- Subtle CRT TV Scanline Overlay -->
+    <div class="crt-scanline-overlay" aria-hidden="true"></div>
+
+    <div class="p4-viewport-wrap">
+      
+      <!-- ================= PERSONA 4 TV WORLD BANNER ================= -->
+      <header class="p4-tv-banner" role="banner">
+        
+        <!-- Retro TV Antenna -->
+        <div class="tv-antenna" aria-hidden="true">
+          <div class="antenna-rod antenna-left"></div>
+          <div class="antenna-base"></div>
+          <div class="antenna-rod antenna-right"></div>
+        </div>
+
+        <!-- TV Outer Chassis -->
+        <div class="tv-chassis">
+          
+          <!-- TV Header Ticker / Status Bar -->
+          <div class="tv-ticker-bar">
+            <div class="ticker-item tv-channel-tag">
+              <span class="channel-num">{{ site.channel | default: "CH 04" }}</span>
+            </div>
+            <div class="ticker-item tv-rec">
+              <span class="rec-dot"></span> REC
+            </div>
+            <div class="ticker-item tv-weather">
+              <span class="weather-icon">🌧️</span> WEATHER: <span class="weather-state">{{ site.weather | default: "RAIN / FOG" }}</span>
+            </div>
+            <div class="ticker-item tv-broadcast">
+              <span class="glitch-text" data-text="MIDNIGHT CHANNEL">MIDNIGHT CHANNEL</span>
+            </div>
+            <div class="ticker-item tv-clock" id="p4-clock">
+              00:00 AM
+            </div>
+          </div>
+
+          <!-- TV Screen Frame & Glass Bezel -->
+          <div class="tv-screen-bezel">
+            <div class="tv-crt-glass">
+              
+              <!-- Screen Glare Light Reflection -->
+              <div class="screen-glare" aria-hidden="true"></div>
+              
+              <!-- Content inside TV Screen -->
+              <div class="tv-screen-content">
+                <div class="p4-title-cluster">
+                  <div class="p4-sub-badge">INVESTIGATION TEAM &bull; PROFILE</div>
+                  <h1 class="p4-main-title">
+                    <a href="{{ "/" | absolute_url }}">
+                      <span class="title-word">{{ site.title | default: "Shia's Domain" }}</span>
+                    </a>
+                  </h1>
+                  <p class="p4-tagline">{{ site.description | default: "Il mio biglietto da visita!" }}</p>
+                </div>
+
+                <!-- TV Glasses Graphic / Emblem -->
+                <div class="p4-glasses-emblem" aria-hidden="true" title="Glasses for the TV World">
+                  <div class="lens-frame left-lens"><div class="lens-glass"></div></div>
+                  <div class="bridge"></div>
+                  <div class="lens-frame right-lens"><div class="lens-glass"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TV Side Hardware Controls (Dials, Knobs, Speaker Slits) -->
+            <div class="tv-controls-panel" aria-hidden="true">
+              <div class="tv-dial dial-vhf">
+                <div class="dial-notch"></div>
+              </div>
+              <div class="tv-dial dial-uhf">
+                <div class="dial-notch notch-2"></div>
+              </div>
+              <div class="tv-power-switch">
+                <span class="power-led"></span>
+                <span class="power-label">POWER</span>
+              </div>
+              <div class="speaker-grille">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Signature Persona 4 Rainbow Test Pattern Bars -->
+          <div class="p4-rainbow-test-bars" aria-hidden="true">
+            <div class="r-bar bar-yellow"></div>
+            <div class="r-bar bar-orange"></div>
+            <div class="r-bar bar-pink"></div>
+            <div class="r-bar bar-purple"></div>
+            <div class="r-bar bar-cyan"></div>
+            <div class="r-bar bar-green"></div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ================= MAIN CONTENT SECTION ================= -->
+      <main class="p4-main-container" id="content">
+        <div class="p4-content-wrapper">
+          {{ content }}
+        </div>
+      </main>
+
+      <!-- ================= PERSONA 4 FOOTER ================= -->
+      <footer class="p4-footer" role="contentinfo">
+        <div class="footer-rainbow" aria-hidden="true"></div>
+        <div class="footer-inner">
+          <div class="footer-badge">
+            <span class="badge-icon">📺</span> CH-04 BROADCAST
+          </div>
+          <p class="footer-meta">
+            <strong>{{ site.title }}</strong> &bull; Inspired by <em>Persona 4 (Atlus)</em> &bull; Hosted on GitHub Pages
+          </p>
+          <div class="footer-links">
+            {% if site.github.is_user_page or site.github_username %}
+            <a href="https://github.com/{{ site.github_username | default: site.github.owner_name }}" class="p4-link-btn" target="_blank" rel="noopener">
+              <span>GitHub Profile</span>
+            </a>
+            {% endif %}
+            <a href="#content" class="p4-link-btn p4-top-btn">
+              <span>▲ Top</span>
+            </a>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+
+    <!-- Clock script for TV header ticker -->
+    <script>
+      (function() {
+        function updateClock() {
+          var clockEl = document.getElementById('p4-clock');
+          if (!clockEl) return;
+          var now = new Date();
+          var h = String(now.getHours()).padStart(2, '0');
+          var m = String(now.getMinutes()).padStart(2, '0');
+          // Midnight Channel touch: if hour is 00:00, show special alert
+          if (h === '00' && m === '00') {
+            clockEl.innerHTML = '<span style="color:#ff0055; animation: blink 1s infinite;">00:00 RAIN</span>';
+          } else {
+            clockEl.textContent = h + ':' + m;
+          }
+        }
+        updateClock();
+        setInterval(updateClock, 30000);
+      })();
+    </script>
+  </body>
+</html>

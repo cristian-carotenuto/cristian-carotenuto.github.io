@@ -1,0 +1,1308 @@
+---
+---
+
+/* ==========================================================================
+   PERSONA 4 - THE TV WORLD & MIDNIGHT CHANNEL THEME
+   Custom CSS override for Jekyll (jekyll-theme-minimal & minima)
+   Inspired by ATLUS's Persona 4 / Persona 4 Golden
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. GOOGLE FONTS & IMPORTS
+   -------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rubik:ital,wght@0,400;0,600;0,700;0,900;1,700;1,900&family=Share+Tech+Mono&display=swap');
+
+/* --------------------------------------------------------------------------
+   2. DESIGN TOKENS & CSS VARIABLES
+   -------------------------------------------------------------------------- */
+:root {
+  /* Persona 4 Signature Palette */
+  --p4-yellow: #FFD000;
+  --p4-yellow-light: #FFF14D;
+  --p4-yellow-dark: #E6A800;
+  --p4-yellow-accent: #FFDF00;
+  --p4-black: #161616;
+  --p4-black-soft: #222222;
+  --p4-dark-gray: #333333;
+  --p4-light-gray: #F2F2F2;
+  --p4-white: #FFFFFF;
+
+  /* Persona 4 Rainbow Test Pattern Bars */
+  --p4-rainbow-yellow: #FFD000;
+  --p4-rainbow-orange: #FF6600;
+  --p4-rainbow-pink:   #E6007A;
+  --p4-rainbow-purple: #7814A8;
+  --p4-rainbow-cyan:   #00A0E9;
+  --p4-rainbow-green:  #7BC800;
+
+  /* Midnight Channel / CRT Effects */
+  --p4-crt-green: #00FF66;
+  --p4-crt-red: #FF0055;
+  --p4-crt-dark: #0F141C;
+
+  /* Typography */
+  --font-display: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+  --font-body: 'Rubik', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'Share Tech Mono', Consolas, Monaco, monospace;
+
+  /* Spacings & Layout */
+  --site-max-width: 960px;
+  --banner-radius: 18px;
+  --shadow-p4: 6px 6px 0px var(--p4-black);
+  --shadow-p4-lg: 10px 10px 0px var(--p4-black);
+  --shadow-p4-yellow: 5px 5px 0px var(--p4-yellow);
+}
+
+/* --------------------------------------------------------------------------
+   3. GLOBAL RESET & BASE STYLES
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--p4-black);
+  /* Persona 4 Halftone Pop-Art Polka Dot Pattern */
+  background-color: var(--p4-yellow);
+  background-image: 
+    radial-gradient(var(--p4-yellow-dark) 18%, transparent 19%),
+    radial-gradient(var(--p4-yellow-dark) 18%, transparent 19%);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+  background-attachment: fixed;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Fallback override for default minimal theme layout if loaded without custom default.html */
+div.wrapper {
+  width: auto !important;
+  max-width: var(--site-max-width) !important;
+  margin: 0 auto !important;
+  float: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. CRT SCANLINE OVERLAY
+   -------------------------------------------------------------------------- */
+.crt-scanline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.04) 0px,
+    rgba(0, 0, 0, 0.04) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  opacity: 0.8;
+}
+
+/* --------------------------------------------------------------------------
+   5. VIEWPORT CONTAINER
+   -------------------------------------------------------------------------- */
+.p4-viewport-wrap {
+  width: 100%;
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  padding: 20px 20px 60px 20px;
+  position: relative;
+  z-index: 10;
+}
+
+/* --------------------------------------------------------------------------
+   6. PERSONA 4 RETRO TV BANNER
+   -------------------------------------------------------------------------- */
+.p4-tv-banner {
+  position: relative;
+  margin: 15px auto 35px auto;
+  width: 100%;
+}
+
+/* TV Antenna */
+.tv-antenna {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 36px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: -4px;
+}
+
+.antenna-base {
+  width: 28px;
+  height: 12px;
+  background: var(--p4-black);
+  border-radius: 6px 6px 0 0;
+  border: 2px solid var(--p4-white);
+  border-bottom: none;
+  z-index: 2;
+}
+
+.antenna-rod {
+  width: 4px;
+  height: 38px;
+  background: linear-gradient(to right, #bbb, #555);
+  border: 1px solid var(--p4-black);
+  position: relative;
+  transform-origin: bottom center;
+}
+
+.antenna-rod::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--p4-yellow);
+  border: 2px solid var(--p4-black);
+  box-shadow: 0 0 5px rgba(255, 208, 0, 0.8);
+}
+
+.antenna-left {
+  transform: rotate(-32deg);
+  margin-right: 2px;
+}
+
+.antenna-right {
+  transform: rotate(32deg);
+  margin-left: 2px;
+}
+
+/* TV Chassis */
+.tv-chassis {
+  background: var(--p4-black);
+  border: 5px solid var(--p4-black);
+  border-radius: var(--banner-radius);
+  box-shadow: var(--shadow-p4-lg), 0 0 25px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+/* TV Top Status Bar / Ticker */
+.tv-ticker-bar {
+  background: #111111;
+  color: var(--p4-white);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 8px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-bottom: 2px solid #282828;
+  letter-spacing: 0.5px;
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tv-channel-tag {
+  background: var(--p4-yellow);
+  color: var(--p4-black);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  padding: 2px 10px;
+  border-radius: 3px;
+  font-weight: bold;
+  transform: skew(-8deg);
+  letter-spacing: 1px;
+}
+
+.tv-rec {
+  color: var(--p4-crt-red);
+  font-weight: bold;
+}
+
+.rec-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--p4-crt-red);
+  box-shadow: 0 0 8px var(--p4-crt-red);
+  animation: p4Blink 1s infinite alternate;
+}
+
+@keyframes p4Blink {
+  0% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+.tv-weather {
+  color: var(--p4-yellow-light);
+}
+
+.tv-broadcast {
+  color: var(--p4-crt-green);
+  text-shadow: 0 0 5px rgba(0, 255, 102, 0.5);
+  font-weight: bold;
+}
+
+.tv-clock {
+  font-weight: bold;
+  color: #DDD;
+  background: #222;
+  padding: 2px 8px;
+  border-radius: 3px;
+  border: 1px solid #444;
+}
+
+/* TV Screen Bezel */
+.tv-screen-bezel {
+  display: flex;
+  background: #1C1C1C;
+  padding: 18px;
+  gap: 18px;
+}
+
+/* TV CRT Glass */
+.tv-crt-glass {
+  flex: 1;
+  background: linear-gradient(135deg, var(--p4-yellow-light) 0%, var(--p4-yellow) 65%, var(--p4-yellow-dark) 100%);
+  border-radius: 12px;
+  border: 4px solid var(--p4-black);
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
+  padding: 25px 30px;
+  display: flex;
+  align-items: center;
+}
+
+/* CRT Screen Glare */
+.screen-glare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.15) 35%,
+    transparent 45%
+  );
+  z-index: 2;
+}
+
+/* Screen Content */
+.tv-screen-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.p4-title-cluster {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.p4-sub-badge {
+  background: var(--p4-black);
+  color: var(--p4-yellow);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 4px 10px;
+  letter-spacing: 1.5px;
+  transform: skew(-10deg);
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+  margin-bottom: 6px;
+  border: 1px solid var(--p4-white);
+}
+
+.p4-main-title {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.p4-main-title a {
+  text-decoration: none;
+  display: inline-block;
+  transform: skew(-9deg);
+}
+
+.title-word {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 4rem;
+  letter-spacing: 2px;
+  color: var(--p4-black);
+  text-transform: uppercase;
+  background: var(--p4-white);
+  padding: 4px 22px 2px 22px;
+  border: 4px solid var(--p4-black);
+  box-shadow: 6px 6px 0px var(--p4-black);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.p4-main-title a:hover .title-word {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px var(--p4-black);
+  background: var(--p4-yellow);
+}
+
+.p4-tagline {
+  margin: 10px 0 0 0;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--p4-black);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 3px 12px;
+  border-left: 5px solid var(--p4-black);
+  display: inline-block;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+}
+
+/* Persona 4 TV Glasses Emblem (Teddie's Glasses) */
+.p4-glasses-emblem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  transform: rotate(-5deg);
+  transition: transform 0.3s ease;
+}
+
+.p4-glasses-emblem:hover {
+  transform: rotate(0deg) scale(1.08);
+}
+
+.lens-frame {
+  width: 48px;
+  height: 38px;
+  background: var(--p4-black);
+  border-radius: 6px;
+  padding: 5px;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.4);
+}
+
+.lens-glass {
+  width: 100%;
+  height: 100%;
+  background: var(--p4-yellow);
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+.lens-glass::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, transparent 50%);
+}
+
+.bridge {
+  width: 14px;
+  height: 6px;
+  background: var(--p4-black);
+  margin-top: -6px;
+}
+
+/* TV Controls Side Panel */
+.tv-controls-panel {
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: #141414;
+  border-radius: 8px;
+  border: 2px solid #292929;
+  padding: 14px 8px;
+  gap: 12px;
+}
+
+.tv-dial {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #333 40%, #1a1a1a 80%);
+  border: 3px solid #0a0a0a;
+  box-shadow: inset 0 0 5px #000, 0 2px 4px rgba(0,0,0,0.7);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.dial-notch {
+  width: 4px;
+  height: 18px;
+  background: var(--p4-yellow);
+  border-radius: 2px;
+  position: absolute;
+  top: 3px;
+  transform-origin: bottom center;
+}
+
+.notch-2 {
+  transform: rotate(70deg);
+}
+
+.tv-power-switch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.power-led {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--p4-crt-green);
+  box-shadow: 0 0 8px var(--p4-crt-green);
+}
+
+.power-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #888;
+  font-weight: bold;
+}
+
+.speaker-grille {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 46px;
+  margin-top: auto;
+}
+
+.speaker-grille span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: #252525;
+  border-radius: 2px;
+}
+
+/* P4 Signature Rainbow Test Bars */
+.p4-rainbow-test-bars {
+  display: flex;
+  width: 100%;
+  height: 10px;
+  border-top: 3px solid var(--p4-black);
+}
+
+.r-bar {
+  flex: 1;
+  height: 100%;
+}
+.bar-yellow { background-color: var(--p4-rainbow-yellow); }
+.bar-orange { background-color: var(--p4-rainbow-orange); }
+.bar-pink   { background-color: var(--p4-rainbow-pink); }
+.bar-purple { background-color: var(--p4-rainbow-purple); }
+.bar-cyan   { background-color: var(--p4-rainbow-cyan); }
+.bar-green  { background-color: var(--p4-rainbow-green); }
+
+/* --------------------------------------------------------------------------
+   7. MAIN CONTENT WRAPPER
+   -------------------------------------------------------------------------- */
+.p4-main-container {
+  width: 100%;
+  position: relative;
+}
+
+.p4-content-wrapper {
+  background: var(--p4-white);
+  border: 5px solid var(--p4-black);
+  border-radius: 12px;
+  padding: 45px 50px;
+  box-shadow: var(--shadow-p4-lg);
+  position: relative;
+}
+
+/* Corner caution tape accent */
+.p4-content-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--p4-yellow),
+    var(--p4-yellow) 10px,
+    var(--p4-black) 10px,
+    var(--p4-black) 20px
+  );
+  border-bottom-left-radius: 8px;
+  border-bottom: 3px solid var(--p4-black);
+  border-left: 3px solid var(--p4-black);
+}
+
+/* Also style default section in minimal theme */
+section {
+  width: 100% !important;
+  float: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+/* Hide or restyle default minimal header if default.html isn't picked up */
+body > .wrapper > header {
+  width: 100% !important;
+  float: none !important;
+  position: static !important;
+  margin-bottom: 25px !important;
+}
+
+/* --------------------------------------------------------------------------
+   8. TYPOGRAPHY & MARKDOWN STYLING
+   -------------------------------------------------------------------------- */
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-body);
+  font-weight: 900;
+  color: var(--p4-black);
+  line-height: 1.2;
+  margin: 35px 0 20px 0;
+  position: relative;
+}
+
+/* H1: Giant Slanted Badge */
+.p4-content-wrapper h1,
+section h1 {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  letter-spacing: 1.5px;
+  display: inline-block;
+  background: var(--p4-black);
+  color: var(--p4-yellow);
+  padding: 6px 24px;
+  transform: skew(-8deg);
+  box-shadow: var(--shadow-p4-yellow);
+  margin-top: 15px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+/* H2: Persona 4 Cut-in Menu Badge */
+.p4-content-wrapper h2,
+section h2 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  background: var(--p4-yellow);
+  color: var(--p4-black);
+  padding: 4px 18px;
+  transform: skew(-7deg);
+  border: 3px solid var(--p4-black);
+  box-shadow: var(--shadow-p4);
+  margin-top: 35px;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+}
+
+.p4-content-wrapper h2::before,
+section h2::before {
+  content: '▶';
+  font-size: 1.2rem;
+  margin-right: 10px;
+  color: var(--p4-black);
+}
+
+/* H3: Sub-section tag */
+.p4-content-wrapper h3,
+section h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  border-left: 6px solid var(--p4-yellow-dark);
+  padding-left: 12px;
+  margin-top: 28px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Paragraphs */
+p {
+  margin: 0 0 20px 0;
+  line-height: 1.8;
+  color: #2b2b2b;
+}
+
+/* Persona 4 Links */
+p a, li a, td a {
+  color: var(--p4-black);
+  font-weight: 700;
+  text-decoration: none;
+  background: linear-gradient(180deg, transparent 65%, var(--p4-yellow) 65%);
+  padding: 0 4px;
+  transition: all 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+  display: inline;
+}
+
+p a:hover, li a:hover, td a:hover {
+  background: var(--p4-black);
+  color: var(--p4-yellow);
+  padding: 2px 6px;
+  border-radius: 2px;
+  text-decoration: none;
+}
+
+/* Persona 4 Dialogue Box (Blockquote) */
+blockquote {
+  margin: 30px 0;
+  padding: 22px 28px;
+  background: var(--p4-black);
+  color: var(--p4-white);
+  border-left: 8px solid var(--p4-yellow);
+  border-radius: 0 8px 8px 0;
+  box-shadow: var(--shadow-p4);
+  position: relative;
+  font-style: normal;
+}
+
+blockquote::before {
+  content: 'INVESTIGATION TEAM // DIALOGUE';
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--p4-yellow);
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 4px;
+}
+
+blockquote::after {
+  content: '▼';
+  position: absolute;
+  bottom: 12px;
+  right: 18px;
+  color: var(--p4-yellow);
+  font-size: 0.9rem;
+  animation: p4Blink 0.8s infinite alternate;
+}
+
+blockquote p {
+  color: #F0F0F0;
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+blockquote strong {
+  color: var(--p4-yellow);
+}
+
+/* Code & Pre (Midnight Channel Terminal) */
+code {
+  font-family: var(--font-mono);
+  background: #F0F0F0;
+  color: #D60058;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.9em;
+  border: 1px solid #DDD;
+}
+
+pre {
+  background: var(--p4-crt-dark) !important;
+  color: var(--p4-crt-green) !important;
+  font-family: var(--font-mono);
+  padding: 20px 24px;
+  border: 4px solid var(--p4-black);
+  border-radius: 8px;
+  box-shadow: var(--shadow-p4);
+  overflow-x: auto;
+  position: relative;
+  margin: 25px 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 102, 0.03) 0px,
+    rgba(0, 255, 102, 0.03) 2px,
+    transparent 2px,
+    transparent 4px
+  ) !important;
+}
+
+pre::before {
+  content: 'TV_WORLD_TERMINAL.EXE';
+  display: block;
+  color: var(--p4-yellow);
+  font-size: 0.75rem;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #223322;
+  padding-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  border: none;
+  font-size: 0.95rem;
+}
+
+/* Horizontal Rule with P4 Rainbow */
+hr {
+  border: none;
+  height: 6px;
+  background: linear-gradient(
+    to right,
+    var(--p4-rainbow-yellow) 0% 16.66%,
+    var(--p4-rainbow-orange) 16.66% 33.33%,
+    var(--p4-rainbow-pink) 33.33% 50%,
+    var(--p4-rainbow-purple) 50% 66.66%,
+    var(--p4-rainbow-cyan) 66.66% 83.33%,
+    var(--p4-rainbow-green) 83.33% 100%
+  );
+  margin: 40px 0;
+  box-shadow: 2px 2px 0 var(--p4-black);
+}
+
+/* Lists */
+ul, ol {
+  padding-left: 24px;
+  margin: 0 0 24px 0;
+}
+
+li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+ul li::marker {
+  color: var(--p4-yellow-dark);
+  font-size: 1.2em;
+}
+
+/* Tables (Persona Stats / S-Link Style) */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+  border: 3px solid var(--p4-black);
+  box-shadow: var(--shadow-p4);
+}
+
+th {
+  background: var(--p4-black);
+  color: var(--p4-yellow);
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 3px solid var(--p4-yellow);
+  text-transform: uppercase;
+}
+
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #E5E5E5;
+  background: var(--p4-white);
+}
+
+tr:nth-child(even) td {
+  background: #FFFDF0;
+}
+
+tr:hover td {
+  background: #FFF8D4;
+}
+
+/* --------------------------------------------------------------------------
+   9. CUSTOM PERSONA 4 COMPONENTS (FOR INDEX.MD)
+   -------------------------------------------------------------------------- */
+
+/* Persona 4 Button / Command Menu Style */
+.p4-btn,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--p4-black) !important;
+  background: var(--p4-yellow) !important;
+  padding: 8px 24px !important;
+  border: 3px solid var(--p4-black) !important;
+  border-radius: 4px;
+  text-decoration: none !important;
+  transform: skew(-9deg);
+  box-shadow: 4px 4px 0px var(--p4-black);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  margin: 6px 4px;
+}
+
+.p4-btn:hover,
+.btn:hover {
+  background: var(--p4-black) !important;
+  color: var(--p4-yellow) !important;
+  transform: skew(-9deg) translate(-2px, -2px);
+  box-shadow: 6px 6px 0px var(--p4-black);
+}
+
+.p4-btn.p4-btn-dark {
+  background: var(--p4-black) !important;
+  color: var(--p4-white) !important;
+}
+
+.p4-btn.p4-btn-dark:hover {
+  background: var(--p4-yellow) !important;
+  color: var(--p4-black) !important;
+}
+
+/* P4 Grid Container */
+.p4-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 22px;
+  margin: 28px 0;
+}
+
+/* TV Screen Project Card */
+.tv-card {
+  background: #1A1A1A;
+  border: 4px solid var(--p4-black);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: var(--shadow-p4);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: var(--p4-white);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tv-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-p4-lg);
+  border-color: var(--p4-yellow);
+}
+
+.tv-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.tv-card-badge {
+  background: var(--p4-yellow);
+  color: var(--p4-black);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  padding: 2px 8px;
+  border-radius: 3px;
+  transform: skew(-8deg);
+  font-weight: bold;
+}
+
+.tv-card-status {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--p4-crt-green);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tv-card-screen {
+  background: #282828;
+  border: 2px solid #3A3A3A;
+  border-radius: 6px;
+  padding: 14px;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.tv-card-screen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255,255,255,0.02) 0px,
+    rgba(255,255,255,0.02) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+}
+
+.tv-card-title {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  color: var(--p4-yellow);
+  margin: 0 0 6px 0;
+  letter-spacing: 0.5px;
+}
+
+.tv-card-desc {
+  font-size: 0.95rem;
+  color: #CCC;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.tv-card-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+}
+
+/* S-Link (Social Links) Cards */
+.slink-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 25px 0;
+}
+
+.slink-card {
+  background: var(--p4-white);
+  border: 3px solid var(--p4-black);
+  border-radius: 6px;
+  padding: 16px 20px;
+  box-shadow: 4px 4px 0px var(--p4-black);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none !important;
+  color: var(--p4-black) !important;
+  transition: all 0.15s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.slink-card:hover {
+  background: var(--p4-yellow);
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0px var(--p4-black);
+}
+
+.slink-rank {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--p4-black);
+  background: var(--p4-yellow);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--p4-black);
+  border-radius: 4px;
+  transform: skew(-6deg);
+  box-shadow: 2px 2px 0 var(--p4-black);
+  flex-shrink: 0;
+}
+
+.slink-card:hover .slink-rank {
+  background: var(--p4-black);
+  color: var(--p4-yellow);
+}
+
+.slink-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.slink-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.1;
+  letter-spacing: 0.5px;
+}
+
+.slink-arcana {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #555;
+  font-weight: bold;
+}
+
+/* Persona 4 Radar/Stat Gauge */
+.p4-stat-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 14px;
+}
+
+.p4-stat-name {
+  width: 130px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+  color: var(--p4-black);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.p4-stat-bar-bg {
+  flex: 1;
+  height: 18px;
+  background: #E5E5E5;
+  border: 2px solid var(--p4-black);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.p4-stat-bar-fill {
+  height: 100%;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--p4-yellow),
+    var(--p4-yellow) 8px,
+    var(--p4-yellow-dark) 8px,
+    var(--p4-yellow-dark) 16px
+  );
+  border-right: 2px solid var(--p4-black);
+}
+
+.p4-stat-rank {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: var(--p4-black);
+  width: 65px;
+}
+
+/* --------------------------------------------------------------------------
+   10. PERSONA 4 FOOTER
+   -------------------------------------------------------------------------- */
+.p4-footer {
+  margin-top: 40px;
+  background: var(--p4-black);
+  border: 5px solid var(--p4-black);
+  border-radius: 12px;
+  box-shadow: var(--shadow-p4-lg);
+  color: var(--p4-white);
+  overflow: hidden;
+}
+
+.footer-rainbow {
+  height: 8px;
+  background: linear-gradient(
+    to right,
+    var(--p4-rainbow-yellow) 0% 16.66%,
+    var(--p4-rainbow-orange) 16.66% 33.33%,
+    var(--p4-rainbow-pink) 33.33% 50%,
+    var(--p4-rainbow-purple) 50% 66.66%,
+    var(--p4-rainbow-cyan) 66.66% 83.33%,
+    var(--p4-rainbow-green) 83.33% 100%
+  );
+}
+
+.footer-inner {
+  padding: 22px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-badge {
+  background: var(--p4-yellow);
+  color: var(--p4-black);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  padding: 3px 12px;
+  border-radius: 3px;
+  transform: skew(-8deg);
+  font-weight: bold;
+}
+
+.footer-meta {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #BBB;
+}
+
+.footer-meta strong {
+  color: var(--p4-yellow);
+}
+
+.footer-links {
+  display: flex;
+  gap: 10px;
+}
+
+.p4-link-btn {
+  background: #252525;
+  color: var(--p4-white) !important;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: 1px solid #444;
+  text-decoration: none !important;
+  transition: all 0.15s ease;
+}
+
+.p4-link-btn:hover {
+  background: var(--p4-yellow);
+  color: var(--p4-black) !important;
+  border-color: var(--p4-black);
+}
+
+/* --------------------------------------------------------------------------
+   11. CUSTOM SCROLLBAR
+   -------------------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--p4-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--p4-yellow);
+  border: 2px solid var(--p4-black);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--p4-yellow-light);
+}
+
+/* --------------------------------------------------------------------------
+   12. RESPONSIVE DESIGN (MEDIA QUERIES)
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 820px) {
+  .title-word {
+    font-size: 3.2rem;
+    padding: 2px 16px;
+  }
+  
+  .tv-controls-panel {
+    display: none;
+  }
+  
+  .p4-content-wrapper {
+    padding: 30px 24px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .p4-viewport-wrap {
+    padding: 10px 10px 40px 10px;
+  }
+
+  .tv-antenna {
+    height: 26px;
+  }
+  
+  .antenna-rod {
+    height: 26px;
+  }
+
+  .title-word {
+    font-size: 2.3rem;
+    padding: 2px 12px;
+  }
+  
+  .p4-tagline {
+    font-size: 0.95rem;
+  }
+  
+  .p4-glasses-emblem {
+    display: none;
+  }
+
+  .tv-ticker-bar {
+    font-size: 0.75rem;
+    padding: 6px 10px;
+    justify-content: center;
+  }
+
+  .tv-crt-glass {
+    padding: 18px 16px;
+  }
+
+  .p4-content-wrapper h1,
+  section h1 {
+    font-size: 2rem;
+    padding: 4px 14px;
+  }
+
+  .p4-content-wrapper h2,
+  section h2 {
+    font-size: 1.6rem;
+    padding: 3px 12px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .p4-stat-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .p4-stat-name {
+    text-align: left;
+    width: 100%;
+  }
+
+  .p4-stat-bar-bg {
+    width: 100%;
+  }
+}
