@@ -1684,7 +1684,18 @@ tr:hover td {
 }
 
 .power-led {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: block;
+  margin-bottom: 2px;
   transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.power-led.is-off {
+  background: #FF0033 !important;
+  box-shadow: 0 0 8px #FF0033, 0 0 14px rgba(255, 0, 51, 0.7) !important;
+  animation: none !important;
 }
 
 .power-led.is-active {
@@ -1696,6 +1707,22 @@ tr:hover td {
 @keyframes p4LedPulse {
   0% { box-shadow: 0 0 6px #00FF66; }
   100% { box-shadow: 0 0 16px #00FF66, 0 0 24px rgba(0, 255, 102, 0.9); }
+}
+
+.power-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
+}
+
+.power-label.is-off {
+  color: #FF0033 !important;
+}
+
+.power-label.is-active {
+  color: #00FF66 !important;
 }
 
 /* Speaker Grille Soundwave Animation */

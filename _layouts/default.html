@@ -143,22 +143,22 @@
 
             <!-- TV Side Hardware Controls (Interactive Radio & Jukebox) -->
             <div class="tv-controls-panel" aria-label="Controlli Radio TV">
-              <!-- Top Dial: Next Track (VHF) -->
-              <div class="tv-dial dial-vhf" id="dial-next-track" role="button" tabindex="0" title="Manopola VHF: Traccia Successiva">
+              <!-- Top Dial: TUNE / Channel (VHF) -->
+              <div class="tv-dial dial-vhf" id="dial-next-track" role="button" tabindex="0" title="Manopola Canali: Traccia Successiva (Clicca o usa rotellina)">
                 <div class="dial-notch" id="notch-vhf"></div>
-                <span class="dial-tag">VHF ▶</span>
+                <span class="dial-tag">TUNE ▶</span>
               </div>
 
-              <!-- Bottom Dial: Prev Track (UHF) -->
-              <div class="tv-dial dial-uhf" id="dial-prev-track" role="button" tabindex="0" title="Manopola UHF: Traccia Precedente">
-                <div class="dial-notch notch-2" id="notch-uhf"></div>
-                <span class="dial-tag">◀ UHF</span>
+              <!-- Middle Dial: Volume (VOL) -->
+              <div class="tv-dial dial-vol" id="dial-volume" role="button" tabindex="0" title="Manopola Volume: Clicca per regolare o usa la rotellina del mouse">
+                <div class="dial-notch" id="notch-vol"></div>
+                <span class="dial-tag" id="vol-tag">VOL 80%</span>
               </div>
 
               <!-- Power Switch: Play / Pause Radio -->
               <div class="tv-power-switch" id="radio-power-toggle" role="button" tabindex="0" title="Interruttore Power Radio (Play/Pausa)">
-                <span class="power-led" id="radio-power-led"></span>
-                <span class="power-label" id="radio-power-text">POWER</span>
+                <span class="power-led is-off" id="radio-power-led"></span>
+                <span class="power-label is-off" id="radio-power-text">OFF</span>
               </div>
 
               <!-- Speaker Grille Audio Visualizer -->
@@ -314,26 +314,27 @@
         function playRadio() {
           audioPlayer.play().then(function() {
             isPlaying = true;
-            powerLed.classList.add('is-active');
+            powerLed.className = 'power-led is-active';
+            powerText.className = 'power-label is-active';
             powerText.textContent = "ON";
-            powerText.style.color = "#00FF66";
             speakerGrille.classList.add('is-playing');
             radioTicker.classList.add('is-playing');
             trackDisplay.textContent = "NOW PLAYING: " + playlist[currentIndex].title;
           }).catch(function(err) {
-            console.log("Audio autoplay was restricted by browser, waiting for user click.");
+            console.log("Audio autoplay restricted by browser, waiting for user click.");
+            pauseRadio();
           });
         }
 
         function pauseRadio() {
           audioPlayer.pause();
           isPlaying = false;
-          powerLed.classList.remove('is-active');
-          powerText.textContent = "POWER";
-          powerText.style.color = "";
+          powerLed.className = 'power-led is-off';
+          powerText.className = 'power-label is-off';
+          powerText.textContent = "OFF";
           speakerGrille.classList.remove('is-playing');
           radioTicker.classList.remove('is-playing');
-          trackDisplay.textContent = "PAUSED: " + playlist[currentIndex].title;
+          trackDisplay.textContent = "RADIO OFF: " + playlist[currentIndex].title;
         }
 
         function toggleRadio() {
@@ -352,11 +353,47 @@
         }
 
         function prevTrack() {
-          uhfAngle -= 45;
-          if (notchUhf) notchUhf.style.transform = 'rotate(' + uhfAngle + 'deg)';
+          vhfAngle -= 45;
+          if (notchVhf) notchVhf.style.transform = 'rotate(' + vhfAngle + 'deg)';
           loadTrack(currentIndex - 1);
           playRadio();
         }
+
+        // --- VOLUME DIAL CONTROLLER ---
+        var currentVolume = 0.8;
+        var notchVol = document.getElementById('notch-vol');
+        var volTag = document.getElementById('vol-tag');
+        var volTimer = null;
+
+        function setVolume(val) {
+          currentVolume = Math.max(0, Math.min(1, Math.round(val * 100) / 100));
+          audioPlayer.volume = currentVolume;
+          // Calculate angle from -125deg (0%) to +125deg (100%)
+          var angle = -125 + (currentVolume * 250);
+          if (notchVol) notchVol.style.transform = 'rotate(' + angle + 'deg)';
+          
+          var percent = Math.round(currentVolume * 100);
+          var label = percent === 0 ? 'MUTE' : 'VOL ' + percent + '%';
+          if (volTag) volTag.textContent = label;
+
+          // Temporary volume display on the ticker
+          if (trackDisplay) {
+            if (volTimer) clearTimeout(volTimer);
+            var bars = Math.round(currentVolume * 5);
+            var barStr = '■'.repeat(bars) + '□'.repeat(5 - bars);
+            trackDisplay.textContent = '🔊 ' + label + ' [' + barStr + ']';
+            volTimer = setTimeout(function() {
+              if (isPlaying) {
+                trackDisplay.textContent = 'NOW PLAYING: ' + playlist[currentIndex].title;
+              } else {
+                trackDisplay.textContent = 'RADIO OFF: ' + playlist[currentIndex].title;
+              }
+            }, 1200);
+          }
+        }
+
+        // Initialize volume at 80%
+        setVolume(0.8);
 
         // When track naturally ends, proceed to next song
         audioPlayer.addEventListener('ended', function() {
@@ -375,16 +412,46 @@
         var dialNextBtn = document.getElementById('dial-next-track');
         if (dialNextBtn) {
           dialNextBtn.addEventListener('click', nextTrack);
+          dialNextBtn.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (e.deltaY < 0) nextTrack();
+            else prevTrack();
+          }, { passive: false });
           dialNextBtn.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); nextTrack(); }
           });
         }
 
-        var dialPrevBtn = document.getElementById('dial-prev-track');
-        if (dialPrevBtn) {
-          dialPrevBtn.addEventListener('click', prevTrack);
-          dialPrevBtn.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); prevTrack(); }
+        var dialVolBtn = document.getElementById('dial-volume');
+        if (dialVolBtn) {
+          // Click cycles presets: 20% -> 40% -> 60% -> 80% -> 100% -> MUTE (0%) -> 20%
+          var volPresets = [0.2, 0.4, 0.6, 0.8, 1.0, 0.0];
+          dialVolBtn.addEventListener('click', function() {
+            var nextVal = 0.8;
+            for (var i = 0; i < volPresets.length; i++) {
+              if (volPresets[i] > currentVolume + 0.05) {
+                nextVal = volPresets[i];
+                break;
+              }
+            }
+            if (currentVolume >= 0.95) nextVal = 0.0;
+            else if (currentVolume <= 0.05) nextVal = 0.2;
+            setVolume(nextVal);
+          });
+
+          // Mouse wheel smoothly turns volume
+          dialVolBtn.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            var step = e.deltaY < 0 ? 0.05 : -0.05;
+            setVolume(currentVolume + step);
+          }, { passive: false });
+
+          dialVolBtn.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowUp' || e.key === 'ArrowRight') {
+              e.preventDefault(); setVolume(currentVolume + 0.1);
+            } else if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') {
+              e.preventDefault(); setVolume(currentVolume - 0.1);
+            }
           });
         }
 
