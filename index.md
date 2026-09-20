@@ -100,8 +100,24 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
   </div>
 
   <div class="slink-info">
-    <span class="slink-name">Steam</span>
-    <span class="slink-arcana">ARCANA: THE JESTER // GAMING</span>
+    <span class="slink-name">Discord</span>
+    <span class="slink-arcana">ARCANA: THE JESTER // COMMUNITY</span>
+  </div>
+</a>
+
+<!-- Twitch -->
+  <a href="https://www.twitch.tv/shia_twitch" class="slink-card" target="_blank" rel="noopener">
+  <div class="slink-icon-wrap">
+    <img 
+      src="assets/images/moon.png"
+      alt="Twitch"
+      class="slink-icon"
+    >
+  </div>
+
+  <div class="slink-info">
+    <span class="slink-name">Twitch</span>
+    <span class="slink-arcana">ARCANA: THE MOON // STREAMING</span>
   </div>
 </a>
 
