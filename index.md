@@ -108,9 +108,10 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
       <span class="tv-card-status">● ON AIR</span>
     </div>
     <div class="tv-card-screen">
-      <h3 class="tv-card-title">Persona 4 GitHub Theme</h3>
+      <h3 class="tv-card-title">Persona 4 GitHub Page Theme</h3>
       <p class="tv-card-desc">
-        Personalizzazione completa e dinamica in stile Persona 4. Nerd stuff. Pursue your true self.
+        Personalizzazione completa e dinamica di GitHub Page in stile Persona 4. No ma è letteralmente questa pagina che stai vedendo adesso, è un self-insert doveroso dai...  
+		**Tecnologie usate : SCSS, HTML.**
       </p>
     </div>
     <div class="tv-card-footer">
@@ -129,11 +130,12 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
     <div class="tv-card-screen">
       <h3 class="tv-card-title">MAP4AID</h3>
       <p class="tv-card-desc">
-        Map4Aid è una piattaforma web dedicata alla solidarietà e all'assistenza sociale che mira a digitalizzare e semplificare l'accesso ai beni di prima necessità e a facilitare le donazioni sul territorio. Tecnologie usate: *Python, Flask, SQLite, HTML, CSS, JS*.
+        Map4Aid è una piattaforma web dedicata alla solidarietà e all'assistenza sociale che mira a digitalizzare e semplificare l'accesso ai beni di prima necessità e a facilitare le donazioni sul territorio.  
+		**Tecnologie usate: Python, Flask, SQLite, HTML, CSS, JS.**
       </p>
     </div>
     <div class="tv-card-footer">
-      <a href="https://github.com/cristian-carotenuto/map4aid" class="p4-btn p4-btn-dark" target="_blank" rel="noopener" style="font-size: 1.1rem; padding: 4px 16px !important;">
+      <a href="https://github.com/cristian-carotenuto/map4aid" class="p4-btn p4-btn" target="_blank" rel="noopener" style="font-size: 1.1rem; padding: 4px 16px !important;">
         Repository ▶
       </a>
     </div>
@@ -148,11 +150,12 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
     <div class="tv-card-screen">
       <h3 class="tv-card-title">AIDANO</h3>
       <p class="tv-card-desc">
-        Aidano è un assistente virtuale knowledge-based sviluppato nell'ambito del progetto Map4Aid. Il chatbot è stato progettato per assistere gli utenti della piattaforma fornendo risposte rapide, coerenti e contestualizzate riguardo ai servizi offerti. *Tecnologie usate: Python, QWEN 2.5-3B*.
+        Aidano è un assistente virtuale knowledge-based sviluppato nell'ambito del progetto Map4Aid. Il chatbot è stato progettato per assistere gli utenti della piattaforma fornendo risposte rapide, coerenti e contestualizzate riguardo ai servizi offerti.  
+		**Tecnologie usate: Python, QWEN 2.5-3B.**
       </p>
     </div>
     <div class="tv-card-footer">
-      <a href="https://github.com/cristian-carotenuto/Aidano" class="p4-btn p4-btn-dark" target="_blank" rel="noopener" style="font-size: 1.1rem; padding: 4px 16px !important;">
+      <a href="https://github.com/cristian-carotenuto/Aidano" class="p4-btn p4-btn" target="_blank" rel="noopener" style="font-size: 1.1rem; padding: 4px 16px !important;">
         Repository ▶
       </a>
     </div>
@@ -167,12 +170,13 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
     <div class="tv-card-screen">
       <h3 class="tv-card-title">RETE CIVES CAMPANIA</h3>
       <p class="tv-card-desc">
-      Ho contribuito allo sviluppo della piattaforma della rete CIVES grazie al presidente *Giuseppe Fornaro*. La cives è una rete di associazioni del Terzo Settore attiva in Campania per promuovere inclusione sociale, autonomia personale e accessibilità per persone con disabilità, in particolare non vedenti, ipovedenti e le loro famiglie. *Tecnologie usate: WordPress, PHP, SQL*.
+      Ho contribuito allo sviluppo della piattaforma della rete CIVES grazie al presidente **Giuseppe Fornaro**. La CIVES è una rete di associazioni del Terzo Settore attiva in Campania per promuovere inclusione sociale, autonomia personale e accessibilità per persone con disabilità, in particolare non vedenti, ipovedenti e le loro famiglie. 
+	  **Tecnologie usate: WordPress, PHP, SQL.**
       </p>
     </div>
     <div class="tv-card-footer">
-      <a href="https://www.retecives.it/" class="p4-btn p4-btn-dark" target="_blank" rel="noopener" style="font-size: 1.1rem; padding: 4px 16px !important;">
-        Repository ▶
+      <a href="https://www.retecives.it/" class="p4-btn p4-btn" target="_blank" rel="noopener" style="font-size: 1.1rem; padding: 4px 16px !important;">
+        Website ▶
       </a>
     </div>
   </div>
@@ -191,7 +195,7 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
     </div>
     <div class="tv-card-footer">
       <a href="https://github.com/cristian-carotenuto" class="p4-btn p4-btn-dark" target="_blank" rel="noopener" style="font-size: 1.1rem; padding: 4px 16px !important;">
-        Repository ▶
+        Github ▶
       </a>
     </div>
   </div>
@@ -210,7 +214,7 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
     </div>
     <div class="tv-card-footer">
       <a href="https://github.com/cristian-carotenuto" class="p4-btn p4-btn-dark" target="_blank" rel="noopener" style="font-size: 1.1rem; padding: 4px 16px !important;">
-        Repository ▶
+        Github ▶
       </a>
     </div>
   </div>
@@ -221,8 +225,8 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
 
 <h2 id="status">Status & Skils</h2>
 
->	**MYSTERIOUS VOICE**
->	*"Thy present glow comes from one of the splendid virtues already dwelling within thee..."*
+> **MYSTERIOUS VOICE**
+> *"Thy present glow comes from one of the splendid virtues already dwelling within thee..."*
 
 <div style="margin: 25px 0;">
   
@@ -239,7 +243,7 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
     <div class="p4-stat-bar-bg">
       <div class="p4-stat-bar-fill" style="width: 100%;"></div>
     </div>
-    <span class="p4-stat-rank">RANK 5 (Rock Solid)</span>
+    <span class="p4-stat-rank">RANK MAX (Rock Solid)</span>
   </div>
 
   <div class="p4-stat-row">
