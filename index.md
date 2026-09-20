@@ -223,7 +223,7 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
 
 ---
 
-<h2 id="status">Status & Skils</h2>
+<h2 id="status">Status & Skills</h2>
 
 > **MYSTERIOUS VOICE**
 > *"Thy present glow comes from one of the splendid virtues already dwelling within thee..."*
