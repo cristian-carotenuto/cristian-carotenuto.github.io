@@ -125,7 +125,7 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
     <div class="tv-card-screen">
       <h3 class="tv-card-title">Persona 4 GitHub Page Theme</h3>
       <p class="tv-card-desc">
-        Personalizzazione completa e dinamica di GitHub Page in stile Persona 4. No ma è letteralmente questa pagina che stai vedendo adesso, è un self-insert doveroso dai... <strong>Tecnologie usate : SCSS, HTML.</strong>   
+        Personalizzazione completa e dinamica di GitHub Page in stile Persona 4. No ma è letteralmente questa pagina che stai vedendo adesso, è un self-insert doveroso dai... **Tecnologie usate : SCSS, HTML.**  
       </p>
     </div>
     <div class="tv-card-footer">
@@ -144,7 +144,7 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
     <div class="tv-card-screen">
       <h3 class="tv-card-title">MAP4AID</h3>
       <p class="tv-card-desc">
-        Map4Aid è una piattaforma web dedicata alla solidarietà e all'assistenza sociale che mira a digitalizzare e semplificare l'accesso ai beni di prima necessità e a facilitare le donazioni sul territorio. <strong>Tecnologie usate: Python, Flask, SQLite, HTML, CSS, JS.</strong>
+        Map4Aid è una piattaforma web dedicata alla solidarietà e all'assistenza sociale che mira a digitalizzare e semplificare l'accesso ai beni di prima necessità e a facilitare le donazioni sul territorio. **Tecnologie usate: Python, Flask, SQLite, HTML, CSS, JS.**
       </p>
     </div>
     <div class="tv-card-footer">
@@ -163,7 +163,7 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
     <div class="tv-card-screen">
       <h3 class="tv-card-title">AIDANO</h3>
       <p class="tv-card-desc">
-        Aidano è un assistente virtuale knowledge-based sviluppato nell'ambito del progetto Map4Aid. Il chatbot è stato progettato per assistere gli utenti della piattaforma fornendo risposte rapide, coerenti e contestualizzate riguardo ai servizi offerti. <strong>Tecnologie usate: Python, QWEN 2.5-3B.</strong>
+        Aidano è un assistente virtuale knowledge-based sviluppato nell'ambito del progetto Map4Aid. Il chatbot è stato progettato per assistere gli utenti della piattaforma fornendo risposte rapide, coerenti e contestualizzate riguardo ai servizi offerti. **Tecnologie usate: Python, QWEN 2.5-3B.**
       </p>
     </div>
     <div class="tv-card-footer">
@@ -182,7 +182,7 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
     <div class="tv-card-screen">
       <h3 class="tv-card-title">RETE CIVES CAMPANIA</h3>
       <p class="tv-card-desc">
-      Ho contribuito allo sviluppo della piattaforma della rete CIVES grazie al presidente <strong>Giuseppe Fornaro</strong>. La CIVES è una rete di associazioni del Terzo Settore attiva in Campania per promuovere inclusione sociale, autonomia personale e accessibilità per persone con disabilità, in particolare non vedenti, ipovedenti e le loro famiglie. <strong>Tecnologie usate: WordPress, PHP, SQL.</strong>
+      Ho contribuito allo sviluppo della piattaforma della rete CIVES grazie al presidente **Giuseppe Fornaro**. La CIVES è una rete di associazioni del Terzo Settore attiva in Campania per promuovere inclusione sociale, autonomia personale e accessibilità per persone con disabilità, in particolare non vedenti, ipovedenti e le loro famiglie. **Tecnologie usate: WordPress, PHP, SQL.**
       </p>
     </div>
     <div class="tv-card-footer">
