@@ -20,7 +20,7 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
 <h2 id="social-links">Social Links (S-Links)</h2>
 
 > **??? // THE TRUE SELF**  
-> *"**Thou art I... And I am thou... Thou hast established a new bond... It brings thee closer to the truth...**"*
+> *"Thou art I... And I am thou... Thou hast established a new **bond**... It brings thee closer to **the truth**..."*
 
 
 <div class="slink-grid">
@@ -236,7 +236,7 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
 
 <h2 id="status">Status & Skills</h2>
 
-> **??? // MYSTERIOUS VOICE**
+> **??? // MYSTERIOUS VOICE**  
 > *"Thy present glow comes from one of the splendid virtues already dwelling within thee..."*
 
 <div style="margin: 25px 0;">
