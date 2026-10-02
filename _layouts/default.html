@@ -17,10 +17,10 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
     
-    <!-- Instant P4 Background Theme Restoration -->
+    <!-- Instant P4 Background Theme Restoration (Default: Eye Strain / Midnight) -->
     <script>
       (function() {
-        var savedTheme = localStorage.getItem('p4-bg-theme') || 'yu';
+        var savedTheme = localStorage.getItem('p4-bg-theme') || 'midnight';
         document.documentElement.setAttribute('data-p4-theme', savedTheme);
       })();
     </script>
@@ -116,7 +116,7 @@
             <div class="ticker-item tv-color-picker-item" id="p4-theme-selector" title="Scegli il colore dello sfondo (Ispirato a p4-stickers.jpg)">
               <span class="theme-picker-title">🎨 THEME:</span>
               <div class="p4-color-swatches" role="group" aria-label="Palette colori sfondo">
-                <button type="button" class="p4-swatch-btn is-active" data-theme="yu" title="Yu Narukami - Giallo Yasogami" style="--swatch-c: #FFD000;"></button>
+                <button type="button" class="p4-swatch-btn" data-theme="yu" title="Yu Narukami - Giallo Yasogami" style="--swatch-c: #FFD000;"></button>
                 <button type="button" class="p4-swatch-btn" data-theme="chie" title="Chie Satonaka - Verde" style="--swatch-c: #27AE60;"></button>
                 <button type="button" class="p4-swatch-btn" data-theme="yukiko" title="Yukiko Amagi - Rosso" style="--swatch-c: #E74C3C;"></button>
                 <button type="button" class="p4-swatch-btn" data-theme="yosuke" title="Yosuke Hanamura - Arancione" style="--swatch-c: #FA8231;"></button>
@@ -124,7 +124,7 @@
                 <button type="button" class="p4-swatch-btn" data-theme="naoto" title="Naoto Shirogane - Celeste" style="--swatch-c: #00CEC9;"></button>
                 <button type="button" class="p4-swatch-btn" data-theme="teddie" title="Teddie / Kuma - Viola" style="--swatch-c: #8854D0;"></button>
                 <button type="button" class="p4-swatch-btn" data-theme="kanji" title="Kanji Tatsumi - Bronzo" style="--swatch-c: #A58D54;"></button>
-                <button type="button" class="p4-swatch-btn" data-theme="midnight" title="Midnight Fog - Dark Mode (Riposo occhi)" style="--swatch-c: #23272E;"></button>
+                <button type="button" class="p4-swatch-btn is-active" data-theme="midnight" title="Midnight Fog - Dark Mode (Riposo occhi)" style="--swatch-c: #23272E;"></button>
               </div>
             </div>
 
@@ -513,14 +513,13 @@
             introOverlay.style.display = 'none';
           }, 450);
 
-          if (startSound) {
-            playRadio();
-          }
+          // Always start radio soundtrack upon intro dismissal
+          playRadio();
         }
 
-        // Auto dismiss after 2.8s
+        // Auto dismiss after 2.8s - plays radio even if user does not skip intro!
         introTimer = setTimeout(function() {
-          dismissIntro(false);
+          dismissIntro(true);
         }, 2800);
 
         // Click anywhere to dismiss immediately & trigger music!
@@ -537,6 +536,19 @@
           }
         });
 
+        // First user gesture listener in case browser blocked autoplay
+        function onFirstInteraction() {
+          if (!isPlaying && introDismissed) {
+            playRadio();
+          }
+          window.removeEventListener('click', onFirstInteraction);
+          window.removeEventListener('touchstart', onFirstInteraction);
+          window.removeEventListener('keydown', onFirstInteraction);
+        }
+        window.addEventListener('click', onFirstInteraction);
+        window.addEventListener('touchstart', onFirstInteraction);
+        window.addEventListener('keydown', onFirstInteraction);
+
         // Replay Intro Button in Footer
         var replayBtn = document.getElementById('btn-replay-intro');
         if (replayBtn) {
@@ -550,14 +562,14 @@
             introBar.style.animation = '';
             
             introTimer = setTimeout(function() {
-              dismissIntro(false);
+              dismissIntro(true);
             }, 2800);
           });
         }
 
         // --- 6. PERSONA 4 BACKGROUND COLOR THEME SELECTOR ---
         var themeBtns = document.querySelectorAll('.p4-swatch-btn');
-        var currentTheme = localStorage.getItem('p4-bg-theme') || 'yu';
+        var currentTheme = localStorage.getItem('p4-bg-theme') || 'midnight';
 
         function applyTheme(theme) {
           document.documentElement.setAttribute('data-p4-theme', theme);

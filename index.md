@@ -327,7 +327,7 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
   <div class="percorso-card" data-categories="vol">
     <div class="percorso-card-header">
       <span class="percorso-date-badge">2025 — 2026</span>
-      <span class="percorso-status-tag status-cleared">● QUEST CLEARED // VOLUNTEERING</span>
+      <span class="percorso-status-tag status-cleared">✔ QUEST CLEARED // VOLUNTEERING</span>
     </div>
     <h3 class="percorso-card-title">Volontario SCU (Servizio Civile Universale)</h3>
     <div class="percorso-card-org">Rete Cives Campania &bull; Sant'Anastasia (NA)</div>
@@ -352,7 +352,7 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
   <div class="percorso-card" data-categories="work">
     <div class="percorso-card-header">
       <span class="percorso-date-badge">2022 — 2023</span>
-      <span class="percorso-status-tag status-cleared">✔ OBJECTIVE CLEARED // PART TIME</span>
+      <span class="percorso-status-tag status-cleared">✔ QUEST CLEARED // PART TIME</span>
     </div>
     <h3 class="percorso-card-title">Segreteria Operativa & Help Desk</h3>
     <div class="percorso-card-org">Sport Village &bull; Somma Vesuviana (NA)</div>
@@ -372,30 +372,7 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
     </div>
   </div>
 
-  <!-- Quest 5: ITIS E. Majorana -->
-  <div class="percorso-card" data-categories="edu">
-    <div class="percorso-card-header">
-      <span class="percorso-date-badge">2018 — 2023</span>
-      <span class="percorso-status-tag status-cleared">✔ OBJECTIVE CLEARED // VOTO: 94/100</span>
-    </div>
-    <h3 class="percorso-card-title">Diploma in Telecomunicazioni e Informatica</h3>
-    <div class="percorso-card-org">ITIS E. Majorana &bull; Somma Vesuviana (NA)</div>
-    <div class="percorso-card-body">
-      <ul>
-        <li>Percorso quinquennale incentrato su fondamenti di programmazione, reti di computer, protocolli di comunicazione e telecomunicazioni.</li>
-        <li>Partecipante al progetto internazionale <strong>Erasmus+ in Romania</strong> (<em>"Under the Same Sky 2023"</em>).</li>
-      </ul>
-    </div>
-    <div class="percorso-tech-pills">
-      <span class="percorso-tech-pill">Telecomunicazioni</span>
-      <span class="percorso-tech-pill">Sistemi e Reti</span>
-      <span class="percorso-tech-pill">C / C++</span>
-      <span class="percorso-tech-pill">Java</span>
-      <span class="percorso-tech-pill">Erasmus+</span>
-    </div>
-  </div>
-
-  <!-- Quest 6: Diagnostica Hardware & Riparazione PC -->
+  <!-- Quest 5: Diagnostica Hardware & Riparazione PC -->
   <div class="percorso-card" data-categories="work">
     <div class="percorso-card-header">
       <span class="percorso-date-badge">2022+ .</span>
@@ -420,12 +397,35 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
 
 </div>
 
+  <!-- Quest 6: ITIS E. Majorana -->
+  <div class="percorso-card" data-categories="edu">
+    <div class="percorso-card-header">
+      <span class="percorso-date-badge">2018 — 2023</span>
+      <span class="percorso-status-tag status-cleared">✔ QUEST CLEARED // VOTO: 94/100</span>
+    </div>
+    <h3 class="percorso-card-title">Diploma in Telecomunicazioni e Informatica</h3>
+    <div class="percorso-card-org">ITIS E. Majorana &bull; Somma Vesuviana (NA)</div>
+    <div class="percorso-card-body">
+      <ul>
+        <li>Percorso quinquennale incentrato su fondamenti di programmazione, sistemi e reti, protocolli di comunicazione e telecomunicazioni.</li>
+        <li>Partecipante al progetto internazionale <strong>Erasmus+ in Romania</strong> (<em>"Under the Same Sky 2023"</em>).</li>
+      </ul>
+    </div>
+    <div class="percorso-tech-pills">
+      <span class="percorso-tech-pill">Telecomunicazioni</span>
+      <span class="percorso-tech-pill">Sistemi e Reti</span>
+      <span class="percorso-tech-pill">C / C++</span>
+      <span class="percorso-tech-pill">Java</span>
+      <span class="percorso-tech-pill">Erasmus+</span>
+    </div>
+  </div>
+
 ---
 
-<h2 id="status">Status & Skills</h2>
+<h2 id="status">Social Stats & Skills</h2>
 
 > **??? // MYSTERIOUS VOICE**  
-> *"Thy present glow comes from one of the splendid virtues already dwelling within thee..."*
+> *"Thy present glow comes from one of the splendid **virtues** already dwelling within thee..."*
 
 <div style="margin: 25px 0;">
   
