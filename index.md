@@ -11,9 +11,9 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
 
 <div style="margin: 25px 0; display: flex; flex-wrap: wrap; gap: 10px;">
   <a href="#social-links" class="p4-btn"><span>▶ SOCIAL LINKS</span></a>
-  <a href="#progetti" class="p4-btn"><span>📺 PROGETTI</span></a>
-  <a href="#percorso" class="p4-btn"><span>📜 IL MIO PERCORSO</span></a>
-  <a href="#status" class="p4-btn"><span>⚡ SKILLS AND STATS</span></a>
+  <a href="#progetti" class="p4-btn"><span>📺 BROADCASTS </span></a>
+  <a href="#percorso" class="p4-btn"><span>📜 QUEST LOG</span></a>
+  <a href="#status" class="p4-btn"><span>⚡STATS</span></a>
 </div>
 
 ---
@@ -126,7 +126,7 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
 
 ---
 
-<h2 id="progetti">Tonight's Broadcasts... </h2>
+<h2 id="progetti">Progetti // Midnight Broadcasts</h2>
 
 > **MYSTERIOUS TV BROADCAST // THE URBAN LEGEND**  
 > *"You're supposed to look into a TV that's switched off, alone, exactly at **midnight** on a **rainy night**. While you're staring at your own image, another person will appear on the screen... And they say that person's your **soulmate**."*
@@ -251,77 +251,30 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
 
 ---
 
-<h2 id="percorso">Il Mio Percorso // Velvet Quest Log</h2>
+<h2 id="percorso">Il Mio Percorso // Quest Log</h2>
 
-> **VELVET ROOM // ATTENDANT**  
-> *"The calendar turns, and each day marks a step along thy journey... Choose wisely the quests thou undertakest to forge thine own future."*
+> **??? // VELVET ROOM HOST**  
+> *"Welcome to the **Velvet Room**... I am delighted to make your acquaintance. This place exists between dream and reality, mind and matter... It is a room that only those who are bound by a **"contract"** may enter... It may be that such a fate awaits you in the near future. Now then... Why don't you introduce yourself...?"*
 
 <!-- Interactive Filter Bar -->
 <div class="percorso-filter-bar">
-  <button type="button" class="percorso-filter-btn is-active" data-filter="all">TUTTI I CAPITOLI (ALL)</button>
+  <button type="button" class="percorso-filter-btn is-active" data-filter="all">ALL QUESTS</button>
   <button type="button" class="percorso-filter-btn" data-filter="work">LAVORO & TECH</button>
   <button type="button" class="percorso-filter-btn" data-filter="edu">FORMAZIONE & STUDI</button>
   <button type="button" class="percorso-filter-btn" data-filter="vol">VOLONTARIATO & SOCIALE</button>
   <a href="{{ '/assets/images/CV Cristian Carotenuto 2026-10-01.pdf' | relative_url }}" class="percorso-cv-dl-btn" target="_blank" rel="noopener" title="Visualizza e scarica il CV completo in PDF">
-    SCARICA CV (PDF) 📄
+    CV (PDF) 📄
   </a>
 </div>
 
 <!-- Interactive Timeline Cards -->
 <div class="percorso-timeline">
 
-  <!-- Quest 1: Web Developer Accessibilità -->
-  <div class="percorso-card" data-categories="work vol">
-    <div class="percorso-card-header">
-      <span class="percorso-date-badge">2026 — IN CORSO</span>
-      <span class="percorso-status-tag status-active">● CURRENT QUEST // ACCESSIBILITY</span>
-    </div>
-    <h3 class="percorso-card-title">Web Developer & Specialista Accessibilità</h3>
-    <div class="percorso-card-org">Rete Cives Campania &bull; www.retecives.it</div>
-    <div class="percorso-card-body">
-      <ul>
-        <li>Progettazione, sviluppo ed implementazione della piattaforma online secondo i rigorosi standard di <strong>accessibilità web (WCAG)</strong> per persone non vedenti e ipovedenti.</li>
-        <li>Implementazione di architettura per <strong>disaster recovery speculare</strong> e massimizzazione del grado di resilienza dei dati.</li>
-        <li>Selezione, installazione e configurazione di plugin strategici per sicurezza, caching e performance del portale.</li>
-      </ul>
-    </div>
-    <div class="percorso-tech-pills">
-      <span class="percorso-tech-pill">WordPress</span>
-      <span class="percorso-tech-pill">PHP</span>
-      <span class="percorso-tech-pill">SQL</span>
-      <span class="percorso-tech-pill">Web Accessibility (WCAG)</span>
-      <span class="percorso-tech-pill">Disaster Recovery</span>
-    </div>
-  </div>
-
-  <!-- Quest 2: Volontario SCU -->
-  <div class="percorso-card" data-categories="vol">
-    <div class="percorso-card-header">
-      <span class="percorso-date-badge">2025 — 2026</span>
-      <span class="percorso-status-tag status-active">● ACTIVE QUEST // VOLUNTEERING</span>
-    </div>
-    <h3 class="percorso-card-title">Volontario SCU (Servizio Civile Universale)</h3>
-    <div class="percorso-card-org">Rete Cives Campania &bull; Sant'Anastasia (NA)</div>
-    <div class="percorso-card-body">
-      <ul>
-        <li>Assistenza sul campo e accompagnamento dedicato per persone <strong>non vedenti e ipovedenti</strong> su tutto il territorio campano.</li>
-        <li>Gestione dello <strong>sportello digitale</strong> e supporto al pubblico per pratiche CAF e servizi telematici.</li>
-        <li>Utilizzo del software gestionale <strong>Zucchetti</strong> e della suite Microsoft Office per la digitalizzazione amministrativa.</li>
-      </ul>
-    </div>
-    <div class="percorso-tech-pills">
-      <span class="percorso-tech-pill">Inclusione Sociale</span>
-      <span class="percorso-tech-pill">Sportello Digitale</span>
-      <span class="percorso-tech-pill">Software Zucchetti</span>
-      <span class="percorso-tech-pill">Assistenza Utenti</span>
-    </div>
-  </div>
-
-  <!-- Quest 3: Università degli Studi di Salerno -->
+  <!-- Quest 1: Università degli Studi di Salerno -->
   <div class="percorso-card" data-categories="edu">
     <div class="percorso-card-header">
       <span class="percorso-date-badge">2023 — 2027</span>
-      <span class="percorso-status-tag status-active">● ACADEMIC ARC // IN CORSO</span>
+      <span class="percorso-status-tag status-active">● ACTIVE QUEST // BACHELOR'S</span>
     </div>
     <h3 class="percorso-card-title">Laurea Triennale in Informatica (L-31)</h3>
     <div class="percorso-card-org">Università degli Studi di Salerno &bull; Fisciano (SA) &bull; Media Esami: 24.7</div>
@@ -346,13 +299,62 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
     </div>
   </div>
 
-  <!-- Quest 4: Sport Village Help Desk -->
+  <!-- Quest 2: Piattaforma Rete Cives -->
+  <div class="percorso-card" data-categories="work vol">
+    <div class="percorso-card-header">
+      <span class="percorso-date-badge">2026 — IN CORSO</span>
+      <span class="percorso-status-tag status-active">● ACTIVE QUEST // ACCESSIBILITY</span>
+    </div>
+    <h3 class="percorso-card-title">Web Developer & Specialista Accessibilità</h3>
+    <div class="percorso-card-org">Rete Cives Campania &bull; www.retecives.it</div>
+    <div class="percorso-card-body">
+      <ul>
+        <li>Progettazione, sviluppo ed implementazione della piattaforma online secondo i rigorosi standard di <strong>accessibilità web (WCAG)</strong> per persone non vedenti e ipovedenti.</li>
+        <li>Implementazione di architettura per <strong>disaster recovery speculare</strong> e massimizzazione del grado di resilienza dei dati.</li>
+        <li>Selezione, installazione e configurazione di plugin strategici per sicurezza, caching e performance del portale.</li>
+      </ul>
+    </div>
+    <div class="percorso-tech-pills">
+      <span class="percorso-tech-pill">WordPress</span>
+      <span class="percorso-tech-pill">PHP</span>
+      <span class="percorso-tech-pill">SQL</span>
+      <span class="percorso-tech-pill">Web Accessibility (WCAG)</span>
+      <span class="percorso-tech-pill">Disaster Recovery</span>
+    </div>
+  </div>
+
+  <!-- Quest 3: Volontario SCU -->
+  <div class="percorso-card" data-categories="vol">
+    <div class="percorso-card-header">
+      <span class="percorso-date-badge">2025 — 2026</span>
+      <span class="percorso-status-tag status-cleared">● QUEST CLEARED // VOLUNTEERING</span>
+    </div>
+    <h3 class="percorso-card-title">Volontario SCU (Servizio Civile Universale)</h3>
+    <div class="percorso-card-org">Rete Cives Campania &bull; Sant'Anastasia (NA)</div>
+    <div class="percorso-card-body">
+      <ul>
+        <li>Assistenza sul campo e accompagnamento dedicato per persone <strong>non vedenti e ipovedenti</strong> su tutto il territorio campano.</li>
+        <li>Gestione dello <strong>sportello digitale</strong> e supporto al pubblico per pratiche CAF e servizi telematici.</li>
+        <li>Utilizzo del software gestionale <strong>Zucchetti</strong> e della suite Microsoft Office per la digitalizzazione amministrativa.</li>
+      </ul>
+    </div>
+    <div class="percorso-tech-pills">
+      <span class="percorso-tech-pill">Inclusione Sociale</span>
+      <span class="percorso-tech-pill">Sportello Digitale</span>
+      <span class="percorso-tech-pill">Software Zucchetti</span>
+      <span class="percorso-tech-pill">Assistenza Utenti</span>
+    </div>
+  </div>
+
+
+
+  <!-- Quest 4: Sport Village -->
   <div class="percorso-card" data-categories="work">
     <div class="percorso-card-header">
       <span class="percorso-date-badge">2022 — 2023</span>
-      <span class="percorso-status-tag status-cleared">✔ OBJECTIVE CLEARED // 1 ANNO</span>
+      <span class="percorso-status-tag status-cleared">✔ OBJECTIVE CLEARED // PART TIME</span>
     </div>
-    <h3 class="percorso-card-title">Segreteria Operativa & Help Desk Informatico</h3>
+    <h3 class="percorso-card-title">Segreteria Operativa & Help Desk</h3>
     <div class="percorso-card-org">Sport Village &bull; Somma Vesuviana (NA)</div>
     <div class="percorso-card-body">
       <ul>
@@ -381,36 +383,37 @@ Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno stud
     <div class="percorso-card-body">
       <ul>
         <li>Percorso quinquennale incentrato su fondamenti di programmazione, reti di computer, protocolli di comunicazione e telecomunicazioni.</li>
-        <li>Vincitore e partecipante al progetto internazionale <strong>Erasmus+ in Romania</strong> (<em>"Under the Same Sky 2023"</em>).</li>
+        <li>Partecipante al progetto internazionale <strong>Erasmus+ in Romania</strong> (<em>"Under the Same Sky 2023"</em>).</li>
       </ul>
     </div>
     <div class="percorso-tech-pills">
-      <span class="percorso-tech-pill">Reti di Calcolatori</span>
+      <span class="percorso-tech-pill">Telecomunicazioni</span>
+      <span class="percorso-tech-pill">Sistemi e Reti</span>
       <span class="percorso-tech-pill">C / C++</span>
-      <span class="percorso-tech-pill">Java OOP</span>
-      <span class="percorso-tech-pill">Erasmus+ Romania</span>
+      <span class="percorso-tech-pill">Java</span>
+      <span class="percorso-tech-pill">Erasmus+</span>
     </div>
   </div>
 
   <!-- Quest 6: Diagnostica Hardware & Riparazione PC -->
   <div class="percorso-card" data-categories="work">
     <div class="percorso-card-header">
-      <span class="percorso-date-badge">3+ ANNI ESP.</span>
+      <span class="percorso-date-badge">2022+ .</span>
       <span class="percorso-status-tag status-cleared">★ PASSIVE SKILL // HARDWARE EXPERT</span>
     </div>
     <h3 class="percorso-card-title">Diagnostica, Assemblaggio & Riparazione PC</h3>
-    <div class="percorso-card-org">Attività Tecnica sul Campo &bull; Hardware Lab</div>
+    <div class="percorso-card-org">Attività Tecnica sul Campo &bull; Per passaparola</div>
     <div class="percorso-card-body">
       <ul>
-        <li>Oltre 3 anni di esperienza diretta nella <strong>diagnostica hardware avanzata</strong>, troubleshooting di problemi di boot e stabilità.</li>
+        <li>Oltre 3 anni di esperienza diretta nella <strong>diagnostica hardware avanzata</strong>, troubleshooting di problemi di performance, boot e stabilità.</li>
         <li>Riparazione e sostituzione componenti per computer desktop e workstation portatili.</li>
-        <li>Assemblaggio di build personalizzate da gaming e lavoro, cablaggio pulito (cable management) e ottimizzazione termico-acustica.</li>
+        <li>Assemblaggio di build personalizzate da gaming e lavoro, cablaggio pulito (cable management) e ottimizzazione.</li>
       </ul>
     </div>
     <div class="percorso-tech-pills">
       <span class="percorso-tech-pill">Hardware Troubleshooting</span>
       <span class="percorso-tech-pill">PC Building</span>
-      <span class="percorso-tech-pill">Diagnostica Termica</span>
+      <span class="percorso-tech-pill">Diagnostica</span>
       <span class="percorso-tech-pill">BIOS & OS Setup</span>
     </div>
   </div>

@@ -139,30 +139,42 @@
 
           <!-- TV Screen Frame & Glass Bezel -->
           <div class="tv-screen-bezel">
-            <div class="tv-crt-glass">
+            <div class="tv-crt-glass" id="tv-crt-screen">
               
               <!-- Screen Glare Light Reflection -->
               <div class="screen-glare" aria-hidden="true"></div>
+
+              <!-- TV Static Glitch Effect Layer -->
+              <div class="tv-static-glitch" id="tv-static-glitch" aria-hidden="true"></div>
               
-              <!-- Content inside TV Screen -->
-              <div class="tv-screen-content">
-                <div class="p4-title-cluster">
-                  <div class="p4-sub-badge">CRISTIAN CAROTENUTO &bull; FULL STACK DEVELOPER</div>
-                  <h1 class="p4-main-title">
-                    <a href="{{ "/" | absolute_url }}">
-                      <span class="title-word">{{ site.title | default: "The Shia Channel" }}</span>
-                    </a>
-                  </h1>
-                  <p class="p4-tagline">{{ site.description | default: "Il mio biglietto da visita!" }}</p>
+              <!-- Collapsible Tagliando (Curtain Drawer with Title & Name) -->
+              <div class="tv-title-tagliando" id="tv-title-tagliando">
+                <div class="tv-screen-content">
+                  <div class="p4-title-cluster">
+                    <div class="p4-sub-badge">CRISTIAN CAROTENUTO &bull; FULL STACK DEVELOPER</div>
+                    <h1 class="p4-main-title">
+                      <a href="{{ "/" | absolute_url }}">
+                        <span class="title-word">{{ site.title | default: "The Shia Channel" }}</span>
+                      </a>
+                    </h1>
+                    <p class="p4-tagline">{{ site.description | default: "Il mio biglietto da visita!" }}</p>
+                  </div>
+
+                  <!-- TV Glasses Graphic / Emblem -->
+                  <div class="p4-glasses-emblem" aria-hidden="true" title="Glasses for the TV World">
+                    <div class="lens-frame left-lens"><div class="lens-glass"></div></div>
+                    <div class="bridge"></div>
+                    <div class="lens-frame right-lens"><div class="lens-glass"></div></div>
+                  </div>
                 </div>
 
-                <!-- TV Glasses Graphic / Emblem -->
-                <div class="p4-glasses-emblem" aria-hidden="true" title="Glasses for the TV World">
-                  <div class="lens-frame left-lens"><div class="lens-glass"></div></div>
-                  <div class="bridge"></div>
-                  <div class="lens-frame right-lens"><div class="lens-glass"></div></div>
+                <!-- Handle / Pull Tab on the right edge of the card -->
+                <div class="tagliando-tab" id="tagliando-tab" role="button" tabindex="0" title="Tagliando Canale: Espandi o Riduci per mostrare gli sticker P4">
+                  <span class="tab-arrow" id="tagliando-arrow">◀</span>
+                  <span class="tab-label">SHIA CH</span>
                 </div>
               </div>
+
             </div>
 
             <!-- TV Side Hardware Controls (Interactive Radio & Jukebox) -->
@@ -618,6 +630,83 @@
             });
           });
         });
+
+        // --- 8. TV TITLE TAGLIANDO CURTAIN (AUTO-MINIMIZE & HOVER) ---
+        var tvScreen = document.getElementById('tv-crt-screen');
+        var tagliando = document.getElementById('tv-title-tagliando');
+        var tagliandoTab = document.getElementById('tagliando-tab');
+        var tagliandoArrow = document.getElementById('tagliando-arrow');
+        var glitchLayer = document.getElementById('tv-static-glitch');
+
+        var isTagliandoMinimized = false;
+        var leaveTimer = null;
+
+        function triggerGlitch(duration) {
+          if (!glitchLayer) return;
+          glitchLayer.classList.remove('is-glitching');
+          void glitchLayer.offsetWidth; /* trigger reflow */
+          glitchLayer.classList.add('is-glitching');
+          setTimeout(function() {
+            glitchLayer.classList.remove('is-glitching');
+          }, duration || 380);
+        }
+
+        function minimizeTagliando() {
+          if (isTagliandoMinimized || !tagliando) return;
+          isTagliandoMinimized = true;
+          triggerGlitch(380);
+          tagliando.classList.add('is-minimized');
+          if (tagliandoArrow) tagliandoArrow.textContent = '▶';
+        }
+
+        function expandTagliando() {
+          if (!isTagliandoMinimized || !tagliando) return;
+          isTagliandoMinimized = false;
+          triggerGlitch(300);
+          tagliando.classList.remove('is-minimized');
+          if (tagliandoArrow) tagliandoArrow.textContent = '◀';
+        }
+
+        // Auto-minimize 3 seconds after page loads
+        setTimeout(function() {
+          minimizeTagliando();
+        }, 3000);
+
+        // Hover over screen or tab expands
+        if (tvScreen) {
+          tvScreen.addEventListener('mouseenter', function() {
+            if (leaveTimer) {
+              clearTimeout(leaveTimer);
+              leaveTimer = null;
+            }
+            if (isTagliandoMinimized) {
+              expandTagliando();
+            }
+          });
+
+          // Moving mouse out of the TV screen minimizes back
+          tvScreen.addEventListener('mouseleave', function() {
+            if (leaveTimer) clearTimeout(leaveTimer);
+            leaveTimer = setTimeout(function() {
+              if (!isTagliandoMinimized) {
+                minimizeTagliando();
+              }
+            }, 400);
+          });
+        }
+
+        // Click / Tap toggle on the tab
+        if (tagliandoTab) {
+          tagliandoTab.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (leaveTimer) clearTimeout(leaveTimer);
+            if (isTagliandoMinimized) {
+              expandTagliando();
+            } else {
+              minimizeTagliando();
+            }
+          });
+        }
 
       })();
     </script>
