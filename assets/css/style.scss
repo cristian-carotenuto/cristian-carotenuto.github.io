@@ -27,6 +27,10 @@
   --p4-light-gray: #F2F2F2;
   --p4-white: #FFFFFF;
 
+  /* Dynamic Site Background Colors (Default Yu) */
+  --p4-bg-color: #FFD000;
+  --p4-bg-dot: #D89E00;
+
   /* Persona 4 Rainbow Test Pattern Bars */
   --p4-rainbow-yellow: #FFD000;
   --p4-rainbow-orange: #FF6600;
@@ -53,6 +57,52 @@
   --shadow-p4-yellow: 5px 5px 0px var(--p4-yellow);
 }
 
+/* Persona 4 Character Theme Palettes (Extracted from p4-stickers.jpg) */
+:root[data-p4-theme="yu"], [data-p4-theme="yu"] {
+  --p4-bg-color: #FFD000;
+  --p4-bg-dot: #D89E00;
+}
+
+:root[data-p4-theme="chie"], [data-p4-theme="chie"] {
+  --p4-bg-color: #27AE60;
+  --p4-bg-dot: #1B7A43;
+}
+
+:root[data-p4-theme="yukiko"], [data-p4-theme="yukiko"] {
+  --p4-bg-color: #E74C3C;
+  --p4-bg-dot: #A92718;
+}
+
+:root[data-p4-theme="yosuke"], [data-p4-theme="yosuke"] {
+  --p4-bg-color: #FA8231;
+  --p4-bg-dot: #BA5407;
+}
+
+:root[data-p4-theme="rise"], [data-p4-theme="rise"] {
+  --p4-bg-color: #FD79A8;
+  --p4-bg-dot: #D83266;
+}
+
+:root[data-p4-theme="naoto"], [data-p4-theme="naoto"] {
+  --p4-bg-color: #00CEC9;
+  --p4-bg-dot: #009894;
+}
+
+:root[data-p4-theme="teddie"], [data-p4-theme="teddie"] {
+  --p4-bg-color: #8854D0;
+  --p4-bg-dot: #572899;
+}
+
+:root[data-p4-theme="kanji"], [data-p4-theme="kanji"] {
+  --p4-bg-color: #A58D54;
+  --p4-bg-dot: #786537;
+}
+
+:root[data-p4-theme="midnight"], [data-p4-theme="midnight"] {
+  --p4-bg-color: #1E232A;
+  --p4-bg-dot: #12151A;
+}
+
 /* --------------------------------------------------------------------------
    3. GLOBAL RESET & BASE STYLES
    -------------------------------------------------------------------------- */
@@ -72,17 +122,18 @@ body {
   font-size: 1.05rem;
   line-height: 1.7;
   color: var(--p4-black);
-  /* Persona 4 Halftone Pop-Art Polka Dot Pattern */
-  background-color: var(--p4-yellow);
+  /* Persona 4 Halftone Pop-Art Polka Dot Pattern (Supports Dynamic Color Chooser) */
+  background-color: var(--p4-bg-color);
   background-image: 
-    radial-gradient(var(--p4-yellow-dark) 18%, transparent 19%),
-    radial-gradient(var(--p4-yellow-dark) 18%, transparent 19%);
+    radial-gradient(var(--p4-bg-dot) 18%, transparent 19%),
+    radial-gradient(var(--p4-bg-dot) 18%, transparent 19%);
   background-size: 24px 24px;
   background-position: 0 0, 12px 12px;
   background-attachment: fixed;
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
+  transition: background-color 0.25s ease;
 }
 
 /* Fallback override for default minimal theme layout if loaded without custom default.html */
@@ -274,9 +325,17 @@ div.wrapper {
 /* TV Screen Bezel */
 .tv-screen-bezel {
   display: flex;
-  background: #1C1C1C;
+  background-color: #1C1C1C;
+  background-image: 
+    linear-gradient(to right, #1C1C1C 0%, #1C1C1C 45%, rgba(28, 28, 28, 0.65) 75%, rgba(28, 28, 28, 0.2) 100%),
+    url('../images/p4-stickers.jpg');
+  background-position: right center;
+  background-size: cover;
+  background-repeat: no-repeat;
   padding: 18px;
   gap: 18px;
+  position: relative;
+  overflow: hidden;
 }
 
 /* TV CRT Glass */
@@ -438,16 +497,27 @@ div.wrapper {
 
 /* TV Controls Side Panel */
 .tv-controls-panel {
-  width: 80px;
+  width: 86px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background: #141414;
+  background: rgba(18, 18, 18, 0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   border-radius: 8px;
-  border: 2px solid #292929;
+  border: 2px solid rgba(255, 208, 0, 0.45);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7), inset 0 0 15px rgba(0, 0, 0, 0.6);
   padding: 14px 8px;
   gap: 12px;
+  position: relative;
+  z-index: 4;
+  transition: all 0.2s ease;
+}
+
+.tv-controls-panel:hover {
+  background: rgba(18, 18, 18, 0.55);
+  border-color: var(--p4-yellow);
 }
 
 .tv-dial {
@@ -1092,19 +1162,17 @@ tr:hover td {
 
 /* Persona 4 Radar/Stat Gauge */
 .p4-stat-row {
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
-  gap: 14px;
+  display: block;
+  margin-bottom: 22px;
 }
 
 .p4-stat-name {
-  width: 130px;
+  width: 225px;
   font-family: var(--font-display);
   font-size: 1.25rem;
   letter-spacing: 0.5px;
   color: var(--p4-black);
-  text-align: right;
+  text-align: left;
   flex-shrink: 0;
 }
 
@@ -1131,11 +1199,12 @@ tr:hover td {
 }
 
 .p4-stat-rank {
+  float: right;
   font-family: var(--font-mono);
   font-size: 0.85rem;
   font-weight: bold;
   color: var(--p4-black);
-  width: 65px;
+  width: 165px;
 }
 
 /* --------------------------------------------------------------------------
@@ -1241,7 +1310,7 @@ tr:hover td {
 /* --------------------------------------------------------------------------
    12. RESPONSIVE DESIGN (MEDIA QUERIES)
    -------------------------------------------------------------------------- */
-@media screen and (max-width: 820px) {
+@media screen and (max-width: 1000px) {
   .title-word {
     font-size: 3.2rem;
     padding: 2px 16px;
@@ -1759,4 +1828,282 @@ tr:hover td {
 @keyframes p4SpeakerVibe {
   0% { transform: scaleX(0.7); opacity: 0.5; }
   100% { transform: scaleX(1.15); opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   14. TV TICKER COLOR THEME PICKER (p4-stickers.jpg PALETTE)
+   -------------------------------------------------------------------------- */
+.tv-color-picker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.theme-picker-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--p4-yellow);
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.p4-color-swatches {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 3px 7px;
+  border-radius: 12px;
+  border: 1px solid #333;
+}
+
+.p4-swatch-btn {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--swatch-c);
+  border: 2px solid #000;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+}
+
+.p4-swatch-btn:hover {
+  transform: scale(1.35);
+  box-shadow: 0 0 8px var(--swatch-c);
+  z-index: 2;
+}
+
+.p4-swatch-btn.is-active {
+  transform: scale(1.25);
+  border-color: #FFF;
+  box-shadow: 0 0 6px var(--swatch-c), 0 0 10px #FFF;
+}
+
+/* --------------------------------------------------------------------------
+   15. IL MIO PERCORSO // VELVET QUEST LOG (INTERACTIVE CV)
+   -------------------------------------------------------------------------- */
+.percorso-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 25px 0 25px 0;
+}
+
+.percorso-filter-btn {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 1px;
+  background: var(--p4-white);
+  color: var(--p4-black);
+  border: 3px solid var(--p4-black);
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transform: skew(-6deg);
+  box-shadow: 3px 3px 0 var(--p4-black);
+  transition: all 0.15s ease;
+}
+
+.percorso-filter-btn:hover {
+  background: var(--p4-yellow);
+  transform: skew(-6deg) translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--p4-black);
+}
+
+.percorso-filter-btn.is-active {
+  background: var(--p4-black);
+  color: var(--p4-yellow);
+  border-color: var(--p4-black);
+  transform: skew(-6deg) translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--p4-yellow-dark);
+}
+
+.percorso-cv-dl-btn {
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 1px;
+  background: #E74C3C;
+  color: var(--p4-white) !important;
+  border: 3px solid var(--p4-black);
+  padding: 6px 18px;
+  border-radius: 4px;
+  text-decoration: none !important;
+  transform: skew(-6deg);
+  box-shadow: 3px 3px 0 var(--p4-black);
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.percorso-cv-dl-btn:hover {
+  background: #C0392B;
+  transform: skew(-6deg) translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--p4-black);
+  color: var(--p4-yellow) !important;
+}
+
+/* Timeline Container & Cards */
+.percorso-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin: 20px 0 40px 0;
+  padding-left: 24px;
+  border-left: 4px solid var(--p4-black);
+}
+
+.percorso-card {
+  background: var(--p4-white);
+  border: 3px solid var(--p4-black);
+  border-radius: 8px;
+  box-shadow: 6px 6px 0 var(--p4-black);
+  position: relative;
+  padding: 22px 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.percorso-card::before {
+  content: '';
+  position: absolute;
+  left: -33px;
+  top: 24px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--p4-yellow);
+  border: 3px solid var(--p4-black);
+  box-shadow: 0 0 0 3px var(--p4-white);
+}
+
+.percorso-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0 var(--p4-black);
+}
+
+.percorso-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px dashed #ddd;
+}
+
+.percorso-date-badge {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  background: var(--p4-black);
+  color: var(--p4-yellow);
+  padding: 2px 12px;
+  border-radius: 3px;
+  transform: skew(-7deg);
+  letter-spacing: 1px;
+}
+
+.percorso-status-tag {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 3px 10px;
+  border-radius: 3px;
+  border: 1px solid var(--p4-black);
+  letter-spacing: 0.5px;
+}
+
+.status-active {
+  background: #E8F8F5;
+  color: #117A65;
+  border-color: #117A65;
+}
+
+.status-cleared {
+  background: #FEF9E7;
+  color: #B7950B;
+  border-color: #B7950B;
+}
+
+.percorso-card-title {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  line-height: 1.15;
+  margin: 0 0 4px 0;
+  color: var(--p4-black);
+  letter-spacing: 0.5px;
+}
+
+.percorso-card-org {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 14px;
+}
+
+.percorso-card-body {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #222;
+}
+
+.percorso-card-body ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.percorso-card-body li {
+  margin-bottom: 6px;
+}
+
+.percorso-tech-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #EEE;
+}
+
+.percorso-tech-pill {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: bold;
+  background: #F4F4F4;
+  color: #333;
+  padding: 3px 9px;
+  border-radius: 4px;
+  border: 1px solid #CCC;
+}
+
+.p4-card-enter {
+  animation: p4CardFadeIn 0.3s ease-out;
+}
+
+@keyframes p4CardFadeIn {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@media screen and (max-width: 600px) {
+  .percorso-timeline {
+    padding-left: 14px;
+  }
+  .percorso-card::before {
+    left: -23px;
+    width: 12px;
+    height: 12px;
+  }
+  .percorso-cv-dl-btn {
+    width: 100%;
+    margin-left: 0;
+    justify-content: center;
+  }
 }
