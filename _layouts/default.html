@@ -72,6 +72,16 @@
     <!-- Subtle CRT TV Scanline Overlay for Main Page -->
     <div class="crt-scanline-overlay" aria-hidden="true"></div>
 
+    <!-- Global weather ambience: lives behind the page and is controlled by the WTHR dial -->
+    <div class="site-weather-fx-layer" id="site-weather-fx-layer" aria-hidden="true">
+      <div class="site-weather-icon" id="site-weather-icon"></div>
+      <div class="site-weather-effect" id="site-weather-effect"></div>
+      <div class="site-weather-cloud-strip" id="site-weather-cloud-strip"></div>
+      <div class="site-weather-lightning" id="site-weather-lightning"></div>
+      <div class="site-weather-fog-side site-weather-fog-left" id="site-weather-fog-left"></div>
+      <div class="site-weather-fog-side site-weather-fog-right" id="site-weather-fog-right"></div>
+    </div>
+
     <div class="p4-viewport-wrap">
       
       <!-- ================= PERSONA 4 TV WORLD BANNER ================= -->
@@ -108,8 +118,8 @@
               </span>
             </div>
 
-            <div class="ticker-item tv-weather">
-              <span class="weather-icon">🌧️</span> WEATHER: <span class="weather-state">{{ site.weather | default: "RAIN / FOG" }}</span>
+            <div class="ticker-item tv-weather" id="tv-weather-status">
+              <span class="weather-icon" id="weather-ticker-icon">🌫️</span> WEATHER: <span class="weather-state" id="weather-state">{{ site.weather | default: "RAIN / FOG" }}</span>
             </div>
 
             <!-- Persona 4 stickers.jpg Background Color Chooser -->
@@ -146,6 +156,7 @@
 
               <!-- TV Static Glitch Effect Layer -->
               <div class="tv-static-glitch" id="tv-static-glitch" aria-hidden="true"></div>
+              <div class="tv-game-swipe-hint" id="tv-game-swipe-hint" aria-hidden="true">↔ DRAG: P3R / P4 / P5R</div>
               
               <!-- Collapsible Tagliando (Curtain Drawer with Title & Name) -->
               <div class="tv-title-tagliando" id="tv-title-tagliando">
@@ -169,10 +180,23 @@
                 </div>
 
                 <!-- Handle / Pull Tab on the right edge of the card -->
-                <div class="tagliando-tab" id="tagliando-tab" role="button" tabindex="0" title="Tagliando Canale: Espandi o Riduci per mostrare gli sticker P4">
+                <div class="tagliando-tab" id="tagliando-tab" role="button" tabindex="0" title="Tagliando Canale: Espandi o Riduci per mostrare gli sticker del canale attivo">
                   <span class="tab-arrow" id="tagliando-arrow">◀</span>
-                  <span class="tab-label">SHIA CH</span>
+                  <span class="tab-label">Who's There?</span>
                 </div>
+              </div>
+
+              <!-- Weather FX Layer: icons and effects rendered here, inside the screen -->
+              <div class="tv-weather-fx-layer" id="tv-weather-fx-layer" aria-hidden="true">
+                <!-- Weather icon top-right -->
+                <div class="weather-fx-icon" id="weather-fx-icon"></div>
+                <!-- Effect containers -->
+                <div class="weather-effect-container" id="weather-effect-container"></div>
+                <!-- Storm banner -->
+                <div class="weather-storm-banner" id="weather-storm-banner" aria-hidden="true"></div>
+                <!-- Fog overlay sides -->
+                <div class="weather-fog-left"  id="weather-fog-left"  aria-hidden="true"></div>
+                <div class="weather-fog-right" id="weather-fog-right" aria-hidden="true"></div>
               </div>
 
             </div>
@@ -189,6 +213,12 @@
               <div class="tv-dial dial-vol" id="dial-volume" role="button" tabindex="0" title="Manopola Volume: Clicca per regolare o usa la rotellina del mouse">
                 <div class="dial-notch" id="notch-vol"></div>
                 <span class="dial-tag" id="vol-tag">VOL 10%</span>
+              </div>
+
+              <!-- Weather Dial: WTHR -->
+              <div class="tv-dial dial-wthr" id="dial-weather" role="button" tabindex="0" title="Manopola Meteo: Cambia il meteo (Clicca o usa rotellina)">
+                <div class="dial-notch" id="notch-wthr"></div>
+                <span class="dial-tag" id="wthr-tag">WTHR</span>
               </div>
 
               <!-- Power Switch: Play / Pause Radio -->
@@ -273,49 +303,50 @@
         updateClock();
         setInterval(updateClock, 30000);
 
-        // --- 2. SOUNDTRACK PLAYLIST & RADIO CONTROLLER ---
-        var playlist = [
-          {
-            title: "Like a Dream Come True",
-            channel: "CH 01",
-            src: "{{ '/assets/audio/like-a-dream-come-true.mp3' | relative_url }}"
-          },
-          {
-            title: "Heartbeat, Heartbreak",
-            channel: "CH 02",
-            src: "https://archive.org/download/never-more-reincarnation-persona-4/02.%20Heartbeat%2C%20Heartbreak.mp3"
-          },
-          {
-            title: "Your Affection",
-            channel: "CH 03",
-            src: "https://archive.org/download/never-more-reincarnation-persona-4/06.%20Your%20Affection.mp3"
-          },
-          {
-            title: "Specialist",
-            channel: "CH 04",
-            src: "https://archive.org/download/never-more-reincarnation-persona-4/11.%20specialist.mp3"
-          },
-          {
-            title: "Signs of Love",
-            channel: "CH 05",
-            src: "https://archive.org/download/never-more-reincarnation-persona-4/10.%20Signs%20Of%20Love.mp3"
-          },
-          {
-            title: "Reach Out To The Truth",
-            channel: "CH 06",
-            src: "https://archive.org/download/never-more-reincarnation-persona-4/05.%20Reach%20Out%20To%20The%20Truth.mp3"
-          },
-          {
-            title: "Pursuing My True Self",
-            channel: "CH 07",
-            src: "https://archive.org/download/never-more-reincarnation-persona-4/01.%20Pursuing%20My%20True%20Self.mp3"
-          },
-          {
-            title: "Never More",
-            channel: "CH 08",
-            src: "https://archive.org/download/never-more-reincarnation-persona-4/12.%20Never%20More.mp3"
-          }
+        // --- 2. MULTI-GAME PLAYLISTS & RADIO CONTROLLER ---
+
+        // ---- P4: Persona 4 (default) ----
+        var playlistP4 = [
+          { title: "Like a Dream Come True", channel: "P4·01", src: "{{ '/assets/audio/like-a-dream-come-true.mp3' | relative_url }}" },
+          { title: "Heartbeat, Heartbreak",  channel: "P4·02", src: "https://archive.org/download/never-more-reincarnation-persona-4/02.%20Heartbeat%2C%20Heartbreak.mp3" },
+          { title: "Your Affection",         channel: "P4·03", src: "https://archive.org/download/never-more-reincarnation-persona-4/06.%20Your%20Affection.mp3" },
+          { title: "Specialist",             channel: "P4·04", src: "https://archive.org/download/never-more-reincarnation-persona-4/11.%20specialist.mp3" },
+          { title: "Signs of Love",          channel: "P4·05", src: "https://archive.org/download/never-more-reincarnation-persona-4/10.%20Signs%20Of%20Love.mp3" },
+          { title: "Reach Out To The Truth", channel: "P4·06", src: "https://archive.org/download/never-more-reincarnation-persona-4/05.%20Reach%20Out%20To%20The%20Truth.mp3" },
+          { title: "Pursuing My True Self",  channel: "P4·07", src: "https://archive.org/download/never-more-reincarnation-persona-4/01.%20Pursuing%20My%20True%20Self.mp3" },
+          { title: "Never More",             channel: "P4·08", src: "https://archive.org/download/never-more-reincarnation-persona-4/12.%20Never%20More.mp3" }
         ];
+
+        // ---- P3R: Persona 3 Reload ----
+        var playlistP3 = [
+          { title: "Full Moon Full Life",      channel: "P3·01", src: "https://archive.org/download/persona-3-reload-ost/01.%20Full%20Moon%20Full%20Life.mp3" },
+          { title: "It's Going Down Now",      channel: "P3·02", src: "https://archive.org/download/persona-3-reload-ost/02.%20It%27s%20Going%20Down%20Now.mp3" },
+          { title: "A Deep Dark Maze",         channel: "P3·03", src: "https://archive.org/download/persona-3-reload-ost/03.%20A%20Deep%20Dark%20Maze.mp3" },
+          { title: "Changing Seasons",         channel: "P3·04", src: "https://archive.org/download/persona-3-reload-ost/04.%20Changing%20Seasons.mp3" },
+          { title: "Iwatodai Station",         channel: "P3·05", src: "https://archive.org/download/persona-3-reload-ost/05.%20Iwatodai%20Station.mp3" },
+          { title: "When the Moon's Reaching Out Stars", channel: "P3·06", src: "https://archive.org/download/persona-3-reload-ost/06.%20When%20the%20Moon%27s%20Reaching%20Out%20Stars.mp3" },
+          { title: "Mass Destruction (Reload)", channel: "P3·07", src: "https://archive.org/download/persona-3-reload-ost/07.%20Mass%20Destruction.mp3" },
+          { title: "Burn My Dread (Reload)",   channel: "P3·08", src: "https://archive.org/download/persona-3-reload-ost/08.%20Burn%20My%20Dread.mp3" }
+        ];
+
+        // ---- P5R: Persona 5 Royal ----
+        var playlistP5 = [
+          { title: "Wake Up, Get Up, Get Out There", channel: "P5·01", src: "https://archive.org/download/persona-5-royal-ost/01.%20Wake%20Up%2C%20Get%20Up%2C%20Get%20Out%20There.mp3" },
+          { title: "Last Surprise",           channel: "P5·02", src: "https://archive.org/download/persona-5-royal-ost/02.%20Last%20Surprise.mp3" },
+          { title: "Life Will Change",        channel: "P5·03", src: "https://archive.org/download/persona-5-royal-ost/03.%20Life%20Will%20Change.mp3" },
+          { title: "Beneath the Mask",        channel: "P5·04", src: "https://archive.org/download/persona-5-royal-ost/04.%20Beneath%20the%20Mask.mp3" },
+          { title: "Phantom",                 channel: "P5·05", src: "https://archive.org/download/persona-5-royal-ost/05.%20Phantom.mp3" },
+          { title: "Layer Cake",              channel: "P5·06", src: "https://archive.org/download/persona-5-royal-ost/06.%20Layer%20Cake.mp3" },
+          { title: "Rivers in the Desert",    channel: "P5·07", src: "https://archive.org/download/persona-5-royal-ost/07.%20Rivers%20in%20the%20Desert.mp3" },
+          { title: "Colors Flying High",      channel: "P5·08", src: "https://archive.org/download/persona-5-royal-ost/08.%20Colors%20Flying%20High.mp3" }
+        ];
+
+        // Game index: 0=P3, 1=P4, 2=P5 (P4 is default/center)
+        var allPlaylists = [playlistP3, playlistP4, playlistP5];
+        var gameNames = ['PERSONA 3 RELOAD', 'PERSONA 4', 'PERSONA 5 ROYAL'];
+        var gameLabels = ['P3R', 'P4', 'P5R'];
+        var currentGameIndex = 1; // default: P4
+        var playlist = allPlaylists[currentGameIndex];
 
         var currentIndex = 0;
         var isPlaying = false;
@@ -495,7 +526,262 @@
           radioTicker.addEventListener('click', toggleRadio);
         }
 
-        // --- 3. PERSONA 4 LOADING INTRO SCREEN (MAX 3 SECONDS) ---
+        // --- 3. MANUAL TV GAME CAROUSEL (P3R <-> P4 <-> P5R, INFINITE LOOP) ---
+        var tvScreenForGame = document.getElementById('tv-crt-screen');
+        var tvBezelForGame = document.querySelector('.tv-screen-bezel');
+        var gameSwipeHint = document.getElementById('tv-game-swipe-hint');
+        var gameStickerImages = [
+          "{{ '/assets/images/p3-stickers.jpg' | relative_url }}",
+          "{{ '/assets/images/p4-stickers.jpg' | relative_url }}",
+          "{{ '/assets/images/p5-stickers.jpg' | relative_url }}"
+        ];
+        var dragStartX = null;
+        var dragStartY = null;
+        var dragPointerId = null;
+        var dragThreshold = 58;
+
+        function normalizeGameIndex(index) {
+          return (index + allPlaylists.length) % allPlaylists.length;
+        }
+
+        function setGameChannel(index, direction) {
+          currentGameIndex = normalizeGameIndex(index);
+          playlist = allPlaylists[currentGameIndex];
+          currentIndex = 0;
+
+          var stickerUrl = gameStickerImages[currentGameIndex];
+          if (tvScreenForGame) {
+            tvScreenForGame.style.setProperty('--tv-sticker-image', 'url("' + stickerUrl + '")');
+            tvScreenForGame.setAttribute('data-persona-game', gameLabels[currentGameIndex]);
+            tvScreenForGame.classList.remove('game-slide-left', 'game-slide-right');
+            void tvScreenForGame.offsetWidth;
+            tvScreenForGame.classList.add(direction === 'prev' ? 'game-slide-right' : 'game-slide-left');
+          }
+          if (tvBezelForGame) {
+            tvBezelForGame.style.setProperty('--tv-sticker-image', 'url("' + stickerUrl + '")');
+          }
+
+          loadTrack(0);
+          if (isPlaying) playRadio();
+          if (gameSwipeHint) gameSwipeHint.textContent = '↔ ' + gameNames[currentGameIndex] + ' • DRAG TO CHANGE';
+          triggerGlitch(420);
+        }
+
+        function nextGameChannel() {
+          setGameChannel(currentGameIndex + 1, 'next');
+        }
+
+        function prevGameChannel() {
+          setGameChannel(currentGameIndex - 1, 'prev');
+        }
+
+        // Initialize P4 explicitly, while keeping the carousel manual-only.
+        setGameChannel(currentGameIndex, 'next');
+
+        if (tvScreenForGame) {
+          tvScreenForGame.addEventListener('pointerdown', function(e) {
+            // Ignore drags that begin on an explicitly interactive control.
+            if (e.target.closest('button, a, [role="button"]')) return;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            dragPointerId = e.pointerId;
+            tvScreenForGame.classList.add('is-dragging-game');
+            try { tvScreenForGame.setPointerCapture(e.pointerId); } catch (_) {}
+          });
+
+          tvScreenForGame.addEventListener('pointermove', function(e) {
+            if (dragStartX === null || e.pointerId !== dragPointerId) return;
+            var dx = e.clientX - dragStartX;
+            var dy = e.clientY - dragStartY;
+            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) {
+              e.preventDefault();
+              tvScreenForGame.style.setProperty('--tv-drag-x', Math.max(-90, Math.min(90, dx)) + 'px');
+            }
+          });
+
+          function finishGameDrag(e) {
+            if (dragStartX === null || (e.pointerId !== undefined && e.pointerId !== dragPointerId)) return;
+            var dx = (e.clientX !== undefined ? e.clientX : dragStartX) - dragStartX;
+            tvScreenForGame.classList.remove('is-dragging-game');
+            tvScreenForGame.style.removeProperty('--tv-drag-x');
+            if (dx <= -dragThreshold) nextGameChannel();
+            else if (dx >= dragThreshold) prevGameChannel();
+            dragStartX = dragStartY = dragPointerId = null;
+          }
+
+          tvScreenForGame.addEventListener('pointerup', finishGameDrag);
+          tvScreenForGame.addEventListener('pointercancel', finishGameDrag);
+          tvScreenForGame.addEventListener('lostpointercapture', function() {
+            tvScreenForGame.classList.remove('is-dragging-game');
+            tvScreenForGame.style.removeProperty('--tv-drag-x');
+            dragStartX = dragStartY = dragPointerId = null;
+          });
+        }
+
+        // --- 4. WEATHER DIAL & GLOBAL WEATHER EFFECTS ---
+        var weatherDial = document.getElementById('dial-weather');
+        var weatherNotch = document.getElementById('notch-wthr');
+        var weatherTag = document.getElementById('wthr-tag');
+        var weatherStateEl = document.getElementById('weather-state');
+        var weatherTickerIcon = document.getElementById('weather-ticker-icon');
+        var weatherLayer = document.getElementById('site-weather-fx-layer');
+        var weatherIcon = document.getElementById('site-weather-icon');
+        var weatherEffect = document.getElementById('site-weather-effect');
+        var weatherCloudStrip = document.getElementById('site-weather-cloud-strip');
+        var weatherLightning = document.getElementById('site-weather-lightning');
+        var fogLeft = document.getElementById('site-weather-fog-left');
+        var fogRight = document.getElementById('site-weather-fog-right');
+        var weatherModes = ['Clear', 'Cloudy', 'Rain / Storm', 'Fog', 'Snow'];
+        var currentWeatherIndex = 0;
+        var weatherAngle = -110;
+        var lightningTimer = null;
+        var fogBaseMode = 'Cloudy';
+
+        function clearWeatherTimers() {
+          if (lightningTimer) {
+            clearTimeout(lightningTimer);
+            lightningTimer = null;
+          }
+        }
+
+        function makeRain(count) {
+          var frag = document.createDocumentFragment();
+          for (var i = 0; i < count; i++) {
+            var drop = document.createElement('i');
+            drop.className = 'weather-raindrop';
+            drop.style.left = (Math.random() * 100) + '%';
+            drop.style.animationDelay = (-Math.random() * 1.2) + 's';
+            drop.style.animationDuration = (0.48 + Math.random() * 0.5) + 's';
+            frag.appendChild(drop);
+          }
+          weatherEffect.appendChild(frag);
+        }
+
+        function makeSnow(count) {
+          var frag = document.createDocumentFragment();
+          for (var i = 0; i < count; i++) {
+            var flake = document.createElement('i');
+            flake.className = 'weather-snowflake';
+            flake.textContent = '❄';
+            flake.style.left = (Math.random() * 100) + '%';
+            flake.style.fontSize = (8 + Math.random() * 16) + 'px';
+            flake.style.animationDelay = (-Math.random() * 8) + 's';
+            flake.style.animationDuration = (5 + Math.random() * 7) + 's';
+            frag.appendChild(flake);
+          }
+          weatherEffect.appendChild(frag);
+        }
+
+        function scheduleLightning() {
+          clearWeatherTimers();
+          function flash() {
+            if (!weatherLayer || !weatherLayer.classList.contains('weather-rain')) return;
+            weatherLightning.classList.add('is-flashing');
+            setTimeout(function() { weatherLightning.classList.remove('is-flashing'); }, 130);
+            setTimeout(function() {
+              if (Math.random() > 0.45) {
+                weatherLightning.classList.add('is-flashing');
+                setTimeout(function() { weatherLightning.classList.remove('is-flashing'); }, 80);
+              }
+            }, 190);
+            lightningTimer = setTimeout(flash, 3000 + Math.random() * 7000);
+          }
+          lightningTimer = setTimeout(flash, 1700 + Math.random() * 3500);
+        }
+
+        function renderBaseWeather(mode, forFog) {
+          if (!weatherLayer) return;
+          weatherLayer.classList.remove('weather-clear', 'weather-cloudy', 'weather-rain', 'weather-snow');
+          weatherEffect.innerHTML = '';
+          weatherCloudStrip.innerHTML = '';
+          weatherLightning.classList.remove('is-flashing');
+          clearWeatherTimers();
+
+          if (mode === 'Clear') {
+            weatherLayer.classList.add('weather-clear');
+            weatherIcon.innerHTML = '<span class="weather-sun"><b></b></span>';
+          } else if (mode === 'Cloudy') {
+            weatherLayer.classList.add('weather-cloudy');
+            weatherIcon.innerHTML = '<span class="weather-cloud weather-cloud-dark"></span>';
+          } else if (mode === 'Rain / Storm') {
+            weatherLayer.classList.add('weather-rain');
+            weatherIcon.innerHTML = '<span class="weather-rain-icon"><span class="weather-cloud weather-cloud-dark"></span><b>////</b></span>';
+            weatherCloudStrip.innerHTML = '<span></span><span></span><span></span><span></span><span></span>';
+            makeRain(78);
+            scheduleLightning();
+          } else if (mode === 'Snow') {
+            weatherLayer.classList.add('weather-snow');
+            weatherIcon.innerHTML = '<span class="weather-snow-icon">❄</span>';
+            makeSnow(55);
+          }
+
+          if (forFog) {
+            weatherIcon.innerHTML += '<span class="weather-fog-warning">⚠ ≋</span>';
+          }
+        }
+
+        function setWeather(index) {
+          currentWeatherIndex = (index + weatherModes.length) % weatherModes.length;
+          var mode = weatherModes[currentWeatherIndex];
+          weatherAngle += 72;
+          if (weatherNotch) weatherNotch.style.transform = 'rotate(' + weatherAngle + 'deg)';
+          if (weatherStateEl) weatherStateEl.textContent = mode.toUpperCase();
+          if (weatherTag) weatherTag.textContent = 'WTHR ' + (currentWeatherIndex + 1) + '/5';
+          if (weatherLayer) weatherLayer.classList.remove('weather-fog');
+          if (fogLeft) fogLeft.classList.remove('is-visible');
+          if (fogRight) fogRight.classList.remove('is-visible');
+
+          var icons = {
+            'Clear': '☀️',
+            'Cloudy': '☁️',
+            'Rain / Storm': '🌧️',
+            'Fog': '🌫️',
+            'Snow': '❄️'
+          };
+          if (weatherTickerIcon) weatherTickerIcon.textContent = icons[mode];
+
+          if (mode === 'Fog') {
+            var fogCandidates = ['Clear', 'Cloudy', 'Rain / Storm', 'Snow'];
+            fogBaseMode = fogCandidates[Math.floor(Math.random() * fogCandidates.length)];
+            renderBaseWeather(fogBaseMode, true);
+            weatherLayer.classList.add('weather-fog');
+            if (fogLeft) fogLeft.classList.add('is-visible');
+            if (fogRight) fogRight.classList.add('is-visible');
+          } else {
+            renderBaseWeather(mode, false);
+          }
+
+          localStorage.setItem('p4-weather-mode', mode);
+        }
+
+        function nextWeather() { setWeather(currentWeatherIndex + 1); }
+        function prevWeather() { setWeather(currentWeatherIndex - 1); }
+
+        if (weatherDial) {
+          weatherDial.addEventListener('click', nextWeather);
+          weatherDial.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (e.deltaY < 0) prevWeather(); else nextWeather();
+          }, { passive: false });
+          weatherDial.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); prevWeather(); }
+            else if (e.key === 'ArrowRight' || e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); nextWeather(); }
+          });
+        }
+
+        var savedWeather = localStorage.getItem('p4-weather-mode');
+        if (savedWeather && weatherModes.indexOf(savedWeather) !== -1) {
+          setWeather(weatherModes.indexOf(savedWeather));
+        } else {
+          var initialWeatherText = (weatherStateEl ? weatherStateEl.textContent : '').toLowerCase();
+          if (initialWeatherText.indexOf('fog') !== -1) setWeather(3);
+          else if (initialWeatherText.indexOf('snow') !== -1) setWeather(4);
+          else if (initialWeatherText.indexOf('rain') !== -1 || initialWeatherText.indexOf('storm') !== -1) setWeather(2);
+          else if (initialWeatherText.indexOf('cloud') !== -1) setWeather(1);
+          else setWeather(0);
+        }
+
+        // --- 5. PERSONA 4 LOADING INTRO SCREEN (MAX 3 SECONDS) ---
         var introOverlay = document.getElementById('p4-intro');
         var introStage = document.getElementById('intro-stage');
         var introBar = document.getElementById('intro-progress-bar');
@@ -567,7 +853,7 @@
           });
         }
 
-        // --- 6. PERSONA 4 BACKGROUND COLOR THEME SELECTOR ---
+        // --- 7. PERSONA 4 BACKGROUND COLOR THEME SELECTOR ---
         var themeBtns = document.querySelectorAll('.p4-swatch-btn');
         var currentTheme = localStorage.getItem('p4-bg-theme') || 'midnight';
 
@@ -620,7 +906,7 @@
           });
         });
 
-        // --- 7. IL MIO PERCORSO (INTERACTIVE CV QUEST LOG) FILTERS ---
+        // --- 8. IL MIO PERCORSO (INTERACTIVE CV QUEST LOG) FILTERS ---
         var filterBtns = document.querySelectorAll('.percorso-filter-btn');
         var percorsoCards = document.querySelectorAll('.percorso-card');
 
@@ -643,7 +929,7 @@
           });
         });
 
-        // --- 8. TV TITLE TAGLIANDO CURTAIN (AUTO-MINIMIZE & HOVER) ---
+        // --- 9. TV TITLE TAGLIANDO CURTAIN (AUTO-MINIMIZE & HOVER) ---
         var tvScreen = document.getElementById('tv-crt-screen');
         var tagliando = document.getElementById('tv-title-tagliando');
         var tagliandoTab = document.getElementById('tagliando-tab');
