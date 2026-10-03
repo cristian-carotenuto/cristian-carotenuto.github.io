@@ -10,17 +10,16 @@ layout: default
 ### ABOUT ME
   
 Ciao! Mi chiamo Cristian, in arte "Shia", e studio Informatica presso l'Università degli Studi di Salerno.  
-Per farla molto breve: adoro la musica, i giochi e i miei gatti.  
+Per farla molto breve: **adoro la musica, i giochi e i miei gatti**.  
 Che poi l'idea di riassumere l'identità di una persona solo con delle [etichette](https://www.youtube.com/watch?v=Y3Sf5GzKyTk) è superfluo.     
 Del resto se sei **curioso/a**, potrai conoscermi meglio oltre le parole, [oltre il bagliore](https://www.youtube.com/watch?v=20sibMJmjsc).
 
 ### ABOUT THIS PROJECT
 
- Questo progetto mira ad essere una raccolta personale, ma non è solo un portfolio. L'idea è di raccogliere la mia essenza artistica e tecnica, le mie passioni e i miei lavori, l'io percepito da me e l'io percepito dagli altri.  
- Il tema (sia filosofico che artistico) si ispira alla serie di videogiochi [**"Persona"**](https://it.wikipedia.org/wiki/Persona_(serie)), di [**Atlus**](https://it.wikipedia.org/wiki/Atlus). In particolare il concept grafico del "Mondo nella TV" è basato su [Persona 4](https://en.wikipedia.org/wiki/Persona_4) (il mio preferito della serie!), mentre quello filosofico è condiviso (per lo più) in tutta la serie.
+ Questo progetto mira ad essere una raccolta personale, ma non è solo un portfolio. L'idea è di raccogliere la mia essenza artistica e tecnica, le mie passioni e i miei lavori, cercare di distinguere e rappresentare l'io percepito da me dall'io percepito dagli altri.  
+ Il tema (sia filosofico che artistico) si ispira alla serie di videogiochi [**"Persona"**](https://it.wikipedia.org/wiki/Persona_(serie)), di [**Atlus**](https://it.wikipedia.org/wiki/Atlus). In particolare il concept grafico del "Mondo nella TV" è basato su [**Persona 4**](https://en.wikipedia.org/wiki/Persona_4) (il mio preferito della serie!), mentre quello filosofico è condiviso (per lo più) in tutta la serie.
 
  ### ABOUT THE MEANING...?
-
 
  E quindi, qual è questa [**filosofia**](https://it.wikipedia.org/wiki/Carl_Gustav_Jung#Archetipi) che troviamo nei giochi Persona?  
  La tematica ricorrente è il subconscio umano, la nostra psiche-- accettare se stessi accogliendo le proprie insicurezze e paure.  
