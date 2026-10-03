@@ -51,7 +51,7 @@
           <!-- Welcome Message -->
           <div class="intro-welcome-box">
             <span class="intro-welcome-sub">MIDNIGHT CHANNEL // SPECIAL BROADCAST</span>
-            <h2 class="intro-welcome-title">WELCOME TO THE SHIA CHANNEL</h2>
+            <h2 class="intro-welcome-title">WELCOME TO SHIA'S MIDNIGHT CHANNEL</h2>
           </div>
 
           <!-- Persona 4 Rainbow Progress Bar -->
@@ -180,9 +180,9 @@
                 </div>
 
                 <!-- Handle / Pull Tab on the right edge of the card -->
-                <div class="tagliando-tab" id="tagliando-tab" role="button" tabindex="0" title="Tagliando Canale: Espandi o Riduci per mostrare gli sticker del canale attivo">
-                  <span class="tab-arrow" id="tagliando-arrow">◀</span>
-                  <span class="tab-label">Who's There?</span>
+                <div class="tagliando-tab" id="tagliando-tab" title="Tagliando Canale">
+                  <span class="tab-arrow" id="tagliando-arrow" aria-hidden="true">◀</span>
+                  <span class="tab-label" id="tagliando-label" role="button" tabindex="0" title="Clicca per espandere o ridurre il tagliando">Who's There?</span>
                 </div>
               </div>
 
@@ -318,27 +318,87 @@
         ];
 
         // ---- P3R: Persona 3 Reload ----
+        // Eight selected full tracks from the Archive.org item: persona-3-reload-ost.
+        // The metadata API is used so the real filenames from the item are resolved at runtime.
         var playlistP3 = [
-          { title: "Full Moon Full Life",      channel: "P3·01", src: "https://archive.org/download/persona-3-reload-ost/01.%20Full%20Moon%20Full%20Life.mp3" },
-          { title: "It's Going Down Now",      channel: "P3·02", src: "https://archive.org/download/persona-3-reload-ost/02.%20It%27s%20Going%20Down%20Now.mp3" },
-          { title: "A Deep Dark Maze",         channel: "P3·03", src: "https://archive.org/download/persona-3-reload-ost/03.%20A%20Deep%20Dark%20Maze.mp3" },
-          { title: "Changing Seasons",         channel: "P3·04", src: "https://archive.org/download/persona-3-reload-ost/04.%20Changing%20Seasons.mp3" },
-          { title: "Iwatodai Station",         channel: "P3·05", src: "https://archive.org/download/persona-3-reload-ost/05.%20Iwatodai%20Station.mp3" },
-          { title: "When the Moon's Reaching Out Stars", channel: "P3·06", src: "https://archive.org/download/persona-3-reload-ost/06.%20When%20the%20Moon%27s%20Reaching%20Out%20Stars.mp3" },
-          { title: "Mass Destruction (Reload)", channel: "P3·07", src: "https://archive.org/download/persona-3-reload-ost/07.%20Mass%20Destruction.mp3" },
-          { title: "Burn My Dread (Reload)",   channel: "P3·08", src: "https://archive.org/download/persona-3-reload-ost/08.%20Burn%20My%20Dread.mp3" }
+          { title: "Full Moon Full Life",                         channel: "P3·01", src: "https://archive.org/download/persona-3-reload-ost/1-01%20Full%20Moon%20Full%20Life.mp3" },
+          { title: "Iwatodai Dorm -Reload-",                     channel: "P3·02", src: "" },
+          { title: "When The Moon's Reaching Out Stars -Reload-",channel: "P3·03", src: "" },
+          { title: "Color Your Night",                           channel: "P3·04", src: "" },
+          { title: "Deep Breath Deep Breath -Reload-",           channel: "P3·05", src: "" },
+          { title: "Joy",                                        channel: "P3·06", src: "" },
+          { title: "It's Going Down Now",                        channel: "P3·07", src: "" },
+          { title: "Changing Seasons -Reload-",                  channel: "P3·08", src: "" }
         ];
 
+        function loadPersona3ArchivePlaylist() {
+          var metadataUrl = "https://archive.org/metadata/persona-3-reload-ost";
+
+          // Prefixes correspond to the official P3 Reload soundtrack numbering.
+          var selectedP3Tracks = [
+            { prefix: "1-01", title: "Full Moon Full Life" },
+            { prefix: "1-11", title: "Iwatodai Dorm -Reload-" },
+            { prefix: "1-10", title: "When The Moon's Reaching Out Stars -Reload-" },
+            { prefix: "1-16", title: "Color Your Night" },
+            { prefix: "1-17", title: "Deep Breath Deep Breath -Reload-" },
+            { prefix: "1-27", title: "Joy" },
+            { prefix: "1-30", title: "It's Going Down Now" },
+            { prefix: "2-01", title: "Changing Seasons -Reload-" }
+          ];
+
+          fetch(metadataUrl)
+            .then(function(response) {
+              if (!response.ok) throw new Error("Archive.org metadata request failed");
+              return response.json();
+            })
+            .then(function(data) {
+              var files = Array.isArray(data.files) ? data.files : [];
+
+              selectedP3Tracks.forEach(function(wanted, index) {
+                var file = files.find(function(candidate) {
+                  return candidate && typeof candidate.name === "string" &&
+                    candidate.name.toLowerCase().endsWith(".mp3") &&
+                    candidate.name.indexOf(wanted.prefix) === 0;
+                });
+
+                if (!file) return;
+
+                playlistP3[index] = {
+                  title: wanted.title,
+                  channel: "P3·" + String(index + 1).padStart(2, "0"),
+                  src: "https://archive.org/download/persona-3-reload-ost/" + encodeURIComponent(file.name)
+                };
+              });
+
+              // If P3 is active, refresh the selected track after resolving the real file URLs.
+              if (currentGameIndex === 0) {
+                currentIndex = Math.min(currentIndex, playlistP3.length - 1);
+                playlist = playlistP3;
+                var currentTrack = playlist[currentIndex];
+                if (audioPlayer && currentTrack && currentTrack.src) audioPlayer.src = currentTrack.src;
+                if (trackDisplay && currentTrack) {
+                  trackDisplay.textContent = (isPlaying ? "NOW PLAYING: " : "RADIO OFF: ") + currentTrack.title;
+                }
+                if (channelDisplay && currentTrack) channelDisplay.textContent = currentTrack.channel;
+              }
+            })
+            .catch(function(error) {
+              console.warn("Could not resolve Persona 3 Reload tracks from Archive.org:", error);
+            });
+        }
+
         // ---- P5R: Persona 5 Royal ----
+        // Full tracks from the Archive.org item: persona-5-royal-ost.
+        // Order intentionally chosen for the site radio.
         var playlistP5 = [
-          { title: "Wake Up, Get Up, Get Out There", channel: "P5·01", src: "https://archive.org/download/persona-5-royal-ost/01.%20Wake%20Up%2C%20Get%20Up%2C%20Get%20Out%20There.mp3" },
-          { title: "Last Surprise",           channel: "P5·02", src: "https://archive.org/download/persona-5-royal-ost/02.%20Last%20Surprise.mp3" },
-          { title: "Life Will Change",        channel: "P5·03", src: "https://archive.org/download/persona-5-royal-ost/03.%20Life%20Will%20Change.mp3" },
-          { title: "Beneath the Mask",        channel: "P5·04", src: "https://archive.org/download/persona-5-royal-ost/04.%20Beneath%20the%20Mask.mp3" },
-          { title: "Phantom",                 channel: "P5·05", src: "https://archive.org/download/persona-5-royal-ost/05.%20Phantom.mp3" },
-          { title: "Layer Cake",              channel: "P5·06", src: "https://archive.org/download/persona-5-royal-ost/06.%20Layer%20Cake.mp3" },
-          { title: "Rivers in the Desert",    channel: "P5·07", src: "https://archive.org/download/persona-5-royal-ost/07.%20Rivers%20in%20the%20Desert.mp3" },
-          { title: "Colors Flying High",      channel: "P5·08", src: "https://archive.org/download/persona-5-royal-ost/08.%20Colors%20Flying%20High.mp3" }
+          { title: "No More What Ifs",     channel: "P5·01", src: "https://archive.org/download/persona-5-royal-ost/1-08%20No%20More%20What%20Ifs.mp3" },
+          { title: "Colors Flying High",   channel: "P5·02", src: "https://archive.org/download/persona-5-royal-ost/2-15%20Colors%20Flying%20High.mp3" },
+          { title: "Royal Days",           channel: "P5·03", src: "https://archive.org/download/persona-5-royal-ost/1-02%20Royal%20Days.mp3" },
+          { title: "Ideal and the Real",   channel: "P5·04", src: "https://archive.org/download/persona-5-royal-ost/1-05%20Ideal%20and%20the%20Real.mp3" },
+          { title: "Take Over",            channel: "P5·05", src: "https://archive.org/download/persona-5-royal-ost/1-03%20Take%20Over.mp3" },
+          { title: "So Happy World",       channel: "P5·06", src: "https://archive.org/download/persona-5-royal-ost/2-05%20So%20Happy%20World.mp3" },
+          { title: "Throw Away Your Mask", channel: "P5·07", src: "https://archive.org/download/persona-5-royal-ost/2-10%20Throw%20Away%20Your%20Mask.mp3" },
+          { title: "Our Light",            channel: "P5·08", src: "https://archive.org/download/persona-5-royal-ost/2-14%20Our%20Light.mp3" }
         ];
 
         // Game index: 0=P3, 1=P4, 2=P5 (P4 is default/center)
@@ -362,6 +422,9 @@
         var radioTicker = document.getElementById('tv-radio-ticker');
         var notchVhf = document.getElementById('notch-vhf');
         var notchUhf = document.getElementById('notch-uhf');
+
+        // Load every Persona 3 Reload MP3 exposed by the Archive.org item.
+        loadPersona3ArchivePlaylist();
 
         function loadTrack(index) {
           currentIndex = (index + playlist.length) % playlist.length;
@@ -716,7 +779,7 @@
           }
 
           if (forFog) {
-            weatherIcon.innerHTML += '<span class="weather-fog-warning">⚠ ≋</span>';
+            weatherIcon.innerHTML += '<span class="weather-fog-warning">⚠ ⚠ ⚠ ⚠ ⚠ ⚠ A STRANGE FOG SHROUDS THE INABA TOWN... ⚠ ⚠ ⚠ ⚠ ⚠ ⚠</span>';
           }
         }
 
@@ -929,10 +992,11 @@
           });
         });
 
-        // --- 9. TV TITLE TAGLIANDO CURTAIN (AUTO-MINIMIZE & HOVER) ---
+        // --- 9. TV TITLE TAGLIANDO CURTAIN (AUTO-MINIMIZE & MANUAL LABEL CLICK ONLY) ---
         var tvScreen = document.getElementById('tv-crt-screen');
         var tagliando = document.getElementById('tv-title-tagliando');
         var tagliandoTab = document.getElementById('tagliando-tab');
+        var tagliandoLabel = document.getElementById('tagliando-label');
         var tagliandoArrow = document.getElementById('tagliando-arrow');
         var glitchLayer = document.getElementById('tv-static-glitch');
 
@@ -970,38 +1034,27 @@
           minimizeTagliando();
         }, 3000);
 
-        // Hover over screen or tab expands
-        if (tvScreen) {
-          tvScreen.addEventListener('mouseenter', function() {
-            if (leaveTimer) {
-              clearTimeout(leaveTimer);
-              leaveTimer = null;
-            }
-            if (isTagliandoMinimized) {
-              expandTagliando();
-            }
-          });
-
-          // Moving mouse out of the TV screen minimizes back
-          tvScreen.addEventListener('mouseleave', function() {
-            if (leaveTimer) clearTimeout(leaveTimer);
-            leaveTimer = setTimeout(function() {
-              if (!isTagliandoMinimized) {
-                minimizeTagliando();
-              }
-            }, 400);
-          });
+        // No hover interaction: the tagliando changes state ONLY when
+        // the user explicitly activates the "Who's There?" label.
+        function toggleTagliandoFromLabel(e) {
+          if (e) e.stopPropagation();
+          if (leaveTimer) {
+            clearTimeout(leaveTimer);
+            leaveTimer = null;
+          }
+          if (isTagliandoMinimized) {
+            expandTagliando();
+          } else {
+            minimizeTagliando();
+          }
         }
 
-        // Click / Tap toggle on the tab
-        if (tagliandoTab) {
-          tagliandoTab.addEventListener('click', function(e) {
-            e.stopPropagation();
-            if (leaveTimer) clearTimeout(leaveTimer);
-            if (isTagliandoMinimized) {
-              expandTagliando();
-            } else {
-              minimizeTagliando();
+        if (tagliandoLabel) {
+          tagliandoLabel.addEventListener('click', toggleTagliandoFromLabel);
+          tagliandoLabel.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              toggleTagliandoFromLabel(e);
             }
           });
         }
