@@ -180,9 +180,9 @@
                 </div>
 
                 <!-- Handle / Pull Tab on the right edge of the card -->
-                <div class="tagliando-tab" id="tagliando-tab" title="Tagliando Canale">
+                <div class="tagliando-tab" id="tagliando-tab" role="button" tabindex="0" aria-label="Espandi o riduci il tagliando" title="Clicca o trascina per espandere/ridurre il tagliando">
                   <span class="tab-arrow" id="tagliando-arrow" aria-hidden="true">◀</span>
-                  <span class="tab-label" id="tagliando-label" role="button" tabindex="0" title="Clicca per espandere o ridurre il tagliando">Who's There?</span>
+                  <span class="tab-label" id="tagliando-label">Who's There?</span>
                 </div>
               </div>
 
@@ -643,8 +643,9 @@
 
         if (tvScreenForGame) {
           tvScreenForGame.addEventListener('pointerdown', function(e) {
-            // Ignore drags that begin on an explicitly interactive control.
-            if (e.target.closest('button, a, [role="button"]')) return;
+            // The tagliando has gesture priority over the TV carousel.
+            // Any pointer gesture that starts on the drawer/tab must never change Persona.
+            if (e.target.closest('#tv-title-tagliando, #tagliando-tab, button, a, [role="button"]')) return;
             dragStartX = e.clientX;
             dragStartY = e.clientY;
             dragPointerId = e.pointerId;
@@ -779,7 +780,7 @@
           }
 
           if (forFog) {
-            weatherIcon.innerHTML += '<span class="weather-fog-warning">⚠ ⚠ ⚠ ⚠ ⚠ ⚠ A STRANGE FOG SHROUDS THE INABA TOWN... ⚠ ⚠ ⚠ ⚠ ⚠ ⚠</span>';
+            weatherIcon.innerHTML += '<span class="weather-fog-warning">⚠ A STRANGE FOG SHROUDS THE TOWN... ⚠</span>';
           }
         }
 
@@ -1034,27 +1035,94 @@
           minimizeTagliando();
         }, 3000);
 
-        // No hover interaction: the tagliando changes state ONLY when
-        // the user explicitly activates the "Who's There?" label.
-        function toggleTagliandoFromLabel(e) {
-          if (e) e.stopPropagation();
+        // No hover interaction. The whole tab is interactive:
+        // click toggles it, while horizontal drag opens/closes it.
+        // Pointer events are stopped here so they can never leak into the TV carousel.
+        var tagDragStartX = null;
+        var tagDragStartY = null;
+        var tagDragPointerId = null;
+        var tagDragMoved = false;
+        var tagDragThreshold = 34;
+
+        function toggleTagliando(e) {
+          if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
           if (leaveTimer) {
             clearTimeout(leaveTimer);
             leaveTimer = null;
           }
-          if (isTagliandoMinimized) {
-            expandTagliando();
-          } else {
-            minimizeTagliando();
-          }
+          if (isTagliandoMinimized) expandTagliando();
+          else minimizeTagliando();
         }
 
-        if (tagliandoLabel) {
-          tagliandoLabel.addEventListener('click', toggleTagliandoFromLabel);
-          tagliandoLabel.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
+        if (tagliandoTab) {
+          tagliandoTab.addEventListener('pointerdown', function(e) {
+            e.stopPropagation();
+            tagDragStartX = e.clientX;
+            tagDragStartY = e.clientY;
+            tagDragPointerId = e.pointerId;
+            tagDragMoved = false;
+            tagliandoTab.classList.add('is-dragging');
+            try { tagliandoTab.setPointerCapture(e.pointerId); } catch (_) {}
+          });
+
+          tagliandoTab.addEventListener('pointermove', function(e) {
+            if (tagDragStartX === null || e.pointerId !== tagDragPointerId) return;
+            e.stopPropagation();
+            var dx = e.clientX - tagDragStartX;
+            var dy = e.clientY - tagDragStartY;
+            if (Math.abs(dx) > 6 || Math.abs(dy) > 6) tagDragMoved = true;
+
+            // Only horizontal movement controls the drawer. Vertical movement is ignored.
+            if (Math.abs(dx) > Math.abs(dy)) {
               e.preventDefault();
-              toggleTagliandoFromLabel(e);
+              var preview = Math.max(-28, Math.min(28, dx * 0.35));
+              tagliandoTab.style.setProperty('--tag-drag-x', preview + 'px');
+            }
+          });
+
+          function finishTagliandoDrag(e) {
+            if (tagDragStartX === null || (e.pointerId !== undefined && e.pointerId !== tagDragPointerId)) return;
+            e.stopPropagation();
+            var dx = (e.clientX !== undefined ? e.clientX : tagDragStartX) - tagDragStartX;
+
+            tagliandoTab.classList.remove('is-dragging');
+            tagliandoTab.style.removeProperty('--tag-drag-x');
+
+            // Expanded drawer closes with a left drag; minimized drawer opens with a right drag.
+            if (!isTagliandoMinimized && dx <= -tagDragThreshold) {
+              minimizeTagliando();
+              tagDragMoved = true;
+            } else if (isTagliandoMinimized && dx >= tagDragThreshold) {
+              expandTagliando();
+              tagDragMoved = true;
+            }
+
+            tagDragStartX = tagDragStartY = tagDragPointerId = null;
+          }
+
+          tagliandoTab.addEventListener('pointerup', finishTagliandoDrag);
+          tagliandoTab.addEventListener('pointercancel', finishTagliandoDrag);
+          tagliandoTab.addEventListener('lostpointercapture', function(e) {
+            if (tagDragStartX !== null) finishTagliandoDrag(e);
+          });
+
+          tagliandoTab.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            // Browsers still emit click after a drag: swallow that synthetic click.
+            if (tagDragMoved) {
+              tagDragMoved = false;
+              return;
+            }
+            toggleTagliando(e);
+          });
+
+          tagliandoTab.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              toggleTagliando(e);
             }
           });
         }
@@ -1086,5 +1154,10 @@ $ echo "Now Broadcasting on Channel 04!"
 | **Motore** | Jekyll (Minimal Overridden) | OTTIMIZZATO |
 | **Stile** | Persona 4 (TV World & Midnight Channel) | COMPLETO |
 | **Meteo** | Rainy Night (Nebbia fitta) | 00:00 ON AIR |
+
+Ho tante passioni, sicuramente la tecnologia e l'informatica sono quelle che hanno definito il mio percorso di studi e la mia carriera, ma invece di fare un elenco concreto, vorrei invece provare a formare un concetto più astratto, o vago forse è il termine più corretto- diciamo che, prima di sviluppare una passione per qualcosa di specifico come appunto la tecnologia, c'è prima qualcosa di primordiale che tutti noi abbiamo sicuramente vissuto e da cui dipendiamo:
+- il rapporto sociale
+- il gioco
+- la curiosità
 
 -->

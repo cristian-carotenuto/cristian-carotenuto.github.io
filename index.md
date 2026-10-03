@@ -2,12 +2,32 @@
 layout: default
 ---
 
-# ABOUT ME
+> **???**  
+> *"The strength of heart required to **face oneself** has been made **manifest**..."*
 
-> **SHIA // UNISA STUDENT**  
-> *"Benvenuto sul mio canale personale, **The Shia Channel**! Questa pagina è uno showcase delle mie passioni più che dei miei progetti, ma nonostante ciò spero possa graderti. Già che ci sei, se stai leggendo questo messaggio puoi contattarmi tramite i miei **Social Link** ;)"*
+# Welcome to **Shia's Midnight Channel**!
 
-Ciao! Mi chiamo **Cristian** (alias online **Shia**) e ho 21 anni. Sono uno studente di Informatica presso l'Università degli Studi di Salerno, e se non si fosse notato, un grande fan di **Persona 4**, il mio gioco Atlus preferito. Ma dunque all'infuori di questo, chi sono davvero? Qual è il **vero io**? <!--Enter sezione dedicata allo spiegare Persona 4 e il pensiero filosofico, in breve.--> 
+### ABOUT ME
+  
+Ciao! Mi chiamo Cristian, in arte "Shia", e studio Informatica presso l'Università degli Studi di Salerno.  
+Per farla molto breve: adoro la musica, i giochi e i miei gatti.  
+Che poi l'idea di riassumere l'identità di una persona solo con delle [etichette](https://www.youtube.com/watch?v=Y3Sf5GzKyTk) è superfluo.     
+Del resto se sei **curioso/a**, potrai conoscermi meglio oltre le parole, [oltre il bagliore](https://www.youtube.com/watch?v=20sibMJmjsc).
+
+### ABOUT THIS PROJECT
+
+ Questo progetto mira ad essere una raccolta personale, ma non è solo un portfolio. L'idea è di raccogliere la mia essenza artistica e tecnica, le mie passioni e i miei lavori, l'io percepito da me e l'io percepito dagli altri.  
+ Il tema (sia filosofico che artistico) si ispira alla serie di videogiochi [**"Persona"**](https://it.wikipedia.org/wiki/Persona_(serie)), di [**Atlus**](https://it.wikipedia.org/wiki/Atlus). In particolare il concept grafico del "Mondo nella TV" è basato su [Persona 4](https://en.wikipedia.org/wiki/Persona_4) (il mio preferito della serie!), mentre quello filosofico è condiviso (per lo più) in tutta la serie.
+
+ ### ABOUT THE MEANING...?
+
+
+ E quindi, qual è questa [**filosofia**](https://it.wikipedia.org/wiki/Carl_Gustav_Jung#Archetipi) che troviamo nei giochi Persona?  
+ La tematica ricorrente è il subconscio umano, la nostra psiche-- accettare se stessi accogliendo le proprie insicurezze e paure.  
+ Dunque il significato di questo progetto, oltre a quello di mostrare chi sono e cosa faccio, è quello di suscitare curiosità e far sì che il lettore possa chiedersi:  
+ [**Qual è il vero io**?](https://it.wikipedia.org/wiki/Self_in_Jungian_psychology)  
+
+# QUICK TRAVEL
 
 <div style="margin: 25px 0; display: flex; flex-wrap: wrap; gap: 10px;">
   <a href="#social-links" class="p4-btn"><span>▶ SOCIAL LINKS</span></a>

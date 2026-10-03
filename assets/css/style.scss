@@ -508,7 +508,9 @@ div.wrapper {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  cursor: pointer;
+  cursor: grab;
+  touch-action: none;
+  transform: translateX(var(--tag-drag-x, 0px));
   border-left: 3px solid var(--p4-yellow);
   box-shadow: -3px 0 12px rgba(0, 0, 0, 0.5);
   user-select: none;
@@ -519,6 +521,16 @@ div.wrapper {
 .tagliando-tab:hover {
   background: #282828;
   color: #FFF;
+}
+
+.tagliando-tab.is-dragging {
+  cursor: grabbing;
+  transition: none;
+}
+
+.tagliando-tab:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -5px;
 }
 
 .tagliando-tab .tab-arrow {
@@ -2514,15 +2526,16 @@ tr:hover td {
 
 .weather-fog-warning {
   position: absolute;
-  right: -12px;
-  bottom: -88px;
-  padding: 2px 6px;
+  right: -30px;
+  bottom: -60px;
+  padding: 15px 6px;
   border-radius: 4px;
   color: #151515;
   background: #ffd43b;
   border: 2px solid #151515;
   font: 900 .78rem/1.15 var(--font-mono);
   box-shadow: 3px 3px 0 rgba(0,0,0,.55);
+  left: -142px;
 }
 
 /* SNOW */
