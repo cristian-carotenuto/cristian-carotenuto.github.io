@@ -139,7 +139,7 @@
             </div>
 
             <div class="ticker-item tv-broadcast">
-              <span class="glitch-text" data-text="MIDNIGHT CHANNEL">MIDNIGHT CHANNEL</span>
+              <span class="glitch-text" data-text="SHIA'S MIDNIGHT CHANNEL">SHIA'S MIDNIGHT CHANNEL</span>
             </div>
 
             <div class="ticker-item tv-clock" id="p4-clock">
@@ -221,10 +221,22 @@
                 <span class="dial-tag" id="wthr-tag">WTHR</span>
               </div>
 
-              <!-- Power Switch: Play / Pause Radio -->
-              <div class="tv-power-switch" id="radio-power-toggle" role="button" tabindex="0" title="Interruttore Power Radio (Play/Pausa)">
-                <span class="power-led is-off" id="radio-power-led"></span>
-                <span class="power-label is-off" id="radio-power-text">OFF</span>
+              <!-- Dedicated Mute Button -->
+              <div class="tv-mute-button" id="radio-mute-toggle" role="button" tabindex="0" aria-pressed="false" title="Mute audio radio">
+                <span class="mute-glyph" id="radio-mute-glyph" aria-hidden="true">🔇</span>
+                <span class="mute-label" id="radio-mute-label">MUTE</span>
+              </div>
+
+              <!-- Analog Lever: Play / Pause Radio -->
+              <div class="tv-power-switch" id="radio-power-toggle" role="button" tabindex="0" aria-pressed="false" title="Levetta Power Radio (Play/Pausa)">
+                <span class="power-switch-plate" aria-hidden="true">
+                  <span class="power-switch-track"></span>
+                  <span class="power-switch-handle" id="radio-power-handle"></span>
+                </span>
+                <span class="power-cluster">
+                  <span class="power-led is-off" id="radio-power-led"></span>
+                  <span class="power-label is-off" id="radio-power-text">OFF</span>
+                </span>
               </div>
 
               <!-- Speaker Grille Audio Visualizer -->
@@ -416,6 +428,10 @@
         var audioPlayer = document.getElementById('p4-audio-player');
         var powerLed = document.getElementById('radio-power-led');
         var powerText = document.getElementById('radio-power-text');
+        var powerHandle = document.getElementById('radio-power-handle');
+        var muteToggleBtn = document.getElementById('radio-mute-toggle');
+        var muteGlyph = document.getElementById('radio-mute-glyph');
+        var muteLabel = document.getElementById('radio-mute-label');
         var trackDisplay = document.getElementById('radio-track-display');
         var channelDisplay = document.getElementById('channel-display');
         var speakerGrille = document.getElementById('tv-speaker-grille');
@@ -441,12 +457,47 @@
         // Initialize default track (Like a Dream Come True)
         loadTrack(0);
 
+        function updateMuteUI(showTickerFeedback) {
+          audioPlayer.muted = isMuted;
+          if (muteToggleBtn) {
+            muteToggleBtn.classList.toggle('is-muted', isMuted);
+            muteToggleBtn.setAttribute('aria-pressed', isMuted ? 'true' : 'false');
+          }
+          if (muteGlyph) muteGlyph.textContent = isMuted ? '🔈' : '🔇';
+          if (muteLabel) muteLabel.textContent = isMuted ? 'UNMUTE' : 'MUTE';
+          if (volTag) {
+            var volPercent = Math.round(currentVolume * 100);
+            volTag.textContent = isMuted ? 'MUTED' : (volPercent === 0 ? 'VOL 0%' : 'VOL ' + volPercent + '%');
+          }
+          if (showTickerFeedback && trackDisplay) {
+            if (volTimer) clearTimeout(volTimer);
+            trackDisplay.textContent = isMuted ? '🔇 AUDIO MUTED' : '🔊 AUDIO RESTORED';
+            volTimer = setTimeout(function() {
+              if (isPlaying) {
+                trackDisplay.textContent = 'NOW PLAYING: ' + playlist[currentIndex].title;
+              } else {
+                trackDisplay.textContent = 'RADIO OFF: ' + playlist[currentIndex].title;
+              }
+            }, 900);
+          }
+        }
+
+        function setPowerSwitchUI(active) {
+          if (powerLed) powerLed.className = 'power-led ' + (active ? 'is-active' : 'is-off');
+          if (powerText) {
+            powerText.className = 'power-label ' + (active ? 'is-active' : 'is-off');
+            powerText.textContent = active ? 'ON' : 'OFF';
+          }
+          if (powerToggleBtn) {
+            powerToggleBtn.classList.toggle('is-on', active);
+            powerToggleBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
+          }
+        }
+
         function playRadio() {
           audioPlayer.play().then(function() {
             isPlaying = true;
-            powerLed.className = 'power-led is-active';
-            powerText.className = 'power-label is-active';
-            powerText.textContent = "ON";
+            setPowerSwitchUI(true);
             speakerGrille.classList.add('is-playing');
             radioTicker.classList.add('is-playing');
             trackDisplay.textContent = "NOW PLAYING: " + playlist[currentIndex].title;
@@ -459,12 +510,15 @@
         function pauseRadio() {
           audioPlayer.pause();
           isPlaying = false;
-          powerLed.className = 'power-led is-off';
-          powerText.className = 'power-label is-off';
-          powerText.textContent = "OFF";
+          setPowerSwitchUI(false);
           speakerGrille.classList.remove('is-playing');
           radioTicker.classList.remove('is-playing');
           trackDisplay.textContent = "RADIO OFF: " + playlist[currentIndex].title;
+        }
+
+        function toggleMute(showTickerFeedback) {
+          isMuted = !isMuted;
+          updateMuteUI(showTickerFeedback !== false);
         }
 
         function toggleRadio() {
@@ -491,6 +545,8 @@
 
         // --- VOLUME DIAL CONTROLLER ---
         var currentVolume = 0.8;
+        var isMuted = false;
+        var lastNonZeroVolume = 0.8;
         var notchVol = document.getElementById('notch-vol');
         var volTag = document.getElementById('vol-tag');
         var volTimer = null;
@@ -498,20 +554,25 @@
         function setVolume(val) {
           currentVolume = Math.max(0, Math.min(1, Math.round(val * 100) / 100));
           audioPlayer.volume = currentVolume;
+          if (currentVolume > 0) lastNonZeroVolume = currentVolume;
+          if (isMuted && currentVolume > 0) {
+            isMuted = false;
+          }
           // Calculate angle from -125deg (0%) to +125deg (100%)
           var angle = -125 + (currentVolume * 250);
           if (notchVol) notchVol.style.transform = 'rotate(' + angle + 'deg)';
           
           var percent = Math.round(currentVolume * 100);
-          var label = percent === 0 ? 'MUTE' : 'VOL ' + percent + '%';
+          var label = isMuted ? 'MUTED' : (percent === 0 ? 'VOL 0%' : 'VOL ' + percent + '%');
           if (volTag) volTag.textContent = label;
+          updateMuteUI(false);
 
           // Temporary volume display on the ticker
           if (trackDisplay) {
             if (volTimer) clearTimeout(volTimer);
             var bars = Math.round(currentVolume * 5);
             var barStr = '■'.repeat(bars) + '□'.repeat(5 - bars);
-            trackDisplay.textContent = '🔊 ' + label + ' [' + barStr + ']';
+            trackDisplay.textContent = (isMuted ? '🔇 ' : '🔊 ') + label + ' [' + barStr + ']';
             volTimer = setTimeout(function() {
               if (isPlaying) {
                 trackDisplay.textContent = 'NOW PLAYING: ' + playlist[currentIndex].title;
@@ -524,6 +585,8 @@
 
         // Initialize volume at 10%
         setVolume(0.1);
+        updateMuteUI(false);
+        setPowerSwitchUI(false);
 
         // When track naturally ends, proceed to next song
         audioPlayer.addEventListener('ended', function() {
@@ -536,6 +599,13 @@
           powerToggleBtn.addEventListener('click', toggleRadio);
           powerToggleBtn.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleRadio(); }
+          });
+        }
+
+        if (muteToggleBtn) {
+          muteToggleBtn.addEventListener('click', function() { toggleMute(true); });
+          muteToggleBtn.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMute(true); }
           });
         }
 
@@ -1045,7 +1115,7 @@
           var target = Number.isFinite(rawTarget) ? Math.max(0, Math.min(100, rawTarget)) : 0;
 
           row.dataset.statAnimated = 'true';
-          row.style.setProperty('--stat-delay', Math.min(rowIndex * 75, 300) + 'ms');
+          row.style.setProperty('--stat-delay', Math.min(rowIndex * 200, 300) + 'ms');
           fill.style.setProperty('--stat-target-width', target + '%');
 
           // Two RAFs guarantee the browser paints the zero-width state first.

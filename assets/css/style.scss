@@ -1400,7 +1400,7 @@ tr:hover td {
     var(--p4-yellow-dark) 16px
   );
   border-right: 2px solid var(--p4-black);
-  transition: width 950ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 2000ms cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: var(--stat-delay, 0ms);
   will-change: width;
 }
@@ -2399,6 +2399,238 @@ tr:hover td {
     width: 100%;
     margin-left: 0;
     justify-content: center;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   18X. TV-RADIO HARDWARE REWORK (Mute Button, Analog Lever, Feet, New Antennas)
+   -------------------------------------------------------------------------- */
+
+.tv-chassis {
+  overflow: visible;
+}
+
+.tv-chassis::before,
+.tv-chassis::after {
+  content: '';
+  position: absolute;
+  bottom: -22px;
+  width: 24px;
+  height: 52px;
+  background: linear-gradient(180deg, #242424 0%, #131313 100%);
+  border: 4px solid #0e0e0e;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  z-index: 1;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+.tv-chassis::before {
+  left: 62px;
+  transform: skew(-18deg);
+}
+
+.tv-chassis::after {
+  right: 86px;
+  transform: skew(18deg);
+}
+
+.tv-antenna {
+  height: 56px;
+  margin-bottom: -10px;
+  gap: 10px;
+}
+
+.antenna-base {
+  width: 76px;
+  height: 20px;
+  border-radius: 22px 22px 0 0;
+  border: 3px solid #0f0f0f;
+  background: linear-gradient(180deg, #3b3b3b 0%, #171717 100%);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.08);
+}
+
+.antenna-rod {
+  width: 34px;
+  height: 44px;
+  background: linear-gradient(180deg, #2d2d2d 0%, #111111 100%);
+  border: 3px solid #0d0d0d;
+  clip-path: polygon(18% 100%, 0 0, 72% 0, 100% 100%);
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.28);
+}
+
+.antenna-rod::before {
+  content: '';
+  position: absolute;
+  inset: 7px 8px 7px 8px;
+  background: var(--p4-bg-color);
+  clip-path: polygon(18% 100%, 0 0, 72% 0, 100% 100%);
+  opacity: 0.98;
+}
+
+.antenna-rod::after {
+  display: none;
+}
+
+.antenna-left {
+  width: 28px;
+  transform: rotate(-36deg) translateY(2px);
+  margin-right: -2px;
+}
+
+.antenna-right {
+  width: 40px;
+  transform: rotate(36deg) translateY(0);
+  margin-left: -2px;
+}
+
+.tv-controls-panel {
+  width: 94px;
+  padding: 14px 8px 12px;
+  gap: 10px;
+}
+
+.tv-mute-button {
+  width: 56px;
+  min-height: 34px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 208, 0, 0.55);
+  background: linear-gradient(180deg, #383838 0%, #191919 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 2px 6px rgba(0,0,0,0.45);
+  color: #f2f2f2;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  user-select: none;
+  transition: transform 0.12s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.tv-mute-button:hover {
+  transform: translateY(-1px);
+  border-color: var(--p4-yellow);
+}
+
+.tv-mute-button:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.tv-mute-button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+.tv-mute-button .mute-glyph {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.tv-mute-button .mute-label {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  line-height: 1;
+}
+
+.tv-mute-button.is-muted {
+  background: linear-gradient(180deg, #ffd64a 0%, #d39e00 100%);
+  color: #111;
+  border-color: #fff1a8;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 0 12px rgba(255,208,0,0.35);
+}
+
+.tv-power-switch {
+  width: 62px;
+  padding: 2px 0 0;
+  gap: 8px;
+  background: transparent;
+  transform: none !important;
+}
+
+.tv-power-switch:hover {
+  background: transparent;
+}
+
+.tv-power-switch .power-switch-plate {
+  position: relative;
+  width: 40px;
+  height: 56px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #2f2f2f 0%, #181818 100%);
+  border: 3px solid #0d0d0d;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 3px 8px rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tv-power-switch .power-switch-track {
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  width: 8px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #0f0f0f 0%, #252525 100%);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+.tv-power-switch .power-switch-handle {
+  position: absolute;
+  width: 26px;
+  height: 18px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f4f4f4 0%, #bcbcbc 100%);
+  border: 2px solid #2b2b2b;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.45);
+  transform: translateY(13px) rotate(-12deg);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background 0.18s ease;
+}
+
+.tv-power-switch.is-on .power-switch-handle {
+  transform: translateY(-13px) rotate(12deg);
+  background: linear-gradient(180deg, #fff6a8 0%, #ffd33d 100%);
+}
+
+.tv-power-switch .power-cluster {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.tv-power-switch .power-label {
+  min-width: 24px;
+  text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+  .tv-chassis::before,
+  .tv-chassis::after {
+    bottom: -18px;
+    width: 18px;
+    height: 36px;
+  }
+
+  .tv-chassis::before { left: 34px; }
+  .tv-chassis::after { right: 46px; }
+
+  .tv-antenna {
+    height: 36px;
+    margin-bottom: -6px;
+  }
+
+  .antenna-base {
+    width: 54px;
+    height: 14px;
+  }
+
+  .antenna-rod {
+    width: 22px;
+    height: 30px;
   }
 }
 

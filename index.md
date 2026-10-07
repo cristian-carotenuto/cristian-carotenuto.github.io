@@ -2,10 +2,10 @@
 layout: default
 ---
 
-> **???**  
-> *"The strength of heart required to **face oneself** has been made **manifest**..."*
-
 # Welcome to **Shia's Midnight Channel**!
+
+> **???**  
+> *"The strength of heart required to **face oneself** has been made **manifest**.."*
 
 ---
 
@@ -25,7 +25,7 @@ Del resto se sei **curioso/a**, potrai conoscermi meglio oltre le parole, [oltre
 
 ---
 
- ### ABOUT THE MEANING
+### ABOUT THE MEANING
 
  E quindi, qual è questa [**filosofia**](https://it.wikipedia.org/wiki/Carl_Gustav_Jung#Archetipi) che troviamo nei giochi Persona?  
  La tematica ricorrente è il subconscio umano, la nostra psiche-- accettare se stessi accogliendo le proprie insicurezze e paure.  
