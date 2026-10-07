@@ -1366,6 +1366,7 @@ tr:hover td {
 .p4-stat-row {
   display: block;
   margin-bottom: 22px;
+  position: relative;
 }
 
 .p4-stat-name {
@@ -1389,6 +1390,7 @@ tr:hover td {
 }
 
 .p4-stat-bar-fill {
+  width: 0;
   height: 100%;
   background: repeating-linear-gradient(
     -45deg,
@@ -1398,6 +1400,79 @@ tr:hover td {
     var(--p4-yellow-dark) 16px
   );
   border-right: 2px solid var(--p4-black);
+  transition: width 950ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--stat-delay, 0ms);
+  will-change: width;
+}
+
+.p4-stat-row.is-stat-loaded .p4-stat-bar-fill {
+  width: var(--stat-target-width, 0%);
+}
+
+/* Small Persona 4-style Rank MAX sparkle burst. */
+.p4-rankup-stars {
+  position: absolute;
+  right: 2px;
+  top: 15px;
+  width: 150px;
+  height: 55px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.p4-rankup-star {
+  --star-x: 0px;
+  --star-y: 0px;
+  --star-r: 0deg;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  color: var(--p4-yellow);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1;
+  opacity: 0;
+  text-shadow:
+    -1px -1px 0 var(--p4-black),
+     1px -1px 0 var(--p4-black),
+    -1px  1px 0 var(--p4-black),
+     1px  1px 0 var(--p4-black);
+  animation: p4RankUpSpark 900ms cubic-bezier(0.2, 0.75, 0.2, 1) forwards;
+  animation-delay: var(--star-delay, 0ms);
+}
+
+@keyframes p4RankUpSpark {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.15) rotate(0deg);
+  }
+  20% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 1;
+    transform: translate(
+      calc(-50% + var(--star-x)),
+      calc(-50% + var(--star-y))
+    ) scale(1.25) rotate(var(--star-r));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(
+      calc(-50% + var(--star-x2)),
+      calc(-50% + var(--star-y2))
+    ) scale(0.55) rotate(calc(var(--star-r) + 70deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p4-stat-bar-fill {
+    transition: none;
+  }
+
+  .p4-rankup-stars {
+    display: none;
+  }
 }
 
 .p4-stat-rank {

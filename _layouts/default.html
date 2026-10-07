@@ -993,6 +993,97 @@
           });
         });
 
+        // --- SOCIAL STATS: LOAD-ON-VIEW + PERSONA 4 RANK MAX SPARKLES ---
+        var statRows = Array.prototype.slice.call(document.querySelectorAll('.p4-stat-row'));
+        var reduceStatMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function spawnRankUpStars(row) {
+          if (!row || row.dataset.rankUpPlayed === 'true' || reduceStatMotion) return;
+          row.dataset.rankUpPlayed = 'true';
+
+          var burst = document.createElement('span');
+          burst.className = 'p4-rankup-stars';
+          burst.setAttribute('aria-hidden', 'true');
+
+          var starLayout = [
+            [-58, -18, -22,   0],
+            [-34,  12,  18,  70],
+            [-12, -28, -12, 120],
+            [ 12,  17,  25,  35],
+            [ 30, -22,  35, 110],
+            [ 48,   8, -30, 165],
+            [ 63, -10,  15,  85],
+            [  2, -10,  45, 190]
+          ];
+
+          starLayout.forEach(function(item, index) {
+            var star = document.createElement('span');
+            star.className = 'p4-rankup-star';
+            star.textContent = index % 3 === 0 ? '✦' : '★';
+            star.style.setProperty('--star-x', item[0] + 'px');
+            star.style.setProperty('--star-y', item[1] + 'px');
+            star.style.setProperty('--star-x2', Math.round(item[0] * 1.25) + 'px');
+            star.style.setProperty('--star-y2', Math.round(item[1] * 1.25) + 'px');
+            star.style.setProperty('--star-r', item[2] + 'deg');
+            star.style.setProperty('--star-delay', item[3] + 'ms');
+            burst.appendChild(star);
+          });
+
+          row.appendChild(burst);
+          window.setTimeout(function() {
+            if (burst.parentNode) burst.parentNode.removeChild(burst);
+          }, 1250);
+        }
+
+        function loadStatRow(row, rowIndex) {
+          if (!row || row.dataset.statAnimated === 'true') return;
+
+          var fill = row.querySelector('.p4-stat-bar-fill');
+          if (!fill) return;
+
+          var rawTarget = parseFloat(fill.getAttribute('data-stat-target'));
+          var target = Number.isFinite(rawTarget) ? Math.max(0, Math.min(100, rawTarget)) : 0;
+
+          row.dataset.statAnimated = 'true';
+          row.style.setProperty('--stat-delay', Math.min(rowIndex * 75, 300) + 'ms');
+          fill.style.setProperty('--stat-target-width', target + '%');
+
+          // Two RAFs guarantee the browser paints the zero-width state first.
+          requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+              row.classList.add('is-stat-loaded');
+            });
+          });
+
+          if (target >= 100) {
+            var sparkleDelay = reduceStatMotion ? 0 : 950 + Math.min(rowIndex * 75, 300);
+            window.setTimeout(function() {
+              spawnRankUpStars(row);
+            }, sparkleDelay);
+          }
+        }
+
+        if (statRows.length) {
+          if ('IntersectionObserver' in window) {
+            var statObserver = new IntersectionObserver(function(entries, observer) {
+              entries.forEach(function(entry) {
+                if (!entry.isIntersecting) return;
+                var index = statRows.indexOf(entry.target);
+                loadStatRow(entry.target, index < 0 ? 0 : index);
+                observer.unobserve(entry.target);
+              });
+            }, { threshold: 0.32, rootMargin: '0px 0px -6% 0px' });
+
+            statRows.forEach(function(row) {
+              statObserver.observe(row);
+            });
+          } else {
+            statRows.forEach(function(row, index) {
+              loadStatRow(row, index);
+            });
+          }
+        }
+
         // --- 9. TV TITLE TAGLIANDO CURTAIN (AUTO-MINIMIZE & MANUAL LABEL CLICK ONLY) ---
         var tvScreen = document.getElementById('tv-crt-screen');
         var tagliando = document.getElementById('tv-title-tagliando');

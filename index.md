@@ -7,6 +7,8 @@ layout: default
 
 # Welcome to **Shia's Midnight Channel**!
 
+---
+
 ### ABOUT ME
   
 Ciao! Mi chiamo Cristian, in arte "Shia", e studio Informatica presso l'Università degli Studi di Salerno.  
@@ -14,17 +16,23 @@ Per farla molto breve: **adoro la musica, i giochi e i miei gatti**.
 Che poi l'idea di riassumere l'identità di una persona solo con delle [etichette](https://www.youtube.com/watch?v=Y3Sf5GzKyTk) è superfluo.     
 Del resto se sei **curioso/a**, potrai conoscermi meglio oltre le parole, [oltre il bagliore](https://www.youtube.com/watch?v=20sibMJmjsc).
 
+---
+
 ### ABOUT THIS PROJECT
 
  Questo progetto mira ad essere una raccolta personale, ma non è solo un portfolio. L'idea è di raccogliere la mia essenza artistica e tecnica, le mie passioni e i miei lavori, cercare di distinguere e rappresentare l'io percepito da me dall'io percepito dagli altri.  
  Il tema (sia filosofico che artistico) si ispira alla serie di videogiochi [**"Persona"**](https://it.wikipedia.org/wiki/Persona_(serie)), di [**Atlus**](https://it.wikipedia.org/wiki/Atlus). In particolare il concept grafico del "Mondo nella TV" è basato su [**Persona 4**](https://en.wikipedia.org/wiki/Persona_4) (il mio preferito della serie!), mentre quello filosofico è condiviso (per lo più) in tutta la serie.
 
- ### ABOUT THE MEANING...?
+---
+
+ ### ABOUT THE MEANING
 
  E quindi, qual è questa [**filosofia**](https://it.wikipedia.org/wiki/Carl_Gustav_Jung#Archetipi) che troviamo nei giochi Persona?  
  La tematica ricorrente è il subconscio umano, la nostra psiche-- accettare se stessi accogliendo le proprie insicurezze e paure.  
  Dunque il significato di questo progetto, oltre a quello di mostrare chi sono e cosa faccio, è quello di suscitare curiosità e far sì che il lettore possa chiedersi:  
  [**Qual è il vero io**?](https://it.wikipedia.org/wiki/Self_in_Jungian_psychology)  
+
+---
 
 # QUICK TRAVEL
 
@@ -451,7 +459,7 @@ Del resto se sei **curioso/a**, potrai conoscermi meglio oltre le parole, [oltre
   <div class="p4-stat-row">
     <span class="p4-stat-name">CORAGGIO (Backend & Frontend)</span>
     <div class="p4-stat-bar-bg">
-      <div class="p4-stat-bar-fill" style="width: 80%;"></div>
+      <div class="p4-stat-bar-fill" data-stat-target="80"></div>
     </div>
     <span class="p4-stat-rank">RANK 4 (Daring)</span>
   </div>
@@ -459,7 +467,7 @@ Del resto se sei **curioso/a**, potrai conoscermi meglio oltre le parole, [oltre
   <div class="p4-stat-row">
     <span class="p4-stat-name">DILIGENZA (Resilienza & Precisione)</span>
     <div class="p4-stat-bar-bg">
-      <div class="p4-stat-bar-fill" style="width: 100%;"></div>
+      <div class="p4-stat-bar-fill" data-stat-target="100"></div>
     </div>
     <span class="p4-stat-rank">RANK MAX (Rock Solid)</span>
   </div>
@@ -467,7 +475,7 @@ Del resto se sei **curioso/a**, potrai conoscermi meglio oltre le parole, [oltre
   <div class="p4-stat-row">
     <span class="p4-stat-name">CONOSCENZA (Tecnologie & Problem Solving)</span>
     <div class="p4-stat-bar-bg">
-      <div class="p4-stat-bar-fill" style="width: 70%;"></div>
+      <div class="p4-stat-bar-fill" data-stat-target="70"></div>
     </div>
     <span class="p4-stat-rank">RANK 4 (Expert)</span>
   </div>
@@ -475,7 +483,7 @@ Del resto se sei **curioso/a**, potrai conoscermi meglio oltre le parole, [oltre
   <div class="p4-stat-row">
     <span class="p4-stat-name">ESPRESSIONE (Comunicazione & UI / UX Design)</span>
     <div class="p4-stat-bar-bg">
-      <div class="p4-stat-bar-fill" style="width: 85%;"></div>
+      <div class="p4-stat-bar-fill" data-stat-target="85"></div>
     </div>
     <span class="p4-stat-rank">RANK 4 (Touching)</span>
   </div>
@@ -483,7 +491,7 @@ Del resto se sei **curioso/a**, potrai conoscermi meglio oltre le parole, [oltre
   <div class="p4-stat-row">
     <span class="p4-stat-name">COMPRENSIONE (Empatia & Lavoro di Squadra)</span>
     <div class="p4-stat-bar-bg">
-      <div class="p4-stat-bar-fill" style="width: 100%;"></div>
+      <div class="p4-stat-bar-fill" data-stat-target="100"></div>
     </div>
     <span class="p4-stat-rank">RANK MAX (Saint)</span>
   </div>
