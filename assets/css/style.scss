@@ -3082,3 +3082,450 @@ tr:hover td {
     max-width: 100%;
   }
 }
+
+/* --------------------------------------------------------------------------
+   21. MOBILE TV WORLD REWORK
+   Dedicated smartphone layout. Desktop behaviour remains unchanged.
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 760px) {
+  .p4-viewport-wrap {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .p4-tv-banner {
+    margin-top: 10px;
+    margin-bottom: 42px;
+  }
+
+  /* Keep the TV readable instead of shrinking the desktop composition. */
+  .tv-chassis {
+    border-width: 4px;
+    border-radius: 14px;
+  }
+
+  .tv-screen-bezel {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background-position: center;
+  }
+
+  .tv-crt-glass {
+    width: 100%;
+    min-height: 300px;
+    flex: none;
+    border-width: 3px;
+    border-radius: 10px;
+  }
+
+  /* Mobile control deck: it stays part of the TV instead of disappearing. */
+  .tv-controls-panel {
+    display: grid !important;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    align-items: center;
+    justify-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 9px 8px;
+    gap: 7px;
+    border-radius: 8px;
+    background: rgba(14, 14, 14, 0.88);
+  }
+
+  .tv-controls-panel .tv-dial {
+    width: 40px;
+    height: 40px;
+    border-width: 2px;
+  }
+
+  .tv-controls-panel .dial-notch {
+    height: 16px;
+  }
+
+  .tv-controls-panel .dial-tag {
+    font-size: 0.52rem;
+    max-width: 58px;
+    text-align: center;
+  }
+
+  .tv-mute-button {
+    width: 50px;
+    min-height: 36px;
+  }
+
+  .tv-power-switch {
+    width: 52px;
+    gap: 4px;
+  }
+
+  .tv-power-switch .power-switch-plate {
+    width: 34px;
+    height: 48px;
+  }
+
+  .tv-power-switch .power-switch-handle {
+    width: 23px;
+    height: 16px;
+    transform: translateY(11px) rotate(-12deg);
+  }
+
+  .tv-power-switch.is-on .power-switch-handle {
+    transform: translateY(-11px) rotate(12deg);
+  }
+
+  .speaker-grille {
+    width: 40px;
+    margin-top: 0;
+  }
+
+  /* A deliberate three-row status layout: no random wrapping. */
+  .tv-ticker-bar {
+    display: grid;
+    grid-template-columns: 64px 58px minmax(0, 1fr) 62px;
+    grid-template-areas:
+      "channel rec broadcast clock"
+      "radio radio radio radio"
+      "weather weather theme theme";
+    align-items: center;
+    gap: 6px 7px;
+    padding: 7px 8px;
+    font-size: 0.68rem;
+  }
+
+  .tv-channel-tag {
+    grid-area: channel;
+    width: 64px;
+    min-width: 64px;
+    max-width: 64px;
+    font-size: 0.92rem;
+  }
+
+  .tv-rec {
+    grid-area: rec;
+    width: 58px;
+    min-width: 58px;
+    max-width: 58px;
+  }
+
+  .tv-broadcast {
+    grid-area: broadcast;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    justify-self: stretch;
+    text-align: center;
+  }
+
+  .tv-clock {
+    grid-area: clock;
+    width: 62px;
+    min-width: 62px;
+    max-width: 62px;
+    margin-left: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .tv-radio-ticker {
+    grid-area: radio;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    box-sizing: border-box;
+    padding: 5px 8px;
+  }
+
+  .tv-weather {
+    grid-area: weather;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    justify-self: stretch;
+    padding: 3px 5px;
+  }
+
+  .tv-color-picker-item {
+    grid-area: theme;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    gap: 5px;
+  }
+
+  .theme-picker-title {
+    font-size: 0.65rem;
+  }
+
+  .p4-color-swatches {
+    gap: 4px;
+    padding: 3px 5px;
+  }
+
+  .p4-swatch-btn {
+    width: 13px;
+    height: 13px;
+  }
+
+  /* Keep the interactive glasses on phones. */
+  .p4-glasses-emblem {
+    display: flex !important;
+    padding: 5px;
+    transform: translate3d(var(--glasses-x, 0px), var(--glasses-y, 0px), 0) rotate(-5deg) scale(0.78);
+    transform-origin: center;
+  }
+
+  .p4-glasses-emblem:hover {
+    transform: translate3d(var(--glasses-x, 0px), var(--glasses-y, 0px), 0) rotate(-2deg) scale(0.82);
+  }
+
+  .p4-glasses-emblem.is-dragging {
+    transform: translate3d(var(--glasses-x, 0px), var(--glasses-y, 0px), 0) rotate(-2deg) scale(0.80);
+  }
+
+  .p4-title-cluster {
+    max-width: calc(100% - 38px);
+  }
+
+  .title-word {
+    font-size: clamp(2rem, 10vw, 2.65rem);
+    padding: 3px 10px;
+    letter-spacing: 1px;
+  }
+
+  .p4-sub-badge {
+    font-size: 0.62rem;
+    letter-spacing: 0.8px;
+    padding: 3px 7px;
+  }
+
+  .p4-tagline {
+    max-width: 100%;
+    font-size: 0.86rem;
+    line-height: 1.25;
+  }
+
+  /* The pull-tab remains a comfortable touch target. */
+  .tv-title-tagliando {
+    padding: 15px 48px 15px 14px;
+  }
+
+  .tv-title-tagliando.is-minimized {
+    transform: translateX(calc(-100% + 42px));
+  }
+
+  .tagliando-tab {
+    width: 42px;
+  }
+
+  .tagliando-tab .tab-label {
+    font-size: 0.82rem;
+    letter-spacing: 1px;
+  }
+
+  .tv-game-swipe-hint {
+    left: 8px;
+    bottom: 8px;
+    font-size: 0.54rem;
+    opacity: 0.68;
+  }
+
+  /* Keep the global weather control out of the content while remaining tappable. */
+  .site-weather-icon {
+    width: 66px;
+    height: 66px;
+    top: 5px;
+    right: 5px;
+    transform: none;
+    opacity: 0.82;
+  }
+
+  .site-weather-icon:hover,
+  .site-weather-icon:active {
+    transform: scale(0.96);
+  }
+
+  /* Main content should breathe without wasting horizontal space. */
+  .p4-content-wrapper {
+    padding: 26px 18px;
+    border-width: 4px;
+    border-radius: 10px;
+  }
+
+  .p4-content-wrapper h1,
+  section h1 {
+    font-size: clamp(1.8rem, 9vw, 2.25rem);
+    margin-bottom: 24px;
+  }
+
+  .p4-content-wrapper h2,
+  section h2 {
+    font-size: clamp(1.45rem, 7vw, 1.8rem);
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+
+  img,
+  video,
+  iframe {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .p4-viewport-wrap {
+    padding: 8px 7px 34px;
+  }
+
+  .tv-crt-glass {
+    min-height: 275px;
+  }
+
+  /* Two rows of three controls fit comfortably even at 320px. */
+  .tv-controls-panel {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px 6px;
+    padding: 10px 6px;
+  }
+
+  .tv-ticker-bar {
+    grid-template-columns: 60px 54px minmax(0, 1fr) 57px;
+    gap: 5px;
+    padding: 6px;
+  }
+
+  .tv-channel-tag {
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+    font-size: 0.86rem;
+  }
+
+  .tv-rec {
+    width: 54px;
+    min-width: 54px;
+    max-width: 54px;
+  }
+
+  .tv-clock {
+    width: 57px;
+    min-width: 57px;
+    max-width: 57px;
+    font-size: 0.62rem;
+  }
+
+  .tv-broadcast {
+    font-size: 0.59rem;
+  }
+
+  .tv-weather,
+  .tv-color-picker-item {
+    font-size: 0.61rem;
+  }
+
+  .theme-picker-title {
+    display: none;
+  }
+
+  .p4-color-swatches {
+    gap: 3px;
+    padding: 3px 4px;
+  }
+
+  .p4-swatch-btn {
+    width: 12px;
+    height: 12px;
+    border-width: 1px;
+  }
+
+  .radio-track-title {
+    font-size: 0.66rem;
+  }
+
+  .radio-eq {
+    margin-left: 0;
+  }
+
+  .title-word {
+    font-size: clamp(1.72rem, 9.6vw, 2.25rem);
+    box-shadow: 4px 4px 0 var(--p4-black);
+    border-width: 3px;
+  }
+
+  .p4-sub-badge {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .p4-tagline {
+    font-size: 0.78rem;
+    padding: 3px 7px;
+  }
+
+  .p4-glasses-emblem {
+    transform: translate3d(var(--glasses-x, 0px), var(--glasses-y, 0px), 0) rotate(-5deg) scale(0.66);
+    margin-right: -12px;
+  }
+
+  .p4-glasses-emblem:hover,
+  .p4-glasses-emblem.is-dragging {
+    transform: translate3d(var(--glasses-x, 0px), var(--glasses-y, 0px), 0) rotate(-2deg) scale(0.69);
+  }
+
+  .site-weather-icon {
+    width: 58px;
+    height: 58px;
+  }
+
+  .p4-content-wrapper {
+    padding: 22px 14px;
+  }
+
+  .p4-content-wrapper::before {
+    width: 36px;
+    height: 36px;
+  }
+
+  .tv-chassis::before,
+  .tv-chassis::after {
+    height: 31px;
+    bottom: -15px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .tv-ticker-bar {
+    grid-template-columns: 56px 50px minmax(0, 1fr) 54px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .tv-channel-tag {
+    width: 56px;
+    min-width: 56px;
+    max-width: 56px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .tv-rec {
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px;
+  }
+
+  .tv-clock {
+    width: 54px;
+    min-width: 54px;
+    max-width: 54px;
+  }
+
+  .p4-swatch-btn {
+    width: 11px;
+    height: 11px;
+  }
+}
