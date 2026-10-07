@@ -74,7 +74,7 @@
 
     <!-- Global weather ambience: lives behind the page and is controlled by the WTHR dial -->
     <div class="site-weather-fx-layer" id="site-weather-fx-layer" aria-hidden="true">
-      <div class="site-weather-icon" id="site-weather-icon"></div>
+      <div class="site-weather-icon" id="site-weather-icon" role="button" tabindex="0" aria-label="Cambia meteo" title="Cambia meteo: clicca, usa la rotellina o le frecce"></div>
       <div class="site-weather-effect" id="site-weather-effect"></div>
       <div class="site-weather-cloud-strip" id="site-weather-cloud-strip"></div>
       <div class="site-weather-lightning" id="site-weather-lightning"></div>
@@ -172,7 +172,7 @@
                   </div>
 
                   <!-- TV Glasses Graphic / Emblem -->
-                  <div class="p4-glasses-emblem" aria-hidden="true" title="Glasses for the TV World">
+                  <div class="p4-glasses-emblem" id="p4-glasses-emblem" role="button" tabindex="0" aria-label="Occhiali TV World trascinabili" title="Trascina gli occhiali dentro lo schermo">
                     <div class="lens-frame left-lens"><div class="lens-glass"></div></div>
                     <div class="bridge"></div>
                     <div class="lens-frame right-lens"><div class="lens-glass"></div></div>
@@ -903,6 +903,24 @@
           });
         }
 
+        // The large weather icon in the top-right is also a hardware-style weather control.
+        if (weatherIcon) {
+          weatherIcon.addEventListener('click', nextWeather);
+          weatherIcon.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (e.deltaY < 0) prevWeather(); else nextWeather();
+          }, { passive: false });
+          weatherIcon.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+              e.preventDefault();
+              prevWeather();
+            } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              nextWeather();
+            }
+          });
+        }
+
         var savedWeather = localStorage.getItem('p4-weather-mode');
         if (savedWeather && weatherModes.indexOf(savedWeather) !== -1) {
           setWeather(weatherModes.indexOf(savedWeather));
@@ -1287,6 +1305,132 @@
             }
           });
         }
+
+        // --- 10. DRAGGABLE TV WORLD GLASSES ---
+        var glassesEmblem = document.getElementById('p4-glasses-emblem');
+        var glassesScreen = document.getElementById('tv-crt-screen');
+        var glassesX = 0;
+        var glassesY = 0;
+        var glassesPointerId = null;
+        var glassesStartClientX = 0;
+        var glassesStartClientY = 0;
+        var glassesStartX = 0;
+        var glassesStartY = 0;
+        var glassesStartRect = null;
+        var glassesMoved = false;
+        var glassesPadding = 8;
+
+        function applyGlassesPosition() {
+          if (!glassesEmblem) return;
+          glassesEmblem.style.setProperty('--glasses-x', glassesX + 'px');
+          glassesEmblem.style.setProperty('--glasses-y', glassesY + 'px');
+        }
+
+        function clampGlassesDelta(dx, dy, elementRect) {
+          if (!glassesScreen || !elementRect) return { dx: dx, dy: dy };
+          var screenRect = glassesScreen.getBoundingClientRect();
+
+          var minDx = (screenRect.left + glassesPadding) - elementRect.left;
+          var maxDx = (screenRect.right - glassesPadding) - elementRect.right;
+          var minDy = (screenRect.top + glassesPadding) - elementRect.top;
+          var maxDy = (screenRect.bottom - glassesPadding) - elementRect.bottom;
+
+          return {
+            dx: Math.max(minDx, Math.min(maxDx, dx)),
+            dy: Math.max(minDy, Math.min(maxDy, dy))
+          };
+        }
+
+        function nudgeGlasses(dx, dy) {
+          if (!glassesEmblem) return;
+          var currentRect = glassesEmblem.getBoundingClientRect();
+          var clamped = clampGlassesDelta(dx, dy, currentRect);
+          glassesX += clamped.dx;
+          glassesY += clamped.dy;
+          applyGlassesPosition();
+        }
+
+        if (glassesEmblem && glassesScreen) {
+          glassesEmblem.addEventListener('pointerdown', function(e) {
+            if (e.button !== undefined && e.button !== 0 && e.pointerType === 'mouse') return;
+            e.preventDefault();
+            e.stopPropagation();
+            glassesPointerId = e.pointerId;
+            glassesStartClientX = e.clientX;
+            glassesStartClientY = e.clientY;
+            glassesStartX = glassesX;
+            glassesStartY = glassesY;
+            glassesStartRect = glassesEmblem.getBoundingClientRect();
+            glassesMoved = false;
+            glassesEmblem.classList.add('is-dragging');
+            try { glassesEmblem.setPointerCapture(e.pointerId); } catch (_) {}
+          });
+
+          glassesEmblem.addEventListener('pointermove', function(e) {
+            if (glassesPointerId === null || e.pointerId !== glassesPointerId) return;
+            e.preventDefault();
+            e.stopPropagation();
+
+            var rawDx = e.clientX - glassesStartClientX;
+            var rawDy = e.clientY - glassesStartClientY;
+            if (Math.abs(rawDx) > 3 || Math.abs(rawDy) > 3) glassesMoved = true;
+
+            var clamped = clampGlassesDelta(rawDx, rawDy, glassesStartRect);
+            glassesX = glassesStartX + clamped.dx;
+            glassesY = glassesStartY + clamped.dy;
+            applyGlassesPosition();
+          });
+
+          function finishGlassesDrag(e) {
+            if (glassesPointerId === null) return;
+            if (e && e.pointerId !== undefined && e.pointerId !== glassesPointerId) return;
+            if (e) e.stopPropagation();
+            glassesEmblem.classList.remove('is-dragging');
+            try { glassesEmblem.releasePointerCapture(glassesPointerId); } catch (_) {}
+            glassesPointerId = null;
+            glassesStartRect = null;
+          }
+
+          glassesEmblem.addEventListener('pointerup', finishGlassesDrag);
+          glassesEmblem.addEventListener('pointercancel', finishGlassesDrag);
+          glassesEmblem.addEventListener('lostpointercapture', finishGlassesDrag);
+          glassesEmblem.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+          });
+
+          glassesEmblem.addEventListener('keydown', function(e) {
+            var step = e.shiftKey ? 24 : 10;
+            if (e.key === 'ArrowLeft') { e.preventDefault(); nudgeGlasses(-step, 0); }
+            else if (e.key === 'ArrowRight') { e.preventDefault(); nudgeGlasses(step, 0); }
+            else if (e.key === 'ArrowUp') { e.preventDefault(); nudgeGlasses(0, -step); }
+            else if (e.key === 'ArrowDown') { e.preventDefault(); nudgeGlasses(0, step); }
+            else if (e.key === 'Home') {
+              e.preventDefault();
+              glassesX = 0;
+              glassesY = 0;
+              applyGlassesPosition();
+            }
+          });
+
+          window.addEventListener('resize', function() {
+            // If the viewport shrinks, pull the emblem back inside the CRT bounds.
+            var rect = glassesEmblem.getBoundingClientRect();
+            var screenRect = glassesScreen.getBoundingClientRect();
+            var dx = 0;
+            var dy = 0;
+            if (rect.left < screenRect.left + glassesPadding) dx = (screenRect.left + glassesPadding) - rect.left;
+            else if (rect.right > screenRect.right - glassesPadding) dx = (screenRect.right - glassesPadding) - rect.right;
+            if (rect.top < screenRect.top + glassesPadding) dy = (screenRect.top + glassesPadding) - rect.top;
+            else if (rect.bottom > screenRect.bottom - glassesPadding) dy = (screenRect.bottom - glassesPadding) - rect.bottom;
+            if (dx || dy) {
+              glassesX += dx;
+              glassesY += dy;
+              applyGlassesPosition();
+            }
+          });
+        }
+
 
       })();
     </script>

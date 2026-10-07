@@ -654,12 +654,32 @@ div.wrapper {
   align-items: center;
   justify-content: center;
   padding: 10px;
-  transform: rotate(-5deg);
-  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 8;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  transform: translate3d(var(--glasses-x, 0px), var(--glasses-y, 0px), 0) rotate(-5deg);
+  transition: transform 0.22s ease, filter 0.2s ease;
+  will-change: transform;
 }
 
 .p4-glasses-emblem:hover {
-  transform: rotate(0deg) scale(1.08);
+  transform: translate3d(var(--glasses-x, 0px), var(--glasses-y, 0px), 0) rotate(0deg) scale(1.08);
+  filter: drop-shadow(0 4px 5px rgba(0,0,0,0.32));
+}
+
+.p4-glasses-emblem.is-dragging {
+  cursor: grabbing;
+  transition: none;
+  transform: translate3d(var(--glasses-x, 0px), var(--glasses-y, 0px), 0) rotate(-2deg) scale(1.04);
+  filter: drop-shadow(0 7px 7px rgba(0,0,0,0.42));
+}
+
+.p4-glasses-emblem:focus-visible {
+  outline: 3px solid var(--p4-white);
+  outline-offset: 2px;
+  border-radius: 8px;
 }
 
 .lens-frame {
@@ -2888,4 +2908,177 @@ tr:hover td {
 @media (prefers-reduced-motion: reduce) {
   .weather-sun, .weather-snow-icon, .weather-raindrop, .weather-snowflake,
   .site-weather-fx-layer::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+}
+
+
+/* --------------------------------------------------------------------------
+   19. FIXED TV STATUS WIDGETS + INTERACTIVE WEATHER ICON
+   Keeps the control deck stable while track/status strings change.
+   -------------------------------------------------------------------------- */
+
+/* The ticker is a control deck: individual widgets must not grow/shrink
+   when their text changes. The second row (broadcast + clock) can wrap
+   naturally, but every control keeps a predictable footprint. */
+.tv-ticker-bar {
+  justify-content: flex-start;
+  align-content: center;
+}
+
+.ticker-item {
+  min-width: 0;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.tv-channel-tag {
+  width: 66px;
+  min-width: 66px;
+  max-width: 66px;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.tv-rec {
+  width: 62px;
+  min-width: 62px;
+  max-width: 62px;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.tv-radio-ticker {
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
+  box-sizing: border-box;
+}
+
+.tv-radio-ticker .radio-icon,
+.tv-radio-ticker .radio-eq {
+  flex: 0 0 auto;
+}
+
+.radio-track-title {
+  min-width: 0;
+  flex: 1 1 auto;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tv-weather {
+  width: 185px;
+  min-width: 185px;
+  max-width: 185px;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tv-weather .weather-state {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tv-color-picker-item {
+  width: 258px;
+  min-width: 258px;
+  max-width: 258px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.tv-broadcast {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tv-clock {
+  width: 62px;
+  min-width: 62px;
+  max-width: 62px;
+  justify-content: center;
+  box-sizing: border-box;
+  margin-left: auto;
+}
+
+/* The full-screen weather layer is non-interactive, except for its large
+   icon. This lets the icon behave like the WTHR dial without blocking the page. */
+.site-weather-icon {
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.site-weather-icon:hover {
+  transform: scale(1.06) rotate(2deg);
+  filter: drop-shadow(0 8px 10px rgba(0,0,0,.38)) brightness(1.08);
+}
+
+.site-weather-icon:active {
+  transform: scale(0.96);
+}
+
+.site-weather-icon:focus-visible {
+  outline: 3px solid var(--p4-yellow);
+  outline-offset: 5px;
+  border-radius: 18px;
+}
+
+/* Avoid the top deck becoming wider than the TV at intermediate sizes.
+   Fixed widths are preserved on desktop; on narrower screens the whole
+   status deck wraps, but each individual widget still stays stable. */
+@media screen and (max-width: 980px) {
+  .tv-radio-ticker {
+    width: 270px;
+    min-width: 270px;
+    max-width: 270px;
+  }
+
+  .tv-weather {
+    width: 170px;
+    min-width: 170px;
+    max-width: 170px;
+  }
+
+  .tv-color-picker-item {
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .tv-ticker-bar {
+    gap: 7px;
+  }
+
+  .tv-radio-ticker {
+    width: min(290px, 100%);
+    min-width: 0;
+    max-width: 100%;
+    flex: 1 1 240px;
+  }
+
+  .tv-weather {
+    width: 170px;
+    min-width: 170px;
+    max-width: 170px;
+  }
+
+  .tv-color-picker-item {
+    width: min(250px, 100%);
+    min-width: 0;
+    max-width: 100%;
+  }
 }
